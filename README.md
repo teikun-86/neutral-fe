@@ -3,7 +3,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ## Using The [Next.JS](https://nextjs.org) + [Tailwind CSS](https://tailwindcss.com) Starter Kit
 1. Fist, Clone this repository:
 ```bash
-git clone https://github.com/teikun-86/next-tailwind-starter.git
+git clone https://github.com/teikun-86/fe-test.git
 ```
 2. Then, install the dependencies:
 ```bash
