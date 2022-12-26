@@ -1,4 +1,4 @@
-const CarIcon = props => {
+export const CarIcon = props => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" { ...props }>
             <g>
@@ -9,5 +9,3 @@ const CarIcon = props => {
 
     );
 };
-
-export default CarIcon;

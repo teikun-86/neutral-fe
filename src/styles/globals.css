@@ -1,3 +1,92 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+img {
+    user-select: none !important;
+}
+
+@layer components {
+    .custom-scrollbar::-webkit-scrollbar {
+        @apply w-2 h-2;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+        @apply bg-rose-900;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        @apply bg-rose-600 rounded-lg;
+    }
+    
+    .btn-text {
+        @apply cursor-pointer select-none disabled:opacity-50 disabled:text-gray-400 disabled:cursor-not-allowed inline-flex justify-center items-center px-4 py-2 text-base font-medium text-white hover:text-rose-700 focus:text-rose-700 focus:outline-none sm:w-auto sm:text-sm transition duration-100;
+    }
+
+    .btn-indigo {
+        @apply cursor-pointer select-none disabled:opacity-50 disabled:cursor-not-allowed inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none sm:w-auto sm:text-sm transition duration-100;
+    }
+
+    .btn-blue {
+        @apply cursor-pointer select-none disabled:opacity-50 disabled:cursor-not-allowed inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none sm:w-auto sm:text-sm transition duration-100;
+    }
+
+    .btn-rose {
+        @apply cursor-pointer select-none disabled:opacity-50 disabled:cursor-not-allowed inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-rose-600 text-base font-medium text-white hover:bg-rose-700 focus:bg-rose-700 focus:outline-none sm:w-auto sm:text-sm transition duration-100;
+    }
+
+    .btn-outline-rose {
+        @apply cursor-pointer select-none disabled:opacity-50 disabled:cursor-not-allowed inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-transparent text-base font-medium text-rose-600 hover:bg-rose-600 hover:text-white focus:bg-rose-600 focus:text-white focus:outline-none sm:w-auto sm:text-sm transition duration-100 border border-rose-600;
+    }
+
+    .btn-rose-gradient {
+        @apply cursor-pointer select-none disabled:opacity-50 disabled:cursor-not-allowed inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gradient-to-tr hover:bg-gradient-to-bl focus:bg-gradient-to-bl from-rose-600 to-rose-800 text-base font-medium text-white focus:outline-none sm:w-auto sm:text-sm transition duration-300;
+    }
+
+    .btn-dark {
+        @apply cursor-pointer select-none disabled:opacity-50 disabled:cursor-not-allowed inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-800 text-base font-medium text-white hover:bg-gray-900 focus:bg-gray-900 focus:outline-none sm:w-auto sm:text-sm transition duration-100;
+    }
+
+    .btn-stone {
+        @apply cursor-pointer select-none disabled:opacity-50 disabled:cursor-not-allowed inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-stone-800 text-base font-medium text-white hover:bg-stone-900 focus:bg-stone-900 focus:outline-none sm:w-auto sm:text-sm transition duration-100;
+    }
+
+    .btn-zinc {
+        @apply cursor-pointer select-none disabled:opacity-50 disabled:cursor-not-allowed inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-zinc-900 text-base font-medium text-white hover:bg-zinc-800 focus:bg-zinc-800 focus:outline-none sm:w-auto sm:text-sm transition duration-100;
+    }
+
+    .btn-brown {
+        @apply cursor-pointer select-none disabled:opacity-50 disabled:cursor-not-allowed inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-brown-900 text-base font-medium text-white hover:bg-brown-1000 focus:bg-brown-1000 focus:outline-none sm:w-auto sm:text-sm transition duration-100;
+    }
+
+    .btn-stone-light {
+        @apply cursor-pointer select-none disabled:opacity-50 disabled:cursor-not-allowed inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-stone-700 text-base font-medium text-white hover:bg-stone-900 focus:bg-stone-900 focus:outline-none sm:w-auto sm:text-sm transition duration-100;
+    }
+
+    .btn-light {
+        @apply cursor-pointer select-none disabled:opacity-50 disabled:cursor-not-allowed inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-100 text-base font-medium text-gray-600 hover:bg-gray-200 focus:bg-gray-300 focus:outline-none sm:w-auto sm:text-sm transition duration-100;
+    }
+
+    input[type="file"] {
+        @apply cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed block w-full text-sm text-slate-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-rose-100 file:text-rose-50 hover:file:bg-rose-700 file:cursor-pointer outline-none focus:outline-none;
+    }
+
+    .input-group {
+        @apply block mb-3;
+    }
+
+    .input-group > label {
+        @apply w-full font-semibold text-gray-100 text-sm block mb-1;
+    }
+
+    .input-zinc {
+        @apply block w-full rounded-full px-2 py-1 bg-zinc-900 border-zinc-700 text-white outline-none ring-0 focus:ring-0 focus:outline-0 focus:border-zinc-500 focus:bg-zinc-800 transition-all duration-200 hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-60 placeholder:text-zinc-400 placeholder:text-sm placeholder:tracking-wide;
+    }
+}
+
+.rdp {
+    --rdp-background-color: rgb(255 228 230 / var(--tw-bg-opacity)) !important;
+    --rdp-accent-color: rgb(251 113 133 / var(--tw-bg-opacity)) !important;
+}
