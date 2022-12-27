@@ -1,0 +1,190 @@
+[
+    {
+        "type": "REGION",
+        "publicId": "jakarta-108001534490276204",
+        "name": "Jakarta",
+        "location": "Indonesia",
+        "hotelCount": 9402,
+        "country": {
+            "id": "indonesia",
+            "name": "Indonesia"
+        },
+        "region": null,
+        "city": null,
+        "area": null,
+        "label": "REGION",
+        "latitude": -5.67258536164212,
+        "longitude": 106.710456825612
+    },
+    {
+        "type": "REGION",
+        "publicId": "bali-108001534490276212",
+        "name": "Bali",
+        "location": "Indonesia",
+        "hotelCount": 26231,
+        "country": {
+            "id": "indonesia",
+            "name": "Indonesia"
+        },
+        "region": null,
+        "city": null,
+        "area": null,
+        "label": "REGION",
+        "latitude": -8.22802491616422,
+        "longitude": 115.191844679619
+    },
+    {
+        "type": "CITY",
+        "publicId": "surabaya-108001534490276270",
+        "name": "Surabaya",
+        "location": "Jawa Timur, Indonesia",
+        "hotelCount": 1981,
+        "country": {
+            "id": "indonesia",
+            "name": "Indonesia"
+        },
+        "region": {
+            "id": "east-java-108001534490276152",
+            "name": "Jawa Timur"
+        },
+        "city": null,
+        "area": null,
+        "label": "CITY",
+        "latitude": -7.28759667792821,
+        "longitude": 112.733049988025
+    },
+    {
+        "type": "CITY",
+        "publicId": "bogor-108001534490276382",
+        "name": "Bogor",
+        "location": "Jawa Barat, Indonesia",
+        "hotelCount": 2535,
+        "country": {
+            "id": "indonesia",
+            "name": "Indonesia"
+        },
+        "region": {
+            "id": "west-java-108001534490276256",
+            "name": "Jawa Barat"
+        },
+        "city": null,
+        "area": null,
+        "label": "CITY",
+        "latitude": -6.56187979692377,
+        "longitude": 106.771455636443
+    },
+    {
+        "type": "CITY",
+        "publicId": "bandung-108001534490276290",
+        "name": "Bandung",
+        "location": "Jawa Barat, Indonesia",
+        "hotelCount": 5015,
+        "country": {
+            "id": "indonesia",
+            "name": "Indonesia"
+        },
+        "region": {
+            "id": "west-java-108001534490276256",
+            "name": "Jawa Barat"
+        },
+        "city": null,
+        "area": null,
+        "label": "CITY",
+        "latitude": -7.0060339916287,
+        "longitude": 107.532255750352
+    },
+    {
+        "type": "CITY",
+        "publicId": "malang-108001534490278480",
+        "name": "Malang",
+        "location": "Jawa Timur, Indonesia",
+        "hotelCount": 2835,
+        "country": {
+            "id": "indonesia",
+            "name": "Indonesia"
+        },
+        "region": {
+            "id": "east-java-108001534490276152",
+            "name": "Jawa Timur"
+        },
+        "city": null,
+        "area": null,
+        "label": "CITY",
+        "latitude": -8.12253145701026,
+        "longitude": 112.641288570626
+    },
+    {
+        "type": "REGION",
+        "publicId": "west-java-108001534490276256",
+        "name": "Jawa Barat",
+        "location": "Indonesia",
+        "hotelCount": 13581,
+        "country": {
+            "id": "indonesia",
+            "name": "Indonesia"
+        },
+        "region": null,
+        "city": null,
+        "area": null,
+        "label": "REGION",
+        "latitude": -6.25427797064765,
+        "longitude": 107.832341187826
+    },
+    {
+        "type": "CITY",
+        "publicId": "semarang-108001534490276289",
+        "name": "Semarang",
+        "location": "Jawa Tengah, Indonesia",
+        "hotelCount": 933,
+        "country": {
+            "id": "indonesia",
+            "name": "Indonesia"
+        },
+        "region": {
+            "id": "central-java-108001534490276205",
+            "name": "Jawa Tengah"
+        },
+        "city": null,
+        "area": null,
+        "label": "CITY",
+        "latitude": -7.20053914799319,
+        "longitude": 110.451620189543
+    },
+    {
+        "type": "CITY",
+        "publicId": "yogyakarta-108001534490276494",
+        "name": "Yogyakarta",
+        "location": "Provinsi Yogyakarta, Indonesia",
+        "hotelCount": 2723,
+        "country": {
+            "id": "indonesia",
+            "name": "Indonesia"
+        },
+        "region": {
+            "id": "yogyakarta-province-108001534490276304",
+            "name": "Provinsi Yogyakarta"
+        },
+        "city": null,
+        "area": null,
+        "label": "CITY",
+        "latitude": -7.79230108670889,
+        "longitude": 110.373044604683
+    },
+    {
+        "type": "REGION",
+        "publicId": "east-java-108001534490276152",
+        "name": "Jawa Timur",
+        "location": "Indonesia",
+        "hotelCount": 7496,
+        "country": {
+            "id": "indonesia",
+            "name": "Indonesia"
+        },
+        "region": null,
+        "city": null,
+        "area": null,
+        "label": "REGION",
+        "latitude": -6.81855241273974,
+        "longitude": 113.716404724387
+    }
+]

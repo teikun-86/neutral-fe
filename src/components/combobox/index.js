@@ -45,10 +45,38 @@ const Container = (props) => {
             leaveTo="opacity-0"
             afterLeave={props.afterLeave}
         >
-            <ComboboxParent.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-10">
+            <div className="w-full md:w-[28rem] bg-white rounded-lg overflow-hidden block absolute z-20 shadow-lg ">
                 {props.children}
-            </ComboboxParent.Options>
+            </div>
         </Transition>
+    )
+}
+
+const Options = (props) => {
+    return (
+        <ComboboxParent.Options className="max-h-80 w-full overflow-y-auto overflow-x-hidden bg-white py-1 text-base ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm" {...props}>
+            {props.children}
+        </ComboboxParent.Options>
+    )
+}
+
+const Header = (props) => {
+    let { className } = props
+    
+    return (
+        <div {...props} className={`${className} px-3 py-2 border-b border-gray-300/30`}>
+            {props.children}
+        </div>
+    )
+}
+
+const Footer = (props) => {
+    let { className } = props
+
+    return (
+        <div {...props} className={`${className} w-full px-3 py-2 mt-2 bg-gray-100`}>
+            {props.children}
+        </div>
     )
 }
 
@@ -63,5 +91,8 @@ const Option = (props) => {
 Combobox.Input = Input
 Combobox.Container = Container
 Combobox.Option = Option
+Combobox.Options = Options
+Combobox.Footer = Footer
+Combobox.Header = Header
 
 export default Combobox

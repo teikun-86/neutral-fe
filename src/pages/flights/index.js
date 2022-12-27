@@ -1,18 +1,22 @@
+import { AirportButton } from "@/components/button";
 import Combobox from "@/components/combobox";
 import DatePicker from "@/components/datepicker";
 import useOutsideClick from "@/components/hooks/outsideclick";
 import { AirplaneLandingIcon, AirplaneTakeoffIcon } from "@/components/icons";
 import AppLayout from "@/layouts/app";
-import { searchString } from "@/util";
+import { checkObjectUndefined, objectToQueryString, searchString } from "@/util";
 import { Transition } from "@headlessui/react";
-import { ArrowsRightLeftIcon, BuildingOffice2Icon, CalendarDaysIcon, ChevronDownIcon, MinusIcon, PlusIcon, UserGroupIcon } from "@heroicons/react/24/outline";
+import { ArrowsRightLeftIcon, BuildingOffice2Icon, CalendarDaysIcon, ChevronDownIcon, MagnifyingGlassIcon, MinusIcon, PlusIcon, UserGroupIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import debounce from "lodash.debounce";
 import moment from "moment";
+import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 const Flights = () => {
     const passengerRef = useRef(null)
+    const router = useRouter()
 
     const [query, setQuery] = useState('')
     const [tripType, setTripType] = useState('one-way')
@@ -40,7 +44,6 @@ const Flights = () => {
                 || searchString(query, airport.countryName)
         })
         setQueriedAirports(results)
-        console.log({ results, query });
     }, [airports])
 
     const handleChange = useCallback((event) => {
@@ -80,12 +83,38 @@ const Flights = () => {
         ]
     }
 
+    const searchFlight = () => {
+        let params = {
+            d: departure.airportCode,
+            a: arrival.airportCode,
+            d_type: departure.type,
+            a_type: arrival.type,
+            d_date: departureDate.format("YYYY-MM-DD"),
+            adult: adult,
+            child: child,
+            infant: infant,
+            class: passengerClass,
+        };
+
+        if (tripType === 'round') params.r_date = returnDate.format("YYYY-MM-DD")
+
+        if (!checkObjectUndefined(params)) {
+            toast.error()
+        }
+        
+        router.push(`/flights/search?${objectToQueryString(params)}`)
+    }
+
     const getAirports = async () => {
         await axios.get('/api/airports').then(res => {
             let airports = res.data.airports.map(airports => {
                 return airports.airports
             }).flat()
             setAirports(airports)
+            let d = airports.filter(ap => ap.airportCode === 'JKTC')[0]
+            let a = airports.filter(ap => ap.airportCode === 'JOGC')[0]
+            setDeparture(d)
+            setArrival(a)
         }).catch(err => {
             console.log({
                 err,
@@ -99,14 +128,14 @@ const Flights = () => {
     }, [])
 
     return (
-        <AppLayout title="Flights ー Neutral">
-            <div className="w-full min-h-screen pt-16 py-4">
+        <AppLayout title="Flights ー Neutral" fixed={false}>
+            <div className="w-full min-h-screen pb-4">
                 <div className="w-full bg-rose-600 h-72 py-3 px-2">
                     <h2 className="text-2xl font-bold text-white text-center">Lorem, ipsum.</h2>
                     <p className="text-center text-gray-100 md:max-w-[50%] mx-auto">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maxime deleniti aliquam ea error culpa autem ipsam magni debitis illo sunt, sapiente officiis corrupti iure atque sequi molestias! Omnis, laborum explicabo?</p>
                 </div>
                 <div className="w-full max-w-7xl px-4 mx-auto">
-                    <div className="w-full bg-white rounded-lg bg-white p-3 shadow-lg -mt-10">
+                    <div className="w-full rounded-lg bg-white p-3 shadow-lg -mt-10">
                         <h3 className="font-semibold text-xl tracking-wide flex items-center">
                             <AirplaneTakeoffIcon className="w-8 h-8 text-rose-600 mr-3" />
                             Cari tiket pesawat murah & promo
@@ -124,120 +153,106 @@ const Flights = () => {
                             </div>
                         </div>
                         <div className="w-full flex items-center flex-wrap">
-                            <div className="w-full md:w-1/2 lg:w-1/4 p-2 relative md:border-r border-b md:border-b-0 border-gray-300/70 px-5">
+                            <div className="w-full md:w-1/2 lg:w-1/4 p-2 relative md:border-r border-b md:border-b-0 border-gray-300/70 px-2 md:px-5">
                                 <div className="w-full rounded-lg">
-                                    <label htmlFor="departureInput" className="text-base font-normal font-semibold text-gray-500">Dari</label>
+                                    <label htmlFor="departureInput" className="text-base font-semibold text-gray-500">Dari</label>
                                     <div className="flex items-center w-full">
                                         <span className="text-rose-600">
                                             <AirplaneTakeoffIcon className="w-7 h-7" />
                                         </span>
                                         <Combobox value={departure} id="departureCombobox" onChange={setDeparture}>
-                                            <Combobox.Input onChange={debounceQueryAirports} placeholder="Cari Kota/Bandara" type="text" id="departureInput" className="select-all w-full px-1 text-base font-semibold text-gray-900 border-0 outline-none focus:outline-none focus:ring-0" />
+                                            <Combobox.Input onChange={debounceQueryAirports} placeholder="Cari Kota/Bandara" type="text" id="departureInput" className="select-all w-full px-1 text-base font-semibold text-gray-900 border-0 outline-none focus:outline-none focus:ring-0" displayValue={(d) => d.type ? `${d.airportName} (${d.airportCode})` : ""} />
                                             <Combobox.Container afterLeave={() => {
                                                 setQuery('')
                                                 setQueriedAirports([])
                                             }}>
-                                                {
-                                                    queriedAirports.length === 0
-                                                        ? (
-                                                            <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
-                                                                {
-                                                                    query === '' ? "Cari Kota/Bandara" : "Tidak ada hasil. Coba cari tujuan lain."
-                                                                }
-                                                            </div>
-                                                        )
-                                                        : (
-                                                            queriedAirports.map(airport => (
-                                                                <Combobox.Option key={airport.id + airport.countryName + airport.cityName} value={`${airport.airportName} (${airport.airportCode})`}>
-                                                                    {({ selected, active }) => (
-                                                                        <>
-                                                                            <div className="w-full cursor-pointer flex items-center justify-between p-2 bg-white hover:bg-gray-50">
-                                                                                <span className="p-2 relative">
-                                                                                    {
-                                                                                        airport.type === 'city'
-                                                                                            ? <BuildingOffice2Icon className="w-6 h-6 mr-2 text-rose-500" />
-                                                                                            : <AirplaneTakeoffIcon className="w-6 h-6 mr-2 text-rose-500" />
-                                                                                    }
-                                                                                </span>
-                                                                                <div className="w-[90%]">
-                                                                                    <p className={`block truncate text-gray-800 ${selected ? "font-medium" : "font-normal"}`}>
-                                                                                        {airport.airportName}
-                                                                                    </p>
-                                                                                    <small className="text-sm font-semibold text-gray-500">{airport.cityName}, {airport.countryName}</small>
-                                                                                </div>
-                                                                                <span className="p-2 rounded bg-gray-100 grid place-items-center uppercase">{airport.airportCode}</span>
-                                                                            </div>
-                                                                        </>
-                                                                    )}
-                                                                </Combobox.Option>
-                                                            ))
-                                                        )
-                                                }
+                                                <Combobox.Header>
+                                                    <div className="flex items-center justify-between">
+                                                        <h5 className="text-base font-semibold text-gray-900">Cari Kota/Bandara</h5>
+                                                        <button className="w-8 h-8 rounded-full grid place-items-center border-0 outline-none ring-0 focus:border-0 focus:outline-none focus:ring-0 hocus:bg-gray-100" type="button">
+                                                            <XMarkIcon className="w-6 h-6" />
+                                                        </button>
+                                                    </div>
+                                                </Combobox.Header>
+                                                <Combobox.Options>
+                                                    {
+                                                        queriedAirports.length === 0
+                                                            ? (
+                                                                <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
+                                                                    {
+                                                                        query === '' ? "Cari Kota/Bandara" : "Tidak ada hasil. Coba cari tujuan lain."
+                                                                    }
+                                                                </div>
+                                                            )
+                                                            : (
+                                                                queriedAirports.map(airport => (
+                                                                    <Combobox.Option key={airport.id + airport.countryName + airport.cityName} value={airport}>
+                                                                        {({ selected, active }) => (
+                                                                            <AirportButton selected={selected} active={active} airport={airport} />
+                                                                        )}
+                                                                    </Combobox.Option>
+                                                                ))
+                                                            )
+                                                    }
+                                                </Combobox.Options>
                                             </Combobox.Container>
                                         </Combobox>
                                     </div>
                                 </div>
-                                <span onClick={switchDA} className="cursor-pointer grid place-items-center w-7 h-7 rounded-full border border-gray-300 bg-white hover:bg-gray-50 transition-all duration-200 absolute md:-right-4 md:top-1/2 md:-translate-y-1/2 -bottom-4 md:bottom-auto left-1/2 md:left-auto -translate-x-1/2 md:translate-x-0 rotate-90 md:rotate-0">
+                                <button type="button" onClick={switchDA} className="cursor-pointer grid place-items-center w-7 h-7 rounded-full border border-gray-300 bg-white hover:bg-gray-50 transition-all duration-200 absolute md:-right-4 md:top-1/2 md:-translate-y-1/2 -bottom-4 md:bottom-auto left-1/2 md:left-auto -translate-x-1/2 md:translate-x-0 rotate-90 md:rotate-0 outline-none focus:outline-none">
                                     <ArrowsRightLeftIcon className="w-5 h-5 text-rose-600" />
-                                </span>
+                                </button>
                             </div>
-                            <div className="w-full md:w-1/2 lg:w-1/4 p-2 relative lg:border-r border-b md:border-b-0 border-gray-300/70 px-5">
+                            <div className="w-full md:w-1/2 lg:w-1/4 p-2 relative lg:border-r border-b md:border-b-0 border-gray-300/70 px-2 md:px-5">
                                 <div className="w-full rounded-lg">
-                                    <label htmlFor="arrivalInput" className="text-base font-normal font-semibold text-gray-500">Ke</label>
+                                    <label htmlFor="arrivalInput" className="text-base font-semibold text-gray-500">Ke</label>
                                     <div className="flex items-center w-full">
                                         <span className="text-rose-600">
                                             <AirplaneLandingIcon className="w-7 h-7" />
                                         </span>
                                         <Combobox value={arrival} id="arrivalCombobox" onChange={setArrival}>
-                                            <Combobox.Input onChange={debounceQueryAirports} placeholder="Cari Kota/Bandara" type="text" id="arrivalInput" className="select-all w-full px-1 text-base font-semibold text-gray-900 border-0 outline-none focus:outline-none focus:ring-0" />
+                                            <Combobox.Input onChange={debounceQueryAirports} placeholder="Cari Kota/Bandara" type="text" id="arrivalInput" className="select-all w-full px-1 text-base font-semibold text-gray-900 border-0 outline-none focus:outline-none focus:ring-0" displayValue={(d) => d.type ? `${d.airportName} (${d.airportCode})` : ""} />
                                             <Combobox.Container afterLeave={() => {
                                                 setQuery('')
                                                 setQueriedAirports([])
                                             }}>
-                                                {
-                                                    queriedAirports.length === 0
-                                                        ? (
-                                                            <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
-                                                                {
-                                                                    query === '' ? "Cari Kota/Bandara" : "Tidak ada hasil. Coba cari tujuan lain."
-                                                                }
-                                                            </div>
-                                                        )
-                                                        : (
-                                                            queriedAirports.map(airport => (
-                                                                <Combobox.Option key={airport.id + airport.countryName + airport.cityName} value={`${airport.airportName} (${airport.airportCode})`}>
-                                                                    {({ selected, active }) => (
-                                                                        <>
-                                                                            <div className="w-full cursor-pointer flex items-center justify-between p-2 bg-white hover:bg-gray-50">
-                                                                                <span className="p-2 relative">
-                                                                                    {
-                                                                                        airport.type === 'city'
-                                                                                            ? <BuildingOffice2Icon className="w-6 h-6 mr-2 text-rose-500" />
-                                                                                            : <AirplaneTakeoffIcon className="w-6 h-6 mr-2 text-rose-500" />
-                                                                                    }
-                                                                                </span>
-                                                                                <div className="w-[90%]">
-                                                                                    <p className={`block truncate text-gray-800 ${selected ? "font-medium" : "font-normal"}`}>
-                                                                                        {airport.airportName}
-                                                                                    </p>
-                                                                                    <small className="text-sm font-semibold text-gray-500">{airport.cityName}, {airport.countryName}</small>
-                                                                                </div>
-                                                                                <span className="p-2 rounded bg-gray-100 grid place-items-center uppercase">{airport.airportCode}</span>
-                                                                            </div>
-                                                                        </>
-                                                                    )}
-                                                                </Combobox.Option>
-                                                            ))
-                                                        )
-                                                }
+                                                <Combobox.Header>
+                                                    <div className="flex items-center justify-between">
+                                                        <h5 className="text-base font-semibold text-gray-900">Cari Kota/Bandara</h5>
+                                                        <button className="w-8 h-8 rounded-full grid place-items-center border-0 outline-none ring-0 focus:border-0 focus:outline-none focus:ring-0 hocus:bg-gray-100" type="button">
+                                                            <XMarkIcon className="w-6 h-6" />
+                                                        </button>
+                                                    </div>
+                                                </Combobox.Header>
+                                                <Combobox.Options>
+                                                    {
+                                                        queriedAirports.length === 0
+                                                            ? (
+                                                                <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
+                                                                    {
+                                                                        query === '' ? "Cari Kota/Bandara" : "Tidak ada hasil. Coba cari tujuan lain."
+                                                                    }
+                                                                </div>
+                                                            )
+                                                            : (
+                                                                queriedAirports.map(airport => (
+                                                                    <Combobox.Option key={airport.id + airport.countryName + airport.cityName} value={airport}>
+                                                                        {({ selected, active }) => (
+                                                                            <AirportButton selected={selected} active={active} airport={airport} />
+                                                                        )}
+                                                                    </Combobox.Option>
+                                                                ))
+                                                            )
+                                                    }
+                                                </Combobox.Options>
                                             </Combobox.Container>
                                         </Combobox>
                                     </div>
                                 </div>
                             </div>
-                            <div className="w-full md:w-1/2 lg:w-1/4 p-2 relative mt-2 lg:mt-0 md:border-r border-b md:border-b-0 border-gray-300/70 px-5">
+                            <div className="w-full md:w-1/2 lg:w-1/4 p-2 relative mt-2 lg:mt-0 md:border-r border-b md:border-b-0 border-gray-300/70 px-2 md:px-5">
                                 <div className="w-full rounded-lg">
-                                    <label htmlFor="arrivalDateInput" className="text-base font-normal font-semibold text-gray-500 mb-3 block">Berangkat</label>
+                                    <label htmlFor="arrivalDateInput" className="text-base font-semibold text-gray-500 mb-3 block">Berangkat</label>
                                     <div className="flex items-center w-full">
                                         <span className="text-rose-600">
                                             <CalendarDaysIcon className="w-7 h-7" />
@@ -250,9 +265,9 @@ const Flights = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="w-full md:w-1/2 lg:w-1/4 p-2 relative border-b md:border-b-0 border-gray-300/70 px-5">
+                            <div className="w-full md:w-1/2 lg:w-1/4 p-2 relative border-b md:border-b-0 border-gray-300/70 px-2 md:px-5">
                                 <div className="w-full rounded-lg">
-                                    <label htmlFor="roundTripCheckBox" className="text-base mb-3 font-normal font-semibold text-gray-500 flex items-center select-none">
+                                    <label htmlFor="roundTripCheckBox" className="text-base mb-3 font-semibold text-gray-500 flex items-center select-none">
                                         <input id="roundTripCheckBox" type="checkbox" checked={tripType === 'round'} onChange={(e) => setTripType(e.target.checked ? 'round' : 'one-way')} className="form-checkbox text-rose-600 rounded focus:ring-rose-600 transition-all duration-200 mr-2" />
                                         Pulang
                                     </label>
@@ -268,8 +283,8 @@ const Flights = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="w-full p-2 relative px-5">
-                                <h6 htmlFor="passengerInfo" className="text-base font-normal font-semibold text-gray-500 mb-3 block">Penumpang & Kelas Kabin</h6>
+                            <div className="w-full p-2 relative px-2 md:px-5">
+                                <h6 htmlFor="passengerInfo" className="text-base font-semibold text-gray-500 mb-3 block">Penumpang & Kelas Kabin</h6>
                                 <div className="w-full relative block z-10">
                                     <button className="select-none w-full text-base font-semibold text-gray-900 border-0 outline-none focus:outline-none focus:ring-0 flex items-center justify-between" onClick={() => setShowPassenger((show) => !show)}>
                                         <div className="flex items-center">
@@ -365,26 +380,26 @@ const Flights = () => {
                                                 <div className="w-full md:w-1/2 p-3">
                                                     <h5 className="text-lg font-semibold text-gray-700">Kelas Kabin</h5>
                                                     <div className="flex flex-col w-full">
-                                                        <button onClick={() => setPassengerClass('Ekonomi')} className={`w-full mb-2 block px-2 flex items-center justify-start space-x-2 py-1 rounded-md border outline-none focus:outline-none ring-0 focus:ring-0 transition-all duration-200 ${passengerClass === 'Ekonomi' ? "border-rose-600" : " border-gray-300"}`} type="button">
-                                                            <span className={`w-5 h-5 block grid place-items-center rounded-full border-2 mr-2 ${passengerClass === 'Ekonomi' ? "border-rose-600" : " border-gray-300"} bg-white`}>
+                                                        <button onClick={() => setPassengerClass('Ekonomi')} className={`w-full mb-2 px-2 flex items-center justify-start space-x-2 py-1 rounded-md border outline-none focus:outline-none ring-0 focus:ring-0 transition-all duration-200 ${passengerClass === 'Ekonomi' ? "border-rose-600" : " border-gray-300"}`} type="button">
+                                                            <span className={`w-5 h-5 grid place-items-center rounded-full border-2 mr-2 ${passengerClass === 'Ekonomi' ? "border-rose-600" : " border-gray-300"} bg-white`}>
                                                                 <span className={`${passengerClass === 'Ekonomi' ? "bg-rose-600 w-3 h-3" : "w-2 h-2  bg-gray-300"} rounded-full transition-all duration-200`}></span>
                                                             </span>
                                                             Ekonomi
                                                         </button>
-                                                        <button onClick={() => setPassengerClass('Permium Ekonomi')} className={`w-full mb-2 block px-2 flex items-center justify-start space-x-2 py-1 rounded-md border outline-none focus:outline-none ring-0 focus:ring-0 transition-all duration-200 ${passengerClass === 'Permium Ekonomi' ? "border-rose-600" : " border-gray-300"}`} type="button">
-                                                            <span className={`w-5 h-5 block grid place-items-center rounded-full border-2 mr-2 ${passengerClass === 'Permium Ekonomi' ? "border-rose-600" : " border-gray-300"} bg-white`}>
+                                                        <button onClick={() => setPassengerClass('Permium Ekonomi')} className={`w-full mb-2 px-2 flex items-center justify-start space-x-2 py-1 rounded-md border outline-none focus:outline-none ring-0 focus:ring-0 transition-all duration-200 ${passengerClass === 'Permium Ekonomi' ? "border-rose-600" : " border-gray-300"}`} type="button">
+                                                            <span className={`w-5 h-5 grid place-items-center rounded-full border-2 mr-2 ${passengerClass === 'Permium Ekonomi' ? "border-rose-600" : " border-gray-300"} bg-white`}>
                                                                 <span className={`${passengerClass === 'Permium Ekonomi' ? "bg-rose-600 w-3 h-3" : "w-2 h-2  bg-gray-300"} rounded-full transition-all duration-200`}></span>
                                                             </span>
                                                             Permium Ekonomi
                                                         </button>
-                                                        <button onClick={() => setPassengerClass('Bisnis')} className={`w-full mb-2 block px-2 flex items-center justify-start space-x-2 py-1 rounded-md border outline-none focus:outline-none ring-0 focus:ring-0 transition-all duration-200 ${passengerClass === 'Bisnis' ? "border-rose-600" : " border-gray-300"}`} type="button">
-                                                            <span className={`w-5 h-5 block grid place-items-center rounded-full border-2 mr-2 ${passengerClass === 'Bisnis' ? "border-rose-600" : " border-gray-300"} bg-white`}>
+                                                        <button onClick={() => setPassengerClass('Bisnis')} className={`w-full mb-2 px-2 flex items-center justify-start space-x-2 py-1 rounded-md border outline-none focus:outline-none ring-0 focus:ring-0 transition-all duration-200 ${passengerClass === 'Bisnis' ? "border-rose-600" : " border-gray-300"}`} type="button">
+                                                            <span className={`w-5 h-5 grid place-items-center rounded-full border-2 mr-2 ${passengerClass === 'Bisnis' ? "border-rose-600" : " border-gray-300"} bg-white`}>
                                                                 <span className={`${passengerClass === 'Bisnis' ? "bg-rose-600 w-3 h-3" : "w-2 h-2  bg-gray-300"} rounded-full transition-all duration-200`}></span>
                                                             </span>
                                                             Bisnis
                                                         </button>
-                                                        <button onClick={() => setPassengerClass('First')} className={`w-full mb-2 block px-2 flex items-center justify-start space-x-2 py-1 rounded-md border outline-none focus:outline-none ring-0 focus:ring-0 transition-all duration-200 ${passengerClass === 'First' ? "border-rose-600" : " border-gray-300"}`} type="button">
-                                                            <span className={`w-5 h-5 block grid place-items-center rounded-full border-2 mr-2 ${passengerClass === 'First' ? "border-rose-600" : " border-gray-300"} bg-white`}>
+                                                        <button onClick={() => setPassengerClass('First')} className={`w-full mb-2 px-2 flex items-center justify-start space-x-2 py-1 rounded-md border outline-none focus:outline-none ring-0 focus:ring-0 transition-all duration-200 ${passengerClass === 'First' ? "border-rose-600" : " border-gray-300"}`} type="button">
+                                                            <span className={`w-5 h-5 grid place-items-center rounded-full border-2 mr-2 ${passengerClass === 'First' ? "border-rose-600" : " border-gray-300"} bg-white`}>
                                                                 <span className={`${passengerClass === 'First' ? "bg-rose-600 w-3 h-3" : "w-2 h-2  bg-gray-300"} rounded-full transition-all duration-200`}></span>
                                                             </span>
                                                             First
@@ -396,6 +411,15 @@ const Flights = () => {
                                     </Transition>
                                 </div>
                             </div>
+                        </div>
+                        <div className="w-full flex items-center justify-end py-2 px-2 md:px-5">
+                            <button type="button" className="btn-rose w-full md:w-auto" onClick={(e) => {
+                                e.preventDefault()
+                                searchFlight()
+                            }}>
+                                <MagnifyingGlassIcon className="w-6 h-6 mr-2" />
+                                Cari Penerbangan
+                            </button>
                         </div>
                     </div>
                 </div>

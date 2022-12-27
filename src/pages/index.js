@@ -1,18 +1,19 @@
 import travelBg from "@/assets/images/tokyo-tower.jpg";
 import SearchBox from "@/components/search";
-import { ArrowPathIcon, BuildingOfficeIcon, CreditCardIcon, HeartIcon, IdentificationIcon, QuestionMarkCircleIcon, ReceiptRefundIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { ArrowPathIcon, BuildingOfficeIcon, CreditCardIcon, IdentificationIcon, QuestionMarkCircleIcon, ReceiptRefundIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { AirplaneTakeoffIcon, TrainIcon, ShipIcon, CarIcon, TruckIcon, KaabaIcon } from "@/components/icons";
-import Modal from "@/components/modal";
+import { Drawer, Modal } from "@/components/modal";
 import { useRecoilState } from "recoil";
 import modalState from "@/hooks/modal";
 import daralhijrahLogo from "@/assets/images/daralhijrah-logo.png";
 import almadinahLogo from "@/assets/images/almadinah-logo.png";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Service } from "@/components/button";
+import { GrayButton, Service } from "@/components/button";
 import useInViewport from "@/hooks/inviewport";
 import { useRef } from "react";
 import AppLayout from "@/layouts/app";
+import Link from "next/link";
 
 export default function Home() {
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
@@ -35,26 +36,28 @@ export default function Home() {
                         </div>
                         <div className="grid place-items-center w-full mt-6">
                             <div className="flex items-center justify-center flex-wrap">
-                                <Service onClick={() => router.push('/flights')} icon={<AirplaneTakeoffIcon className="w-10 h-10 text-red-600" />}>Pesawat</Service>
-                                <Service onClick={() => router.push('/hotel')} icon={<BuildingOfficeIcon className="w-10 h-10 text-red-600" />}>Hotel</Service>
-                                <Service onClick={() => router.push('/trains')} icon={<TrainIcon className="w-10 h-10 text-red-600" />}>Kereta Api</Service>
-                                <Service onClick={() => router.push('/pelni')} icon={<ShipIcon className="w-10 h-10 text-red-600" />}>Pelni</Service>
-                                <Service onClick={() => router.push('/car')} icon={<CarIcon className="w-10 h-10 text-red-600" />}>Sewa Mobil</Service>
-                                <Service onClick={() => router.push('/cargo')} icon={<TruckIcon className="w-10 h-10 text-red-600" />}>Cargo</Service>
+                                <Service href="/flights" icon={<AirplaneTakeoffIcon className="w-10 h-10 text-red-600" />}>Pesawat</Service>
+                                <Service href="/hotel" icon={<BuildingOfficeIcon className="w-10 h-10 text-red-600" />}>Hotel</Service>
+                                <Service href="/trains" icon={<TrainIcon className="w-10 h-10 text-red-600" />}>Kereta Api</Service>
+                                <Service href="/pelni" icon={<ShipIcon className="w-10 h-10 text-red-600" />}>Pelni</Service>
+                                <Service href="/car" icon={<CarIcon className="w-10 h-10 text-red-600" />}>Sewa Mobil</Service>
+                                <Service href="/cargo" icon={<TruckIcon className="w-10 h-10 text-red-600" />}>Cargo</Service>
                             </div>
                             <h6 className="text-white font-semibold text-lg mt-2">Haji & Umrah</h6>
                             <div className="flex items-start justify-center flex-wrap">
-                                <Service onClick={() => setModalOpen('landArrangementModal')} icon={<KaabaIcon className="w-10 h-10 text-red-600" />}>Land<br/>Arrangement</Service>
-                                <Service onClick={() => router.push('/flights')} icon={<AirplaneTakeoffIcon className="w-10 h-10 text-red-600" />}>Pesawat</Service>
-                                <Service onClick={() => router.push('/pay-later')} icon={<CreditCardIcon className="w-10 h-10 text-red-600" />}>Pay Later</Service>
-                                <Service onClick={() => router.push('/visa')} icon={<IdentificationIcon className="w-10 h-10 text-red-600" />}>Visa</Service>
+                                <Service onClick={(e) => {
+                                    e.preventDefault()
+                                    setModalOpen('landArrangementModal')
+                                }} icon={<KaabaIcon className="w-10 h-10 text-red-600" />}>Land<br/>Arrangement</Service>
+                                <Service href="/flights" icon={<AirplaneTakeoffIcon className="w-10 h-10 text-red-600" />}>Pesawat</Service>
+                                <Service href="/hajj-and-umrah/pay-later" icon={<CreditCardIcon className="w-10 h-10 text-red-600" />}>Pay Later</Service>
+                                <Service href="/hajj-and-umrah/visa" icon={<IdentificationIcon className="w-10 h-10 text-red-600" />}>Visa</Service>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="w-full max-w-7xl mx-auto px-4">
-                
+            <div className="w-full max-w-7xl mx-auto px-4">     
                 <h2 className="text-2xl font-bold text-gray-900 text-center">Jaminan Harga Termurah!</h2>
                 <h2 className="text-2xl font-bold text-gray-900 text-center mt-4 mb-2">Butuh Bantuan? Cek Informasi Berikut!</h2>
 

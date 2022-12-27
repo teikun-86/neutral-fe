@@ -16,6 +16,7 @@ module.exports = {
             },
             animation: {
                 "width-half": "width-half 0.2s ease-in-out",
+                "width-2/3": "width-2/3 0.2s ease-in-out",
             },
             keyframes: {
                 "width-half": {
@@ -24,6 +25,14 @@ module.exports = {
                     },
                     "to": {
                         width: "50%",
+                    }
+                },
+                "width-2/3": {
+                    "from": {
+                        width: 0,
+                    },
+                    "to": {
+                        width: "66.666667%",
                     }
                 },
             }

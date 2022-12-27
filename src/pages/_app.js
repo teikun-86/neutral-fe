@@ -1,7 +1,10 @@
 import '@/styles/globals.css'
 import 'react-day-picker/dist/style.css';
+import 'react-toastify/dist/ReactToastify.css';
+import NextNProgress from 'nextjs-progressbar';
 import { RecoilRoot } from 'recoil'
 import { Source_Sans_Pro } from "@next/font/google";
+import { ToastContainer } from 'react-toastify';
 
 const ssp = Source_Sans_Pro({
     variable: "--font-source-sans-pro",
@@ -12,9 +15,13 @@ const ssp = Source_Sans_Pro({
 function MyApp({ Component, pageProps }) {
     return (
         <RecoilRoot>
+            <NextNProgress color="#e11d48" options={{
+                showSpinner: false
+            }} />
             <main className={`${ssp.variable} font-sans`}>
                 <Component {...pageProps} />
             </main>
+            <ToastContainer />
         </RecoilRoot>
     )
 }
