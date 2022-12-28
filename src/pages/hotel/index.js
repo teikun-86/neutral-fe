@@ -1,20 +1,18 @@
-import { AirportButton, DestinationButton } from "@/components/button";
+import { DestinationButton } from "@/components/button";
 import Combobox from "@/components/combobox";
-import DatePicker from "@/components/datepicker";
 import useOutsideClick from "@/components/hooks/outsideclick";
-import { AirplaneLandingIcon, AirplaneTakeoffIcon } from "@/components/icons";
 import AppLayout from "@/layouts/app";
-import { checkObjectUndefined, objectToQueryString, searchString } from "@/util";
+import { searchString } from "@/util";
 import { Transition } from "@headlessui/react";
-import { ArrowsRightLeftIcon, BuildingOffice2Icon, CalendarDaysIcon, ChevronDownIcon, MagnifyingGlassIcon, MapPinIcon, MinusIcon, PlusIcon, UserGroupIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { BuildingOffice2Icon, CalendarDaysIcon, ChevronDownIcon, MagnifyingGlassIcon, MapPinIcon, MinusIcon, PlusIcon, UserGroupIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import debounce from "lodash.debounce";
 import moment from "moment";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { toast } from "react-toastify";
+import Datepicker from "react-tailwindcss-datepicker";
 
-const Flights = () => {
+const Hotel = () => {
     const guestRef = useRef(null)
     const router = useRouter()
 
@@ -60,37 +58,6 @@ const Flights = () => {
         let params = {
             dest: destination,
         }
-    }
-
-    const updateNights = () => {
-        let i = checkInDate
-        let o = checkOutDate
-        
-        if (! checkInDate instanceof Date) {
-            i = new Date(moment(checkInDate.target.value))
-            setCheckInDate(i)
-        }
-        if (! checkOutDate instanceof Date) {
-            o = new Date(moment(checkOutDate.target.value))
-            setCheckOutDate(o)
-        }
-
-        setNights(moment.duration(moment(o).diff(i)).days())
-    }
-
-    const disabledDays = {
-        in: [
-            {
-                from: new Date(1977, 1, 1),
-                to: (new Date()).setDate((new Date()).getDate() - 1)
-            }
-        ],
-        out: [
-            {
-                from: new Date(1977, 1, 1),
-                to: checkInDate
-            }
-        ]
     }
 
     const getDestinations = async () => {
@@ -171,10 +138,23 @@ const Flights = () => {
                                         <span className="text-rose-600">
                                             <CalendarDaysIcon className="w-7 h-7" />
                                         </span>
-                                        <DatePicker id="checkInDateInput" className="select-all w-full px-1 text-base font-semibold text-gray-900 border-0 cursor-pointer outline-none focus:outline-none focus:ring-0 disabled:opacity-50" selected={checkInDate} afterLeave={updateNights} onSelect={setCheckInDate}
-                                            options={{
-                                                disabled: disabledDays.in
+                                        <Datepicker
+                                            asSingle
+                                            useRange={false}
+                                            primaryColor="rose"
+                                            onChange={(val) => {
+                                                if (moment(val.startDate).isBefore(moment())) {
+                                                    setCheckInDate(new Date())
+                                                    return
+                                                }
+                                                setCheckInDate(val.startDate)
+                                                if (moment(checkOutDate).isSameOrBefore(moment(val.startDate))) {
+                                                    setCheckOutDate(moment(val.startDate).add(1, 'days').format('YYYY-MM-DD'))
+                                                }
                                             }}
+                                            displayFormat="ddd, D MMM YYYY"
+                                            value={{ startDate: checkInDate, endDate: checkInDate }}
+                                            inputClassName="select-all w-full px-1 text-base font-semibold text-gray-900 border-0 cursor-pointer outline-none focus:outline-none focus:ring-0 disabled:opacity-50"
                                         />
                                     </div>
                                 </div>
@@ -186,10 +166,20 @@ const Flights = () => {
                                         <span className="text-rose-600">
                                             <CalendarDaysIcon className="w-7 h-7" />
                                         </span>
-                                        <DatePicker id="checkOutDateInput" className="select-all w-full px-1 text-base font-semibold text-gray-900 border-0 cursor-pointer outline-none focus:outline-none focus:ring-0 disabled:opacity-50" selected={checkOutDate} afterLeave={updateNights} onSelect={setCheckOutDate}
-                                            options={{
-                                                disabled: disabledDays.out
+                                        <Datepicker
+                                            asSingle
+                                            useRange={false}
+                                            primaryColor="rose"
+                                            onChange={(val) => {
+                                                if (moment(val.startDate).isSameOrBefore(moment(checkInDate))) {
+                                                    setCheckOutDate(moment(checkInDate).add(1, 'days').format('YYYY-MM-DD'))
+                                                    return
+                                                }
+                                                setCheckOutDate(val.startDate)
                                             }}
+                                            displayFormat="ddd, D MMM YYYY"
+                                            value={{ startDate: checkOutDate, endDate: checkOutDate }}
+                                            inputClassName="select-all w-full px-1 text-base font-semibold text-gray-900 border-0 cursor-pointer outline-none focus:outline-none focus:ring-0 disabled:opacity-50"
                                         />
                                     </div>
                                 </div>
@@ -310,4 +300,4 @@ const Flights = () => {
     );
 };
 
-export default Flights;
+export default Hotel;

@@ -1,23 +1,21 @@
 import { Transition } from "@headlessui/react";
-import { Bars3BottomRightIcon } from "@heroicons/react/24/outline";
+import { Bars3BottomRightIcon, CreditCardIcon, IdentificationIcon, UserIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import SearchBox from "../search";
-import { ResponsiveLink, NavLink } from "@/components/navbar";
-import { GrayButton } from "../button";
+import { ResponsiveLink, NavLink, UnderlinedLink, ResponsiveNavbar } from "@/components/navbar";
 import { useRecoilState } from "recoil";
 import modalState from "@/hooks/modal";
 import useHorizontalScroll from "@/hooks/horizontal-scroll";
 import { Dropdown } from "../dropdown";
+import { AirplaneTakeoffIcon, KaabaIcon } from "../icons";
+import { searchString } from "@/util";
 
 export const Navbar = ({ isInViewport = null, fixed = true }) => {
-    const verticalScrollRef = useRef(null)
     const [showNavbar, setBgActive] = useState(false)
     const [showSidebar, setShowSidebar] = useState(false)
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
-
-    const horizontalScroll = useHorizontalScroll({ ref: verticalScrollRef })
     
     const router = useRouter()
 
@@ -32,17 +30,11 @@ export const Navbar = ({ isInViewport = null, fixed = true }) => {
     }
 
     const openSidebar = () => {
-        setShowSidebar(true)
-        setBgActive(true)
-        document.body.classList.add("!overflow-y-hidden")
+        setModalOpen('responsiveNavDrawer')
     }
 
     const closeSidebar = () => {
-        setShowSidebar(false)
-        setBgActive(active => {
-            return window.scrollY >= 100
-        })
-        document.body.classList.remove("!overflow-y-hidden")
+        setModalOpen('')
     }
 
     const toggleSidebar = () => {
@@ -52,6 +44,14 @@ export const Navbar = ({ isInViewport = null, fixed = true }) => {
             closeSidebar()
         }
     }
+
+    useEffect(() => {
+        if (modalOpen === 'responsiveNavDrawer') {
+            document.body.classList.add("!overflow-y-hidden")
+        } else {
+            document.body.classList.remove("!overflow-y-hidden")
+        }
+    }, [modalOpen])
 
     useEffect(() => {
         window.addEventListener('scroll', onScroll)
@@ -64,7 +64,7 @@ export const Navbar = ({ isInViewport = null, fixed = true }) => {
 
     return (
         <header className="w-full relative">
-            <div className={`w-full ${showNavbar ? "fixed top-0" : "absolute top-0"} z-30`}>
+            <div className={`w-full ${showNavbar ? "fixed top-0" : "absolute top-0"} z-40`}>
                 <div className="relative w-full h-full">
                     <div className={`w-full h-16 z-20 ${router.pathname === '/' ? (showNavbar ? "bg-white shadow" : "bg-transparent") : "bg-white shadow-lg"} relative transition-colors duration-400`}>
                         <div className="flex items-center justify-between w-full max-w-7xl px-4 mx-auto h-full">
@@ -102,14 +102,41 @@ export const Navbar = ({ isInViewport = null, fixed = true }) => {
                                 <div className="w-full lg:w-1/2 py-2 px-2">
                                     <SearchBox />
                                 </div>
-                                <div className="w-full lg:w-1/2 px-2 py-2">
-                                    <div ref={verticalScrollRef} className="w-full overflow-x-auto whitespace-nowrap justify-start flex items-center gray-scrollbar py-1 relative md:justify-end">
-                                        <GrayButton className="mx-1 ml-3" as="link" href="/flights">Pesawat</GrayButton>
-                                        <GrayButton className="mx-1" as="link" href="/hotel">Hotel</GrayButton>
-                                        <GrayButton className="mx-1" as="link" href="/trains">Kereta Api</GrayButton>
-                                        <GrayButton className="mx-1" as="link" href="/pelni">Pelni</GrayButton>
-                                        <GrayButton className="mx-1" as="link" href="/rent-car">Sewa Mobil</GrayButton>
-                                        <GrayButton className="mx-1" as="link" href="/cargo">Cargo</GrayButton>
+                                <div className="w-full lg:w-1/2 px-2 py-2 hidden lg:block">
+                                    <div className="w-full justify-start flex items-center py-1 relative md:justify-end h-14">
+                                        <UnderlinedLink className="mx-1 ml-3" href="/flights">Pesawat</UnderlinedLink>
+                                        <UnderlinedLink className="mx-1" href="/hotel">Hotel</UnderlinedLink>
+                                        <UnderlinedLink className="mx-1" href="/trains">Kereta Api</UnderlinedLink>
+                                        <UnderlinedLink className="mx-1" href="/pelni">Pelni</UnderlinedLink>
+                                        <UnderlinedLink className="mx-1" href="/rent-car">Sewa Mobil</UnderlinedLink>
+                                        <UnderlinedLink className="mx-1" href="/cargo">Cargo</UnderlinedLink>
+                                        <Dropdown className="h-full">
+                                            {({ open }) => (
+                                                <>
+                                                    <Dropdown.Button as="div" className="h-full">
+                                                        <UnderlinedLink active={open} as="button">Haji & Umrah</UnderlinedLink>
+                                                    </Dropdown.Button>
+                                                    <Dropdown.Content>
+                                                        <button className="w-full bg-white hocus:bg-gray-100 outline-none focus:outline-none ring-0 focus:ring-0 transition duration-200 flex items-center justify-start space-x-2 px-3 py-2 text-sm font-semibold text-gray-900 tracking-wider" onClick={() => setModalOpen('landArrangementModal')}>
+                                                            <KaabaIcon className="w-5 h-5 mr-2 text-rose-500" />
+                                                            Land Arrangement
+                                                        </button>
+                                                        <Link className="w-full bg-white hocus:bg-gray-100 outline-none focus:outline-none ring-0 focus:ring-0 transition duration-200 flex items-center justify-start space-x-2 px-3 py-2 text-sm font-semibold text-gray-900 tracking-wider" href="/flights">
+                                                            <AirplaneTakeoffIcon className="w-5 h-5 mr-2 text-rose-500" />
+                                                            Pesawat
+                                                        </Link>
+                                                        <Link className="w-full bg-white hocus:bg-gray-100 outline-none focus:outline-none ring-0 focus:ring-0 transition duration-200 flex items-center justify-start space-x-2 px-3 py-2 text-sm font-semibold text-gray-900 tracking-wider" href="/hajj-and-umrah/pay-later">
+                                                            <CreditCardIcon className="w-5 h-5 mr-2 text-rose-500" />
+                                                            Pay Later
+                                                        </Link>
+                                                        <Link className="w-full bg-white hocus:bg-gray-100 outline-none focus:outline-none ring-0 focus:ring-0 transition duration-200 flex items-center justify-start space-x-2 px-3 py-2 text-sm font-semibold text-gray-900 tracking-wider" href="/hajj-and-umrah/visa">
+                                                            <IdentificationIcon className="w-5 h-5 mr-2 text-rose-500" />
+                                                            VISA
+                                                        </Link>
+                                                    </Dropdown.Content>
+                                                </>
+                                            )}
+                                        </Dropdown>
                                     </div>
                                 </div>
                             </div>
@@ -118,40 +145,7 @@ export const Navbar = ({ isInViewport = null, fixed = true }) => {
                 </div>
             </div>
 
-            <Transition className="w-full h-screen fixed inset-0 z-20" show={showSidebar}>
-                <Transition.Child onClick={closeSidebar} className="w-full h-full bg-black/80 backdrop-blur-sm"
-                    enter="transition-all duration-300"
-                    enterFrom="opacity-0"
-                    enterTo="opacity-100"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                    leave="transition-all duration-300"
-                ></Transition.Child>
-                <Transition.Child
-                    className="w-[80%] h-screen absolute inset-0 bg-white pt-16"
-                    enter="transition-all duration-300"
-                    enterFrom="opacity-0 -left-12"
-                    enterTo="opacity-100 left-0"
-                    leaveFrom="opacity-100 left-0"
-                    leaveTo="opacity-0 -left-12"
-                    leave="transition-all duration-300"
-                >
-                    <div className="w-full my-3 h-[96%] overflow-y-auto overflow-x-hidden block relative">
-                        <nav className="w-full block">
-                            <ResponsiveLink href="#elite-rewards">Elite Rewards</ResponsiveLink>
-                            <ResponsiveLink href="#elite-rewards">Cek Order</ResponsiveLink>
-                            <ResponsiveLink href="#elite-rewards">Masuk</ResponsiveLink>
-                            <ResponsiveLink href="#elite-rewards">Daftar</ResponsiveLink>
-                            <ResponsiveLink active={router.pathname === '/flights'} href="/flights">Pesawat</ResponsiveLink>
-                            <ResponsiveLink active={router.pathname === '/hotel'} href="/hotel">Hotel</ResponsiveLink>
-                            <ResponsiveLink active={router.pathname === '/trains'} href="/trains">Kereta Api</ResponsiveLink>
-                            <ResponsiveLink active={router.pathname === '/pelni'} href="/pelni">Pelni</ResponsiveLink>
-                            <ResponsiveLink active={router.pathname === '/rent-car'} href="/rent-car">Sewa Mobil</ResponsiveLink>
-                            <ResponsiveLink active={router.pathname === '/cargo'} href="/cargo">Cargo</ResponsiveLink>
-                        </nav>
-                    </div>
-                </Transition.Child>
-            </Transition>
+            <ResponsiveNavbar show={showSidebar} closeSidebar={closeSidebar} />
         </header>
     );
 };

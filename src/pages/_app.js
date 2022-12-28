@@ -1,5 +1,4 @@
 import '@/styles/globals.css'
-import 'react-day-picker/dist/style.css';
 import 'react-toastify/dist/ReactToastify.css';
 import NextNProgress from 'nextjs-progressbar';
 import { RecoilRoot } from 'recoil'

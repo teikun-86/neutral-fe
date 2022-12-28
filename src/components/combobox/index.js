@@ -36,16 +36,16 @@ const Input = (props) => {
     )
 }
 
-const Container = (props) => {
+const Container = ({className = "", afterLeave = () => {}, ...props}) => {
     return (
         <Transition
             as={Fragment}
             leave="transition ease-in duration-100"
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
-            afterLeave={props.afterLeave}
+            afterLeave={afterLeave}
         >
-            <div className="w-full md:w-[28rem] bg-white rounded-lg overflow-hidden block absolute z-20 shadow-lg ">
+            <div className={`w-full md:w-[28rem] bg-white rounded-lg overflow-hidden block absolute z-20 shadow-lg right-0 ${className}`}>
                 {props.children}
             </div>
         </Transition>

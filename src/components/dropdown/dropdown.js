@@ -1,10 +1,10 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 
-const Dropdown = (props) => {
+const Dropdown = ({ className, ...props}) => {
     return (
-        <div className="block">
-            <Menu as="div" className="!relative inline-block text-left">
+        <div className="block h-full">
+            <Menu as="div" className={`!relative inline-block text-left ${className}`}>
                 {
                     props.children
                 }
@@ -21,7 +21,7 @@ const Button = (props) => {
     )
 }
 
-const Content = (props) => {
+const Content = ({className, ...props}) => {
     return (
         <Transition
             as={Fragment}
@@ -32,7 +32,7 @@ const Content = (props) => {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
         >
-            <Menu.Items className="absolute left-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50 py-1" {...props}>
+            <Menu.Items className={`absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50 py-1 ${className}`} {...props}>
                 {props.children}
             </Menu.Items>
         </Transition>

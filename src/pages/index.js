@@ -1,19 +1,14 @@
 import travelBg from "@/assets/images/tokyo-tower.jpg";
 import SearchBox from "@/components/search";
-import { ArrowPathIcon, BuildingOfficeIcon, CreditCardIcon, IdentificationIcon, QuestionMarkCircleIcon, ReceiptRefundIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { ArrowPathIcon, BuildingOfficeIcon, CreditCardIcon, IdentificationIcon, QuestionMarkCircleIcon, ReceiptRefundIcon } from "@heroicons/react/24/outline";
 import { AirplaneTakeoffIcon, TrainIcon, ShipIcon, CarIcon, TruckIcon, KaabaIcon } from "@/components/icons";
-import { Drawer, Modal } from "@/components/modal";
 import { useRecoilState } from "recoil";
 import modalState from "@/hooks/modal";
-import daralhijrahLogo from "@/assets/images/daralhijrah-logo.png";
-import almadinahLogo from "@/assets/images/almadinah-logo.png";
-import Image from "next/image";
 import { useRouter } from "next/router";
-import { GrayButton, Service } from "@/components/button";
+import { Service } from "@/components/button";
 import useInViewport from "@/hooks/inviewport";
 import { useRef } from "react";
 import AppLayout from "@/layouts/app";
-import Link from "next/link";
 
 export default function Home() {
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
@@ -23,12 +18,12 @@ export default function Home() {
 
     return (
         <AppLayout isInViewport={isInViewport}>
-            <div className="w-full min-h-[90vh] bg-gray-400 bg-cover bg-top font-sans"
+            <div className="w-full min-h-[80vh] bg-gray-400 bg-cover bg-top font-sans"
                 style={{
                     backgroundImage: `url(${travelBg.src})`
                 }}
             >
-                <div className="w-full min-h-[90vh] bg-gradient-to-r from-black/60 to-black/60 via-black/20 flex items-center pt-16">
+                <div className="w-full min-h-[80vh] bg-gradient-to-r from-black/60 to-black/60 via-black/20 flex items-center pt-16">
                     <div className="w-full block max-w-7xl mx-auto px-4">
                         <h1 className="text-center text-white text-3xl font-bold mb-3">Jalan-jalan kemana nih?</h1>
                         <div ref={searchboxRef} className="sm:w-2/3 lg:w-1/2 mx-auto">
@@ -44,7 +39,7 @@ export default function Home() {
                                 <Service href="/cargo" icon={<TruckIcon className="w-10 h-10 text-red-600" />}>Cargo</Service>
                             </div>
                             <h6 className="text-white font-semibold text-lg mt-2">Haji & Umrah</h6>
-                            <div className="flex items-start justify-center flex-wrap">
+                            <div className="flex items-start justify-center flex-wrap mt-4">
                                 <Service onClick={(e) => {
                                     e.preventDefault()
                                     setModalOpen('landArrangementModal')
@@ -113,37 +108,6 @@ export default function Home() {
                 </div>
 
             </div>
-
-            <Modal size="md" id="landArrangementModal">
-                <Modal.Header>
-                    <h3 className="text-xl font-semibold text-gray-900">Land Arrangement</h3>
-                    <button onClick={() => setModalOpen('')} className="absolute top-3 right-3 focus:outline-none outline-none text-gray-700 hover:text-gray-900 hover:bg-gray-50 focus:bg-gray-100 transition-all duration-200 p-2 rounded-full"><XMarkIcon className="w-5 h-5 hover:shadow-sm focus:shadow-sm" /></button>
-                </Modal.Header>
-                <Modal.Body>
-                    <p className="text-center text-gray-700 mb-3 text-sm">Pilih Land Arrangement</p>
-                    <div className="flex items-center justify-center w-full h-full space-x-3">
-                        <a onClick={(e) => {
-                            setModalOpen('')
-                        }} href="https://almadinah.co.id/transaksi/land-arrangement" className="flex items-center justify-center flex-col w-32 rounded-lg hover:bg-gray-100 focus:bg-gray-200 transition-all duration-200 outline-none focus:outline-none ring-0 focus:ring-0 px-2 py-2" target="_blank" rel="noopener noreferrer">
-                            <div className="w-full h-24 grid place-items-center">
-                                <Image alt="Almadinah LA" src={almadinahLogo} className="w-full h-auto" />
-                            </div>
-                            <span className="text-gray-700 font-semibold text-lg">Al Madinah</span>
-                        </a>
-                        <a onClick={(e) => {
-                            setModalOpen('')
-                        }} href="https://daralhijrah.co.id/transaksi/land-arrangement" className="flex items-center justify-center flex-col w-32 rounded-lg hover:bg-gray-100 focus:bg-gray-200 transition-all duration-200 outline-none focus:outline-none ring-0 focus:ring-0 px-2 py-2" target="_blank" rel="noopener noreferrer">
-                            <div className="w-full h-24 grid place-items-center">
-                                <Image alt="Dar Al-Hijrah LA" src={daralhijrahLogo} className="w-full h-auto" />
-                            </div>
-                            <span className="text-gray-700 font-semibold text-lg">Dar Al-Hijrah</span>
-                        </a>
-                    </div>
-                </Modal.Body>
-                <Modal.Footer className="flex items-center justify-end space-x-3">
-                    <button className="btn-rose" onClick={() => setModalOpen('')}>Cancel</button>
-                </Modal.Footer>
-            </Modal>
         </AppLayout>
     )
 }

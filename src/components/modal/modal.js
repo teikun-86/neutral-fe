@@ -50,7 +50,7 @@ const Modal = (props = defaultProps) => {
 
     return (
         <Transition appear show={open} as={Fragment}>
-            <Dialog id={props.id} as="div" className="relative z-10" onClose={() => props.static ? {} : closeModal()}>
+            <Dialog id={props.id} as="div" className="relative z-50" onClose={() => props.static ? {} : closeModal()}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-200"
