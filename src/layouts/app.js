@@ -96,26 +96,21 @@ const AppLayout = props => {
             </Modal>
             <Drawer id="landArrangementDrawer" afterClose={() => {
                 setDrawerOpen('responsiveNavDrawer')
-            }} showCloseButton={false}>
+            }}>
                 <Drawer.Header>
-                    <button onClick={() => {
-                        setDrawerOpen('responsiveNavDrawer')
-                    }} className="absolute left-2 top-0 px-2 py-2 outline-none focus:outline-none ring-0 focus:ring-0">
-                        <ArrowLeftIcon className="w-6 h-6" />
-                    </button>
-                    <h4 className="text-xl font-bold text-gray-900 text-center mb-3">Pilih Land Arrangement</h4>
+                    <h4 className="text-xl w-2/3 mx-auto font-bold text-gray-900 text-center mb-3">Pilih Land Arrangement</h4>
                 </Drawer.Header>
                 <Drawer.Body className="!min-h-[45vh]">
                     <div className="flex items-center justify-center w-full h-full space-x-3">
                         <a href="https://almadinah.co.id/transaksi/land-arrangement" className="flex items-center justify-center flex-col w-1/2 rounded-lg hover:bg-gray-100 focus:bg-gray-200 transition-all duration-200 outline-none focus:outline-none ring-0 focus:ring-0 px-2 py-2" target="_blank" rel="noopener noreferrer">
                             <div className="w-full h-36 grid place-items-center">
-                                <Image alt="Almadinah LA" src={almadinahLogo} className="w-full h-auto" />
+                                <Image alt="Almadinah LA" src={almadinahLogo} className="w-32 h-auto" />
                             </div>
                             <span className="text-gray-700 font-semibold text-lg">Al Madinah</span>
                         </a>
                         <a href="https://daralhijrah.co.id/transaksi/land-arrangement" className="flex items-center justify-center flex-col w-1/2 rounded-lg hover:bg-gray-100 focus:bg-gray-200 transition-all duration-200 outline-none focus:outline-none ring-0 focus:ring-0 px-2 py-2" target="_blank" rel="noopener noreferrer">
                             <div className="w-full h-36 grid place-items-center">
-                                <Image alt="Dar Al-Hijrah LA" src={daralhijrahLogo} className="w-full h-auto" />
+                                <Image alt="Dar Al-Hijrah LA" src={daralhijrahLogo} className="w-auto h-32" />
                             </div>
                             <span className="text-gray-700 font-semibold text-lg">Dar Al-Hijrah</span>
                         </a>

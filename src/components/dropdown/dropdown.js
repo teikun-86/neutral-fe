@@ -21,7 +21,7 @@ const Button = (props) => {
     )
 }
 
-const Content = ({className, ...props}) => {
+const Content = ({className = "", ...props}) => {
     return (
         <Transition
             as={Fragment}
@@ -32,8 +32,10 @@ const Content = ({className, ...props}) => {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
         >
-            <Menu.Items className={`absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50 py-1 ${className}`} {...props}>
-                {props.children}
+            <Menu.Items className={`absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50 py-1 with-caret after:!bg-white after:!-top-1 after:!right-2 after:!left-auto after:!z-10 ${className}`} {...props}>
+                <div className="relative w-full h-full z-20">
+                    {props.children}
+                </div>
             </Menu.Items>
         </Transition>
     )

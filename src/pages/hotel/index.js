@@ -1,8 +1,9 @@
 import { DestinationButton } from "@/components/button";
 import Combobox from "@/components/combobox";
 import useOutsideClick from "@/components/hooks/outsideclick";
+import { RoseTooltip } from "@/components/tooltip";
 import AppLayout from "@/layouts/app";
-import { searchString } from "@/util";
+import { objectToQueryString, searchString } from "@/util";
 import { Transition } from "@headlessui/react";
 import { BuildingOffice2Icon, CalendarDaysIcon, ChevronDownIcon, MagnifyingGlassIcon, MapPinIcon, MinusIcon, PlusIcon, UserGroupIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
@@ -26,7 +27,10 @@ const Hotel = () => {
     const [adult, setAdult] = useState(1)
     const [child, setChild] = useState(0)
     const [rooms, setRooms] = useState(1)
-    const [nights, setNights] = useState(1)
+
+    const [destError, setDestError] = useState(false)
+    const [cinDateError, setCinDateError] = useState(false)
+    const [coutDateError, setCoutDateError] = useState(false)
 
     const queryDestinations = useCallback((query) => {
         if (query.trim().length < 0) return []
@@ -55,9 +59,20 @@ const Hotel = () => {
     })
     
     const searchHotel = () => {
+        if (!checkQuery()) return
+        
         let params = {
-            dest: destination,
+            dest: destination.name,
+            d_type: destination.type,
+            d_id: destination.publicId,
+            adult,
+            child,
+            rooms,
+            check_in: moment(checkInDate).format("YYYY-MM-DD"),
+            check_out: moment(checkOutDate).format("YYYY-MM-DD"),
         }
+
+        router.push(`/hotel/search?${objectToQueryString(params)}`)
     }
 
     const getDestinations = async () => {
@@ -65,6 +80,18 @@ const Hotel = () => {
             setDestinations(res.data.destinations)
         })
     }
+
+    const checkQuery = useCallback(() => {
+        let des = !destination.name
+        let cin = moment(checkInDate).isBefore(moment().format('YYYY-MM-DD')) || checkInDate === null
+        let cout = moment(checkOutDate).isBefore(checkInDate) || checkOutDate === null
+
+        setDestError(des)
+        setCinDateError(cin)
+        setCoutDateError(cout)
+
+        return !des && !cin && !cout
+    }, [checkInDate, checkOutDate, destination])
 
     useEffect(() => {
         getDestinations()
@@ -83,17 +110,20 @@ const Hotel = () => {
                             <BuildingOffice2Icon className="w-8 h-8 text-rose-600 mr-3" />
                             Cari & Booking Hotel Murah
                         </h3>
-                        <div className="w-full flex items-center flex-wrap">
+                        <div className="w-full flex items-center flex-wrap my-2 mt-5 py-2 border-t border-gray-300/50">
                             <div className="w-full lg:w-1/4 p-2 relative lg:border-r border-b lg:border-b-0 border-gray-300/70 px-2 md:px-5 md:mb-2 lg:mb-0">
                                 <div className="w-full rounded-lg">
                                     <label htmlFor="destinationInput" className="text-base font-semibold text-gray-500">Tujuan</label>
-                                    <div className="flex items-center w-full">
+                                    <div className="flex items-center w-full relative">
                                         <span className="text-rose-600">
                                             <MapPinIcon className="w-6 h-6" />
                                         </span>
-                                        <Combobox value={destination} id="destinationCombobox" onChange={setDestination}>
+                                        <Combobox value={destination} id="destinationCombobox" className onChange={(value) => {
+                                            setDestError(false)
+                                            setDestination(value)
+                                        }}>
                                             <Combobox.Input onChange={debounceQueryAirports} placeholder="Nginep di mana nih?" type="text" id="destinationInput" className="select-all w-full px-1 text-base font-semibold text-gray-900 border-0 outline-none focus:outline-none focus:ring-0 cursor-pointer" displayValue={(d) => d.name} />
-                                            <Combobox.Container afterLeave={() => {
+                                            <Combobox.Container className="z-30 left-0" afterLeave={() => {
                                                 setQuery('')
                                                 setQueriedDestinations([])
                                             }}>
@@ -128,13 +158,18 @@ const Hotel = () => {
                                                 </Combobox.Options>
                                             </Combobox.Container>
                                         </Combobox>
+                                        {
+                                            destError && query === '' && (
+                                                <RoseTooltip>Isi kota tujuan</RoseTooltip>
+                                            )
+                                        }
                                     </div>
                                 </div>
                             </div>
                             <div className="w-full md:w-1/2 lg:w-1/4 p-2 relative border-b lg:border-b-0 border-gray-300/70 px-2 md:px-5 lg:border-r">
                                 <div className="w-full rounded-lg">
                                     <label htmlFor="checkInDateInput" className="text-base font-semibold text-gray-500 mb-3 block">Check-In</label>
-                                    <div className="flex items-center w-full">
+                                    <div className="flex items-center w-full relative">
                                         <span className="text-rose-600">
                                             <CalendarDaysIcon className="w-7 h-7" />
                                         </span>
@@ -143,6 +178,7 @@ const Hotel = () => {
                                             useRange={false}
                                             primaryColor="rose"
                                             onChange={(val) => {
+                                                setCinDateError(false)
                                                 if (moment(val.startDate).isBefore(moment())) {
                                                     setCheckInDate(new Date())
                                                     return
@@ -154,15 +190,21 @@ const Hotel = () => {
                                             }}
                                             displayFormat="ddd, D MMM YYYY"
                                             value={{ startDate: checkInDate, endDate: checkInDate }}
-                                            inputClassName="select-all w-full px-1 text-base font-semibold text-gray-900 border-0 cursor-pointer outline-none focus:outline-none focus:ring-0 disabled:opacity-50"
+                                            inputClassName="select-all w-full px-1 text-base font-semibold text-gray-900 border-0 cursor-pointer outline-none focus:outline-none focus:ring-0 disabled:opacity-50 z-40"
+                                            containerClassName="z-40"
                                         />
+                                        {
+                                            cinDateError && (
+                                                <RoseTooltip>Tanggal check-in harus sama dengan atau setelah {moment().format('ddd, D MMM YYYY')}</RoseTooltip>
+                                            )
+                                        }
                                     </div>
                                 </div>
                             </div>
                             <div className="w-full md:w-1/2 lg:w-1/4 p-2 relative border-b lg:border-b-0 border-gray-300/70 px-2 md:px-5 lg:border-r">
                                 <div className="w-full rounded-lg">
                                     <label htmlFor="checkOutDateInput" className="text-base mb-3 font-semibold text-gray-500 block">Check-Out</label>
-                                    <div className="flex items-center w-full">
+                                    <div className="flex items-center w-full relative">
                                         <span className="text-rose-600">
                                             <CalendarDaysIcon className="w-7 h-7" />
                                         </span>
@@ -171,6 +213,7 @@ const Hotel = () => {
                                             useRange={false}
                                             primaryColor="rose"
                                             onChange={(val) => {
+                                                setCoutDateError(false)
                                                 if (moment(val.startDate).isSameOrBefore(moment(checkInDate))) {
                                                     setCheckOutDate(moment(checkInDate).add(1, 'days').format('YYYY-MM-DD'))
                                                     return
@@ -179,8 +222,16 @@ const Hotel = () => {
                                             }}
                                             displayFormat="ddd, D MMM YYYY"
                                             value={{ startDate: checkOutDate, endDate: checkOutDate }}
-                                            inputClassName="select-all w-full px-1 text-base font-semibold text-gray-900 border-0 cursor-pointer outline-none focus:outline-none focus:ring-0 disabled:opacity-50"
+                                            inputClassName="select-all w-full px-1 text-base font-semibold text-gray-900 border-0 cursor-pointer outline-none focus:outline-none focus:ring-0 disabled:opacity-50 z-40"
+                                            containerClassName="z-50"
                                         />
+                                        {
+                                            coutDateError && (
+                                                <RoseTooltip>
+                                                    Tanggal check-out harus setelah {checkInDate !== null ? moment(checkInDate).format('ddd, D MMM YYYY') : "Tanggal check-in"}
+                                                </RoseTooltip>
+                                            )
+                                        }
                                     </div>
                                 </div>
                             </div>

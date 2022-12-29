@@ -80,7 +80,7 @@ export const GlobalNavbar = () => {
                                     {({ open }) => (
                                         <>
                                             <Dropdown.Button as="div" className="h-full">
-                                                <UnderlinedLink active={open} as="button">Haji & Umrah</UnderlinedLink>
+                                                <UnderlinedLink active={open || searchString('/hajj-and-umrah', router.pathname)} as="button">Haji & Umrah</UnderlinedLink>
                                             </Dropdown.Button>
                                             <Dropdown.Content>
                                                 <button className="w-full bg-white hocus:bg-gray-100 outline-none focus:outline-none ring-0 focus:ring-0 transition duration-200 flex items-center justify-start space-x-2 px-3 py-2 text-sm font-semibold text-gray-900 tracking-wider" onClick={() => setModalOpen('landArrangementModal')}>

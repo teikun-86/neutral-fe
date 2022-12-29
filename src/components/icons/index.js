@@ -7,3 +7,4 @@ export * from "@/components/icons/train";
 export * from "@/components/icons/truck";
 export * from "@/components/icons/train-right";
 export * from "@/components/icons/wifi-off";
+export * from "@/components/icons/history";

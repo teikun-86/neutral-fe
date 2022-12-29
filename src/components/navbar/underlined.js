@@ -1,13 +1,6 @@
 import Link from "next/link";
-import { useEffect } from "react";
 
 export const UnderlinedLink = ({active = false, as = "link", href = "/", ...props}) => {
-    useEffect(() => {
-        console.log({ props });
-        return () => {
-            
-        };
-    }, []);
     
     let classes = active
         ? "font-semibold text-rose-500 hover:text-rose-600 after:w-2/3 after:h-0.5 after:bg-rose-600 after:absolute after:bottom-0.5 after:animate-width-2/3 after:transition-all after:duration-200 after:left-0"

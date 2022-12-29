@@ -10,6 +10,7 @@ const Drawer = ({ showCloseButton = true, afterClose = () => {}, ...props }) => 
     const [open, setOpen] = useState(false);
     const [drawerOpen, setDrawerOpen] = useRecoilState(drawerState); 
     const [position, setPosition] = useState({ x: 0, y: 0 })
+    const [released, setReleased] = useState(false)
     const router = useRouter()
 
     const handleStart = (e, data) => {
@@ -19,10 +20,18 @@ const Drawer = ({ showCloseButton = true, afterClose = () => {}, ...props }) => 
         setPosition({ x: 0, y: data.y })
     }
     const handleStop = (e, data) => {
-        if (position.y > 100) {
+        if (position.y > 200) {
             closeDrawer()
-            setPosition({ x: 0, y: 0 })
+            let t = setTimeout(() => {
+                setPosition({ x: 0, y: 0 })
+                clearTimeout(t)
+            }, 200)
         } else {
+            setReleased(true)
+            let to = setTimeout(() => {
+                setReleased(false)
+                clearTimeout(to)
+            }, 200)
             setPosition({ x: 0, y: 0 })
         }
     }
@@ -53,7 +62,7 @@ const Drawer = ({ showCloseButton = true, afterClose = () => {}, ...props }) => 
     }, [router, closeDrawer])
 
     return (
-        <Transition className="w-full h-screen fixed inset-0 z-40" show={open} id={props.id}>
+        <Transition className="w-full h-screen fixed inset-0 z-[100]" show={open} id={props.id}>
             <Transition.Child onClick={closeDrawer} className="w-full h-full bg-black/80 backdrop-blur-sm"
                 enter="transition-all duration-300"
                 enterFrom="opacity-0"
@@ -64,7 +73,6 @@ const Drawer = ({ showCloseButton = true, afterClose = () => {}, ...props }) => 
             />
 
             <Draggable
-                defaultClassNameDragging="transition-all duration-200"
                 axis="y"
                 handle=".drag-handler"
                 defaultPosition={{ x: 0, y: 0 }}
@@ -75,7 +83,7 @@ const Drawer = ({ showCloseButton = true, afterClose = () => {}, ...props }) => 
                 onStop={handleStop}
             >
                 <Transition.Child
-                    className="w-full absolute inset-x-0 bottom-0 rounded-t-3xl bg-white"
+                    className={`w-full absolute inset-x-0 bottom-0 rounded-t-3xl bg-white ${released ? "transition-all duration-200" : ""}`}
                     enter="transition-all duration-300"
                     enterFrom="opacity-0 -bottom-full"
                     enterTo="opacity-100 bottom-0"

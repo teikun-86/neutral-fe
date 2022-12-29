@@ -1,7 +1,7 @@
 import { AirportButton } from "@/components/button";
 import Combobox from "@/components/combobox";
 import useOutsideClick from "@/components/hooks/outsideclick";
-import { AirplaneLandingIcon, AirplaneTakeoffIcon } from "@/components/icons";
+import { AirplaneLandingIcon, AirplaneTakeoffIcon, HistoryIcon } from "@/components/icons";
 import { RoseTooltip } from "@/components/tooltip";
 import AppLayout from "@/layouts/app";
 import { objectToQueryString, searchString } from "@/util";
@@ -26,6 +26,8 @@ const Flights = () => {
     const [queriedAirports, setQueriedAirports] = useState([])
     const [departureDate, setDepartureDate] = useState(new Date())
     const [returnDate, setReturnDate] = useState(new Date(moment(departureDate).add(1, 'days')))
+
+    const [recentAirports, setRecentAirports] = useState([])
 
     const [depError, setDepError] = useState(false)
     const [arrError, setArrERror] = useState(false)
@@ -74,6 +76,8 @@ const Flights = () => {
     }
 
     const searchFlight = () => {
+        if (!checkInput()) return
+        
         let params = {
             d: departure.airportCode,
             a: arrival.airportCode,
@@ -87,6 +91,13 @@ const Flights = () => {
         };
 
         if (tripType === 'round') params.r_date = moment(returnDate).format("YYYY-MM-DD")
+
+        let recents = recentAirports
+        recents.push(departure, arrival)
+        if (recents.length >= 8) {
+            recents = recents.slice(-8)
+        }
+        localStorage.setItem("__rc_airports", JSON.stringify(recents))
 
         router.push(`/flights/search?${objectToQueryString(params)}`)
     }
@@ -105,15 +116,23 @@ const Flights = () => {
         })
     }
 
-    useEffect(() => {
-        setDepError(!departure.type)
-        setArrERror(!arrival.type)
-        setDDateError(moment(departureDate).isBefore(moment().format('YYYY-MM-DD')) || departureDate === null)
-        setADateError(tripType !== 'round' ? false : (moment(returnDate).isBefore(departureDate) || returnDate === null))
+    const checkInput = useCallback(() => {
+        let dep = !departure.type
+        let arr = !arrival.type
+        let ddt = moment(departureDate).isBefore(moment().format('YYYY-MM-DD')) || departureDate === null
+        let rdt = tripType !== 'round' ? false : (moment(returnDate).isBefore(departureDate) || returnDate === null)
+        
+        setDepError(dep)
+        setArrERror(arr)
+        setDDateError(ddt)
+        setADateError(rdt)
+
+        return !dep && !arr && !ddt && !rdt
     }, [arrival, departure, departureDate, returnDate, tripType])
 
     useEffect(() => {
         getAirports()
+        setRecentAirports(JSON.parse(localStorage.getItem("__rc_airports")) ?? [])
     }, [])
 
     return (
@@ -129,7 +148,7 @@ const Flights = () => {
                             <AirplaneTakeoffIcon className="w-8 h-8 text-rose-600 mr-3" />
                             Cari tiket pesawat murah & promo
                         </h3>
-                        <div className="my-2 px-4">
+                        <div className="my-2 mt-5 px-4 py-2 border-t border-gray-300/50">
                             <div className="w-full my-2 flex items-center space-x-4">
                                 <label htmlFor="onewayTrip" className="flex items-center select-none">
                                     <input checked={tripType === 'one-way'} onChange={(e) => setTripType(e.target.value)} type="radio" name="triptype" id="onewayTrip" value="one-way" className="form-radio text-rose-600 focus:ring-rose-600 transition-all duration-200 mr-2 " />
@@ -149,7 +168,10 @@ const Flights = () => {
                                         <span className="text-rose-600">
                                             <AirplaneTakeoffIcon className="w-7 h-7" />
                                         </span>
-                                        <Combobox value={departure} id="departureCombobox" onChange={setDeparture}>
+                                        <Combobox value={departure} id="departureCombobox" onChange={(value) => {
+                                            setDeparture(value)
+                                            setDepError(false)
+                                        }}>
                                             <Combobox.Input onChange={debounceQueryAirports} placeholder="Cari Kota/Bandara" type="text" id="departureInput" className="select-all w-full px-1 text-base font-semibold text-gray-900 border-0 outline-none focus:outline-none focus:ring-0" displayValue={(d) => d.type ? `${d.airportName} (${d.airportCode})` : ""} />
                                             <Combobox.Container afterLeave={() => {
                                                 setQuery('')
@@ -183,6 +205,25 @@ const Flights = () => {
                                                                 ))
                                                             )
                                                     }
+                                                    {
+                                                        recentAirports.length > 0 && (
+                                                            <>
+                                                                <div className="flex items-center justify-start px-3 py-2">
+                                                                    <HistoryIcon class="w-5 h-5 mr-3" />
+                                                                    <h5 className="text-gray-900 font-semibold text-base">Pencarian Terakhir</h5>
+                                                                </div>
+                                                                {
+                                                                    recentAirports.map(airport => (
+                                                                        <Combobox.Option key={airport.id + airport.countryName + airport.cityName} value={airport}>
+                                                                            {({ selected, active }) => (
+                                                                                <AirportButton selected={selected} active={active} airport={airport} />
+                                                                            )}
+                                                                        </Combobox.Option>
+                                                                    ))
+                                                                }
+                                                            </>
+                                                        )
+                                                    }
                                                 </Combobox.Options>
                                             </Combobox.Container>
                                         </Combobox>
@@ -204,7 +245,10 @@ const Flights = () => {
                                         <span className="text-rose-600">
                                             <AirplaneLandingIcon className="w-7 h-7" />
                                         </span>
-                                        <Combobox value={arrival} id="arrivalCombobox" onChange={setArrival}>
+                                        <Combobox value={arrival} id="arrivalCombobox" onChange={(value) => {
+                                            setArrival(value)
+                                            setArrERror(false)
+                                        }}>
                                             <Combobox.Input onChange={debounceQueryAirports} placeholder="Cari Kota/Bandara" type="text" id="arrivalInput" className="select-all w-full px-1 text-base font-semibold text-gray-900 border-0 outline-none focus:outline-none focus:ring-0" displayValue={(d) => d.type ? `${d.airportName} (${d.airportCode})` : ""} />
                                             <Combobox.Container afterLeave={() => {
                                                 setQuery('')
@@ -238,6 +282,25 @@ const Flights = () => {
                                                                 ))
                                                             )
                                                     }
+                                                    {
+                                                        recentAirports.length > 0 && (
+                                                            <>
+                                                                <div className="flex items-center justify-start px-3 py-2">
+                                                                    <HistoryIcon class="w-5 h-5 mr-3" />
+                                                                    <h5 className="text-gray-900 font-semibold text-base">Pencarian Terakhir</h5>
+                                                                </div>
+                                                                {
+                                                                    recentAirports.map(airport => (
+                                                                        <Combobox.Option key={airport.id + airport.countryName + airport.cityName} value={airport}>
+                                                                            {({ selected, active }) => (
+                                                                                <AirportButton selected={selected} active={active} airport={airport} />
+                                                                            )}
+                                                                        </Combobox.Option>
+                                                                    ))
+                                                                }
+                                                            </>
+                                                        )
+                                                    }
                                                 </Combobox.Options>
                                             </Combobox.Container>
                                         </Combobox>
@@ -261,6 +324,7 @@ const Flights = () => {
                                             useRange={false}
                                             primaryColor="rose"
                                             onChange={(val) => {
+                                                setDDateError(false)
                                                 if (moment(val.startDate).isBefore(moment())) {
                                                     setDepartureDate(new Date())
                                                     return
@@ -272,7 +336,8 @@ const Flights = () => {
                                             }}
                                             displayFormat="ddd, D MMM YYYY"
                                             value={{startDate: departureDate, endDate: departureDate}}
-                                            inputClassName="select-all w-full px-1 text-base font-semibold text-gray-900 border-0 cursor-pointer outline-none focus:outline-none focus:ring-0 disabled:opacity-50"
+                                            inputClassName="select-all w-full px-1 text-base font-semibold text-gray-900 border-0 cursor-pointer outline-none focus:outline-none focus:ring-0 disabled:opacity-50 z-40"
+                                            containerClassName="z-50"
                                         />
                                         {
                                             dDateError && (
@@ -302,11 +367,13 @@ const Flights = () => {
                                                     return
                                                 }
                                                 setReturnDate(val.startDate)
+                                                setADateError(false)
                                             }}
                                             displayFormat="ddd, D MMM YYYY"
                                             value={{ startDate: returnDate, endDate: returnDate }}
-                                            inputClassName="select-all w-full px-1 text-base font-semibold text-gray-900 border-0 cursor-pointer outline-none focus:outline-none focus:ring-0 disabled:opacity-50"
+                                            inputClassName="select-all w-full px-1 text-base font-semibold text-gray-900 border-0 cursor-pointer outline-none focus:outline-none focus:ring-0 disabled:opacity-50 z-40"
                                             disabled={tripType !== 'round'}
+                                            containerClassName="z-50"
                                         />
                                         {
                                             aDateError && (

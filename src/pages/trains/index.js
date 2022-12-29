@@ -138,7 +138,7 @@ const Trains = () => {
                                         </span>
                                         <Combobox value={departure} id="departureCombobox" onChange={setDeparture}>
                                             <Combobox.Input onChange={debounceQueryEndpoints} placeholder="Cari Kota/Stasiun" type="text" id="departureInput" className="select-all w-full px-1 text-base font-semibold text-gray-900 border-0 outline-none focus:outline-none focus:ring-0" displayValue={(d) => d.name ? `${d.name} (${d.type === 'CITY' ? 'ALL' : d.code})` : ""} />
-                                            <Combobox.Container afterLeave={() => {
+                                            <Combobox.Container className="left-0" afterLeave={() => {
                                                 setQuery('')
                                                 setQueriedEndpoints([])
                                             }}>
@@ -249,7 +249,8 @@ const Trains = () => {
                                             }}
                                             displayFormat="ddd, D MMM YYYY"
                                             value={{ startDate: departureDate, endDate: departureDate }}
-                                            inputClassName="select-all w-full px-1 text-base font-semibold text-gray-900 border-0 cursor-pointer outline-none focus:outline-none focus:ring-0 disabled:opacity-50"
+                                            inputClassName="select-all w-full px-1 text-base font-semibold text-gray-900 border-0 cursor-pointer outline-none focus:outline-none focus:ring-0 disabled:opacity-50 z-40"
+                                            containerClassName="z-50"
                                         />
                                     </div>
                                 </div>
@@ -277,8 +278,9 @@ const Trains = () => {
                                             }}
                                             displayFormat="ddd, D MMM YYYY"
                                             value={{ startDate: returnDate, endDate: returnDate }}
-                                            inputClassName="select-all w-full px-1 text-base font-semibold text-gray-900 border-0 cursor-pointer outline-none focus:outline-none focus:ring-0 disabled:opacity-50"
+                                            inputClassName="select-all w-full px-1 text-base font-semibold text-gray-900 border-0 cursor-pointer outline-none focus:outline-none focus:ring-0 disabled:opacity-50 z-10"
                                             disabled={tripType !== 'round'}
+                                            containerClassName="z-40"
                                         />
                                     </div>
                                 </div>

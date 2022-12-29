@@ -17,12 +17,12 @@ const Combobox = (props) => {
     )
 }
 
-const Input = (props) => {
+const Input = ({ showButton = true, ...props}) => {
     return (
         <div className="relative w-full cursor-default overflow-hidden text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
             <ComboboxParent.Input {...props} />
             {
-                props.showButton 
+                showButton 
                 ?
                     <ComboboxParent.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
                         <ChevronUpDownIcon
@@ -45,7 +45,7 @@ const Container = ({className = "", afterLeave = () => {}, ...props}) => {
             leaveTo="opacity-0"
             afterLeave={afterLeave}
         >
-            <div className={`w-full md:w-[28rem] bg-white rounded-lg overflow-hidden block absolute z-20 shadow-lg right-0 ${className}`}>
+            <div className={`w-full md:w-[28rem] bg-white rounded-lg overflow-hidden block absolute z-[60] shadow-lg right-0 ${className}`}>
                 {props.children}
             </div>
         </Transition>
