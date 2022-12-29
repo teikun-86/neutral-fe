@@ -1,36 +1,16 @@
-import modalState from "@/hooks/modal";
+import drawerState from "@/hooks/drawer";
 import { searchString } from "@/util";
-import { Transition } from "@headlessui/react";
-import { UserIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { UserIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
-import { useState } from "react";
-import Draggable from "react-draggable";
 import { useRecoilState } from "recoil";
 import { AirplaneTakeoffIcon, KaabaIcon } from "../icons";
 import { Drawer } from "../modal";
 import SearchBox from "../search";
 import { ResponsiveLink } from "./responsive-link";
 
-export const ResponsiveNavbar = ({ show, closeSidebar = () => { } }) => {
-    const [modalOpen, setModalOpen] = useRecoilState(modalState);
+export const ResponsiveNavbar = () => {
+    const [drawerOpen, setDrawerOpen] = useRecoilState(drawerState)
     const router = useRouter()
-    const [position, setPosition] = useState({x: 0, y: 0})
-    const handleStart = (start, data) => {
-        setPosition({x: 0, y: 0})
-    }
-    const handleDrag = (drag, data) => {
-        setPosition({x: 0, y: data.y})
-    }
-    const handleStop = (stop, data) => {
-        if (position.y > 100) {
-            closeSidebar()
-            setPosition({x: 0, y: 0})
-            // let to = setTimeout(() => {
-            // }, 300)
-        } else {
-            setPosition({x: 0, y: 0})
-        }
-    }
 
     return (
         <Drawer id="responsiveNavDrawer">
@@ -62,7 +42,7 @@ export const ResponsiveNavbar = ({ show, closeSidebar = () => { } }) => {
                         <KaabaIcon className="w-6 h6 mr-2" />
                         Haji & Umrah
                     </h6>
-                    <ResponsiveLink as="button" onClick={() => setModalOpen('landArrangementModal')}>
+                    <ResponsiveLink as="button" onClick={() => setDrawerOpen('landArrangementDrawer')}>
                         Land Arrangement
                     </ResponsiveLink>
                     <ResponsiveLink href="/flights">
@@ -78,7 +58,7 @@ export const ResponsiveNavbar = ({ show, closeSidebar = () => { } }) => {
             </Drawer.Body>
             <Drawer.Footer>
                 <div className="flex items-center w-full justify-end">
-                    <button onClick={() => setModalOpen('')} className="btn-text text-gray-900">Close</button>
+                    <button onClick={() => setDrawerOpen('')} className="btn-text text-gray-900">Close</button>
                 </div>
             </Drawer.Footer>
         </Drawer>

@@ -8,41 +8,35 @@ import { Dropdown } from "../dropdown";
 import { useRecoilState } from "recoil";
 import modalState from "@/hooks/modal";
 import { AirplaneTakeoffIcon, KaabaIcon } from "../icons";
+import drawerState from "@/hooks/drawer";
 
 export const GlobalNavbar = () => {
     const [showSidebar, setShowSidebar] = useState(false)
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
+    const [drawerOpen, setDrawerOpen] = useRecoilState(drawerState)
     const router = useRouter()
 
     const onResize = useCallback(() => {
         if (window.innerWidth >= 768) {
-            closeSidebar()
+            closeDrawer()
         }
     }, [])
 
-    const openSidebar = () => {
-        setModalOpen('responsiveNavDrawer')
+    const openDrawer = () => {
+        setDrawerOpen('responsiveNavDrawer')
     }
 
-    const closeSidebar = () => {
-        setModalOpen('')
+    const closeDrawer = () => {
+        setDrawerOpen('')
     }
 
     const toggleSidebar = () => {
         if (showSidebar === false) {
-            openSidebar()
+            openDrawer()
         } else {
-            closeSidebar()
+            closeDrawer()
         }
     }
-
-    useEffect(() => {
-        if (modalOpen === 'responsiveNavDrawer') {
-            document.body.classList.add("!overflow-y-hidden")
-        } else {
-            document.body.classList.remove("!overflow-y-hidden")
-        }
-    }, [modalOpen])
 
     useEffect(() => {
         window.addEventListener('resize', onResize)
@@ -115,7 +109,7 @@ export const GlobalNavbar = () => {
                 </div>
             </div>
 
-            <ResponsiveNavbar show={showSidebar} closeSidebar={closeSidebar} />
+            <ResponsiveNavbar />
         </header>
     );
 };

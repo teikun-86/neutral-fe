@@ -1,14 +1,16 @@
-import modalState from "@/hooks/modal";
+import drawerState from "@/hooks/drawer";
 import { Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useCallback, useEffect, useState } from "react";
 import Draggable from "react-draggable";
 import { useRecoilState } from "recoil";
 
-const Drawer = ({ showCloseButton = true, ...props }) => {
+const Drawer = ({ showCloseButton = true, afterClose = () => {}, ...props }) => {
     const [open, setOpen] = useState(false);
-    const [modalOpen, setModalOpen] = useRecoilState(modalState); 
+    const [drawerOpen, setDrawerOpen] = useRecoilState(drawerState); 
     const [position, setPosition] = useState({ x: 0, y: 0 })
+    const router = useRouter()
 
     const handleStart = (e, data) => {
         setPosition({ x: 0, y: 0 })
@@ -18,28 +20,41 @@ const Drawer = ({ showCloseButton = true, ...props }) => {
     }
     const handleStop = (e, data) => {
         if (position.y > 100) {
-            closeModal()
+            closeDrawer()
             setPosition({ x: 0, y: 0 })
         } else {
             setPosition({ x: 0, y: 0 })
         }
     }
 
+    const closeDrawer = useCallback(() => {
+        setDrawerOpen('');
+        
+        if (afterClose instanceof Function) {
+            afterClose()
+        }
+    }, [afterClose, setDrawerOpen])
+
     useEffect(() => {
+        setOpen(drawerOpen === props.id)
+        if (drawerOpen !== '') {
+            document.body.classList.add("!overflow-y-hidden")
+        } else {
+            document.body.classList.remove("!overflow-y-hidden")
+        }
+    }, [drawerOpen, props.id, closeDrawer, router]);
 
-        setOpen(modalOpen === props.id)
-
+    useEffect(() => {
+        router.events.on("routeChangeStart", closeDrawer)
+        
         return () => {
+            router.events.off("routeChangeStart", closeDrawer)
         };
-    }, [modalOpen, props.id]);
-
-    const closeModal = () => {
-        setModalOpen('');
-    }
+    }, [router, closeDrawer])
 
     return (
         <Transition className="w-full h-screen fixed inset-0 z-40" show={open} id={props.id}>
-            <Transition.Child onClick={closeModal} className="w-full h-full bg-black/80 backdrop-blur-sm"
+            <Transition.Child onClick={closeDrawer} className="w-full h-full bg-black/80 backdrop-blur-sm"
                 enter="transition-all duration-300"
                 enterFrom="opacity-0"
                 enterTo="opacity-100"
@@ -49,6 +64,7 @@ const Drawer = ({ showCloseButton = true, ...props }) => {
             />
 
             <Draggable
+                defaultClassNameDragging="transition-all duration-200"
                 axis="y"
                 handle=".drag-handler"
                 defaultPosition={{ x: 0, y: 0 }}
@@ -69,7 +85,7 @@ const Drawer = ({ showCloseButton = true, ...props }) => {
                 >
                     {
                         showCloseButton && (
-                            <button className="absolute top-1 right-1 rounded-full outline-none focus:outline-none ring-0 focus:ring-0 p-2 z-50" onClick={closeModal}>
+                            <button className="absolute top-1 right-1 rounded-full outline-none focus:outline-none ring-0 focus:ring-0 p-2 z-50" onClick={closeDrawer}>
                                 <XMarkIcon className="w-7 h-7" />
                             </button>
                         )

@@ -11,11 +11,13 @@ import useHorizontalScroll from "@/hooks/horizontal-scroll";
 import { Dropdown } from "../dropdown";
 import { AirplaneTakeoffIcon, KaabaIcon } from "../icons";
 import { searchString } from "@/util";
+import drawerState from "@/hooks/drawer";
 
 export const Navbar = ({ isInViewport = null, fixed = true }) => {
     const [showNavbar, setBgActive] = useState(false)
     const [showSidebar, setShowSidebar] = useState(false)
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
+    const [drawerOpen, setDrawerOpen] = useRecoilState(drawerState)
     
     const router = useRouter()
 
@@ -30,11 +32,11 @@ export const Navbar = ({ isInViewport = null, fixed = true }) => {
     }
 
     const openSidebar = () => {
-        setModalOpen('responsiveNavDrawer')
+        setDrawerOpen('responsiveNavDrawer')
     }
 
     const closeSidebar = () => {
-        setModalOpen('')
+        setDrawerOpen('')
     }
 
     const toggleSidebar = () => {
@@ -44,15 +46,7 @@ export const Navbar = ({ isInViewport = null, fixed = true }) => {
             closeSidebar()
         }
     }
-
-    useEffect(() => {
-        if (modalOpen === 'responsiveNavDrawer') {
-            document.body.classList.add("!overflow-y-hidden")
-        } else {
-            document.body.classList.remove("!overflow-y-hidden")
-        }
-    }, [modalOpen])
-
+    
     useEffect(() => {
         window.addEventListener('scroll', onScroll)
         window.addEventListener('resize', onResize)
