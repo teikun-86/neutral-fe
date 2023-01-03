@@ -102,6 +102,10 @@ img {
     .with-caret {
         @apply after:absolute after:w-4 after:h-4 after:rotate-45 after:bg-rose-500 after:-top-1 after:left-3;
     }
+
+    .middot {
+        @apply w-1 h-1 bg-gray-500 rounded-full;
+    }
 }
 
 .rdp {

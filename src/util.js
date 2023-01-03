@@ -25,3 +25,15 @@ export const checkObjectUndefined = (obj) => {
     }
     return true
 }
+export const randomString = (len) => {
+    return Math.random().toString(36).substr(2, len);
+}
+
+export const formatIDR = (amount, decimalPlaces = 0) => {
+    return Intl.NumberFormat("id-ID", {
+        style: 'currency',
+        currency: "IDR",
+        minimumFractionDigits: 0,
+        maximumFractionDigits: decimalPlaces,
+    }).format(amount)
+}

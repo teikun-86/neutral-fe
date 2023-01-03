@@ -1,7 +1,7 @@
 import Footer from "@/components/footer";
 import { Drawer, Modal } from "@/components/modal";
 import { GlobalNavbar, Navbar } from "@/components/navbar";
-import { ArrowLeftIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { ArrowLeftIcon, ArrowUpIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -14,13 +14,18 @@ import { useNetwork } from "@/hooks/network";
 import { WifiOffIcon } from "@/components/icons";
 import { Transition } from "@headlessui/react";
 import { useViewport } from "@/hooks/viewport";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const AppLayout = props => {
     const [modalOpen, setModalOpen] = useRecoilState(modalState)
     const [drawerOpen, setDrawerOpen] = useRecoilState(drawerState)
     const router = useRouter()
-    const { width } = useViewport()
+    const [showBtn, setShowBtn] = useState(false)
+    const { width, scrollY } = useViewport({
+        onScroll: (result) => {
+            setShowBtn(result.y > 100)
+        }
+    })
 
     const { online } = useNetwork({
         onOnline: () => {
@@ -33,6 +38,16 @@ const AppLayout = props => {
             }
         }
     })
+
+    const { showGoToTopButton } = props
+
+    const goToTop = () => {
+        window.scrollTo({
+            left: 0,
+            top: 0,
+            behavior: "smooth"
+        })
+    }
     
     return (
         <>
@@ -63,6 +78,14 @@ const AppLayout = props => {
 
                 {props.children}
             </div>
+
+            {
+                showGoToTopButton && showBtn && (
+                    <button onClick={goToTop} className="btn-rose rounded-full p-2 fixed bottom-3 right-3 opacity-70 hocus:opacity-100">
+                        <ArrowUpIcon className="w-6 h-6" />
+                    </button>
+                )
+            }
 
             <Modal size="md" id="landArrangementModal">
                 <Modal.Header>
