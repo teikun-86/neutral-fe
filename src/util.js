@@ -37,3 +37,11 @@ export const formatIDR = (amount, decimalPlaces = 0) => {
         maximumFractionDigits: decimalPlaces,
     }).format(amount)
 }
+
+export const removeFromArray = (needle, haystack = []) => {
+    return haystack.filter(val => val !== needle)
+}
+
+export const truncateString = (string, length = 12) => {
+    return string.length > length ? string.substring(0, length) + '...' : string
+}

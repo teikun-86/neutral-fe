@@ -1,8 +1,12 @@
-import lionAirLogo from "@/assets/images/providers/lion-air-logo.png"
+import lionAirLogo from "@/assets/images/airlines/lion-air-logo.png"
+import thaiLionAirLogo from "@/assets/images/airlines/thai-lion-air-logo.png"
+import batikAirLogo from "@/assets/images/airlines/batik-air-logo.png"
+import superAirJetLogo from "@/assets/images/airlines/super-air-jet-logo.svg"
+import wingsAirLogo from "@/assets/images/airlines/wings-air-logo.png"
 import Image from 'next/image';
 import moment from 'moment';
 import { formatIDR, randomString } from '@/util';
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { ArchiveBoxIcon, BoltIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Tooltip } from "../tooltip";
 import { Transition } from "@headlessui/react";
@@ -21,12 +25,23 @@ export const FlightTicket = ({ departure, ...props }) => {
     let cheapest = classesAvailable.sort((a, b) => {
         return Number(a.Amount) - Number(b.Amount)
     })
+
+    const airlineLogo = {
+        "Lion Air": lionAirLogo,
+        "Thai Lion Air": thaiLionAirLogo,
+        "Batik Air": batikAirLogo,
+        "Batik Air Malaysia": batikAirLogo,
+        "Super Air Jet": superAirJetLogo,
+        "Wings Air": wingsAirLogo,
+    }
     
     return (
         <div key={departure.FlightNumber + randomString(12)} className="block w-full p-2 rounded-lg bg-white my-3 shadow">
-            <div className="flex w-full items-center">
-                <Image src={lionAirLogo} className="h-8 w-auto mr-4" alt="Lion Air" />
-                <h6 className="text-lg font-semibold text-gray-900">Lion Air</h6>
+            <div className="flex w-full items-center space-x-2">
+                <div className="w-20 h-14 grid place-items-center p-1">
+                    <Image src={airlineLogo[departure.OperatingAirline.CompanyShortName.replace("Operated by", "").trim()]} className="w-auto h-auto block" alt="Lion Air" />
+                </div>
+                <h6 className="text-lg font-semibold text-gray-900">{departure.OperatingAirline.CompanyShortName.replace("Operated by", "").trim()}</h6>
             </div>
             <div className="flex items-center justify-between mt-2 flex-wrap">
                 <div className="flex items-center px-3 w-full md:w-1/2">

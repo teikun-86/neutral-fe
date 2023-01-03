@@ -1,3 +1,4 @@
+import { Airport } from "./airport"
 import { Flight } from "./flight"
 
 export class LionAPI {
@@ -7,5 +8,9 @@ export class LionAPI {
 
     flight() {
         return new Flight()
+    }
+
+    airport() {
+        return new Airport()
     }
 }

@@ -9,11 +9,22 @@ import { useRecoilState } from "recoil";
 import modalState from "@/hooks/modal";
 import { AirplaneTakeoffIcon, KaabaIcon } from "../icons";
 import drawerState from "@/hooks/drawer";
+import { useViewport } from "@/hooks/viewport";
 
-export const GlobalNavbar = () => {
+export const GlobalNavbar = ({ stickyOnScroll = false }) => {
     const [showSidebar, setShowSidebar] = useState(false)
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [drawerOpen, setDrawerOpen] = useRecoilState(drawerState)
+    const [lastY, setLastY] = useState(0)
+    const [sticky, setSticky] = useState(false)
+
+    const { scrollY } = useViewport({
+        onScroll: (result) => {
+            setLastY(result.y)
+            setSticky(result.y < lastY && result.y > 0)
+        }
+    })
+    
     const router = useRouter()
 
     const onResize = useCallback(() => {
@@ -47,7 +58,7 @@ export const GlobalNavbar = () => {
 
     return (
         <header className="w-full relative">
-            <div className={`w-full z-30`}>
+            <div className={`w-full z-50 ${stickyOnScroll && sticky ? "fixed top-0" : ""}`}>
                 <div className="relative w-full h-full">
                     <div className={`w-full bg-white h-16 md:h-auto shadow-lg relative transition-colors duration-300`}>
                         <div className="flex items-center justify-between w-full max-w-7xl px-4 mx-auto h-full">

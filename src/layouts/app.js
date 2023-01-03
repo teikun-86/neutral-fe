@@ -73,7 +73,7 @@ const AppLayout = props => {
                 {
                     router.pathname === '/'
                     ?   <Navbar fixed={props.fixed ?? true} isInViewport={props.isInViewport ?? null} />
-                    :   <GlobalNavbar />
+                    :   <GlobalNavbar stickyOnScroll={props.stickyOnScroll ?? false} />
                 }
 
                 {props.children}

@@ -1,10 +1,15 @@
-import airports from "@/data/airports";
+import airportsData from "@/data/airports";
 
 export default function handler(req, res) {
-    let results = airports.filter(airport => airport.type === 'airport')
+    let airports = airportsData.filter(airport => airport.type === 'airport')
     if (!req.query.intl) {
-        results = results.filter(airport => airport.countryName === "Indonesia")
+        airports = airports.filter(airport => airport.countryName === "Indonesia")
+    }
+
+    if (req.query.iata) {
+        let result = airports.filter(airport => airport.airportCode === req.query.iata)[0]
+        return res.status(200).json({ airport: result })
     }
     
-    res.status(200).json({ airports: results })
+    return res.status(200).json({ airports })
 }

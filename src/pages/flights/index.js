@@ -98,6 +98,7 @@ const Flights = () => {
         localStorage.setItem("__rc_airports", JSON.stringify(recents))
 
         setSearching(true)
+        window.scrollTo(0, 0)
 
         router.push(`/flights/search?${objectToQueryString(params)}`)
     }

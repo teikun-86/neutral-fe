@@ -1,70 +1,104 @@
-import { ArrowDownIcon, ArrowUpIcon } from "@heroicons/react/24/outline"
-import { useState } from "react"
-import Draggable from "react-draggable"
+import { Transition } from "@headlessui/react"
+import { useRouter } from "next/router"
+import { useCallback, useEffect, useState } from "react"
 import { SpinnerIcon } from "./icons"
 
-export const PullToRefresh = ({ onRefresh = () => {}, ...props }) => {
-    const [position, setPosition] = useState({x: 0, y: 0})
-    const [status, setStatus] = useState(0)
+export const PullToRefresh = ({
+    onRefresh = () => { },
+    children = null,
+}) => {
+    const router = useRouter()
+    const [isRefreshing, setIsRefreshing] = useState(false)
+    const [isTouching, setIsTouching] = useState(false)
+    const [touchStart, setTouchStart] = useState(0)
+    const [touchEnd, setTouchEnd] = useState(0)
+    const [touchMove, setTouchMove] = useState(0)
+    const [touchDistance, setTouchDistance] = useState(0)
+    const [touchDirection, setTouchDirection] = useState(0)
+    const [touchDirectionName, setTouchDirectionName] = useState("")
+    const [canRefresh, setCanRefresh] = useState(false)
 
-    const onPullStart = (data) => {
-        setPosition({x: 0, y: 0})
+    const handleTouchStart = (e) => {
+        setTouchStart(e.touches[0].clientY)
+        setIsTouching(true)
     }
-    
-    const onPull = (data) => {
-        setPosition({x: 0, y: data.y > 50 ? 50: data.y})
-        setStatus(data.y === 0 ? 0 : (data.y >= 50 ? 2 : 1))
+
+    const handleTouchMove = (e) => {
+        setTouchMove(e.touches[0].clientY)
+        setTouchDistance(touchMove - touchStart)
+        setTouchDirection(touchMove - touchEnd)
+        setTouchDirectionName(touchDirection > 0 ? "down" : "up")
+        setCanRefresh(touchDirectionName === "up" && touchDistance > 100)
     }
-    
-    const onPullEnd = (data) => {
-        if (data.y > 50) {
+
+    const handleTouchEnd = (e) => {
+        setTouchEnd(e.changedTouches[0].clientY)
+        setIsTouching(false)
+        if (touchDirectionName === "up" && touchDistance > 100) {
+            setIsRefreshing(true)
+            setCanRefresh(false)
             onRefresh()
-            setStatus(3)
-            setPosition({x: 0, y: 0})
-            return
         }
-        setPosition({x: 0, y: data.y})
     }
+
+    const afterRouteChange = useCallback(() => {
+        setIsRefreshing(false)
+    }, [])
+
+    useEffect(() => {
+        router.events.on('routeChangeComplete', afterRouteChange)
+        return () => {
+            router.events.off('routeChangeComplete', afterRouteChange)
+        };
+    }, [afterRouteChange, router.events]);
 
     return (
-        <Draggable
-            axis="y"
-            handle=".drag-handler"
-            defaultPosition={{ x: 0, y: 0 }}
-            bounds={{ top: 0 }}
-            position={position}
-            onStart={onPullStart}
-            onDrag={onPull}
-            onStop={onPullEnd}
+        <div
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            onTouchCancel={handleTouchEnd}
+            className="flex flex-col w-full h-full overflow-y-auto"
         >
-            <div>
-                {
-                    status === 1
-                    ? (
-                        <div className="w-full grid place-items-center">
-                            <ArrowDownIcon className="w-5 h-5" />
-                            <p className="text-center text-sm font-semibold text-gray-800">Tarik untuk memperbarui</p>
-                        </div>
-                    )
-                    : (
-                        status === 2
-                        ? (
-                            <div className="w-full grid place-items-center">
-                                <ArrowUpIcon className="w-5 h-5" />
-                                <p className="text-center text-sm font-semibold text-gray-800">Lepas untuk memperbarui</p>
-                            </div>
-                        )
-                        : (
-                            status === 3
-                            ?   <div className="w-full grid place-items-center">
-                                    <SpinnerIcon className="w-5 h-5 animate-spin" />
-                                </div>
-                            : <></>
-                        )
-                    )
-                }
-                <div className="drag-handler">{props.children}</div>
-            </div>
-        </Draggable>
+            <Transition
+                show={isRefreshing}
+                enter="transition-all duration-300 ease-in-out"
+                enterFrom="opacity-0 -translate-y-20"
+                enterTo="opacity-100 translate-y-0"
+                leave="transition-all duration-300 ease-in-out"
+                leaveFrom="opacity-100 translate-y-0"
+                leaveTo="opacity-0 -translate-y-20"
+                className="flex flex-col items-center justify-center w-full h-20 fixed top-0 z-50"
+            >
+                <span className="p-2 grid place-items-center bg-white rounded-full shadow-lg">
+                    <SpinnerIcon className="w-6 h-6 text-rose-600 animate-spin" />
+                </span>
+            </Transition>
+            <Transition
+                show={isTouching && canRefresh}
+                enter="transition-all duration-300 ease-in-out"
+                enterFrom="opacity-0 -translate-y-20"
+                enterTo="opacity-100 translate-y-0"
+                leave="transition-all duration-300 ease-in-out"
+                leaveFrom="opacity-100 translate-y-0"
+                leaveTo="opacity-0 -translate-y-20"
+                className="flex flex-col items-center justify-center w-full h-20 fixed top-0 z-50"
+            >
+                <p className="text-sm text-gray-900 p-2 rounded-full bg-white shadow-lg">Lepaskan untuk memuat ulang</p>
+            </Transition>
+            <Transition
+                show={isTouching && touchDirectionName === "up" && touchDistance > 0 && !canRefresh}
+                enter="transition-all duration-300 ease-in-out"
+                enterFrom="opacity-0 -translate-y-20"
+                enterTo="opacity-100 translate-y-0"
+                leave="transition-all duration-300 ease-in-out"
+                leaveFrom="opacity-100 translate-y-0"
+                leaveTo="opacity-0 -translate-y-20"
+                className="flex flex-col items-center justify-center w-full h-20 fixed top-0 z-50"
+            >
+                <p className="text-sm text-gray-900 p-2 rounded-full bg-white shadow-lg">Tarik ke bawah untuk memuat ulang</p>
+            </Transition>
+            {children}
+        </div>
     )
 }

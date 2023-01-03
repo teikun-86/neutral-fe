@@ -74,7 +74,7 @@ export class Flight {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
         }).then(res => res.data.data).catch(err => {
-            throw err
+            console.log({err});
         })
     }
 }
