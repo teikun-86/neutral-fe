@@ -8,7 +8,7 @@ import { Transition } from "@headlessui/react";
 import { BuildingOffice2Icon, CalendarDaysIcon, ChevronDownIcon, MagnifyingGlassIcon, MapPinIcon, MinusIcon, PlusIcon, UserGroupIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import debounce from "lodash.debounce";
-import moment from "moment";
+import moment from "@/libs/moment";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
@@ -98,7 +98,7 @@ const Hotel = () => {
     }, [])
 
     return (
-        <AppLayout title="Hotel ー Neutral" fixed={false}>
+        <AppLayout title={`Hotel ー ${process.env.NEXT_PUBLIC_APP_NAME}`} fixed={false}>
             <div className="w-full min-h-screen pb-4">
                 <div className="w-full bg-rose-600 h-72 py-3 px-2">
                     <h2 className="text-2xl font-bold text-white text-center">Lorem, ipsum.</h2>

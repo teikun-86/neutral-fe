@@ -87,7 +87,7 @@ const PayLater = () => {
     }
     
     return (
-        <AppLayout title="Pay Later Haji & Umrah ー Neutral">
+        <AppLayout title={`Pay Later Haji & Umrah ー ${process.env.NEXT_PUBLIC_APP_NAME}`}>
             <div className="w-full min-h-screen pb-4">
                 <div className="w-full bg-rose-600 h-72 py-3 px-2 grid place-items-center">
                     <div>

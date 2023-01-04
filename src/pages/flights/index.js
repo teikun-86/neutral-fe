@@ -9,7 +9,7 @@ import { Transition } from "@headlessui/react";
 import { ArrowsRightLeftIcon, CalendarDaysIcon, ChevronDownIcon, MagnifyingGlassIcon, MinusIcon, PlusIcon, UserGroupIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import debounce from "lodash.debounce";
-import moment from "moment";
+import moment from "@/libs/moment";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
@@ -62,7 +62,7 @@ const Flights = () => {
         return debounce(handleChange, 400)
     }, [handleChange])
 
-    const clickOutsidePassenger = useOutsideClick({
+    useOutsideClick({
         ref: passengerRef, callback: () => {
             setShowPassenger(false)
         }
@@ -91,11 +91,31 @@ const Flights = () => {
         if (tripType === 'round') params.r_date = moment(returnDate).format("YYYY-MM-DD")
 
         let recents = recentAirports
-        recents.push(departure, arrival)
-        if (recents.length >= 8) {
-            recents = recents.slice(-8)
+        let depIndex = recents.findIndex(airport => airport.airportCode === departure.airportCode)
+        if (depIndex !== -1) recents.splice(depIndex, 1)
+        recents.unshift(departure)
+        let arrIndex = recents.findIndex(airport => airport.airportCode === arrival.airportCode)
+        if (arrIndex !== -1) recents.splice(arrIndex, 1)
+        recents.unshift(arrival)
+        if (recents.length > 5) recents.pop()
+
+        setRecentAirports(recents)
+
+        localStorage.setItem('__rc_airports', JSON.stringify(recents))
+
+        let lastFlight = {
+            d: departure,
+            a: arrival,
+            d_date: moment(departureDate).format("YYYY-MM-DD"),
+            adult: adult,
+            child: child,
+            infant: infant,
+            class: passengerClass,
         }
-        localStorage.setItem("__rc_airports", JSON.stringify(recents))
+
+        if (tripType === 'round') lastFlight.r_date = moment(returnDate).format("YYYY-MM-DD")
+
+        localStorage.setItem('__rc_flight_search', JSON.stringify(lastFlight))
 
         setSearching(true)
         window.scrollTo(0, 0)
@@ -104,15 +124,43 @@ const Flights = () => {
     }
 
     const getAirports = async () => {
-        await axios.get('/api/airports').then(res => {
-            let airports = res.data.airports
+        let intlAirports = localStorage.getItem('__airports_data_intl')
+        let localAirports = localStorage.getItem('__airports_data_local')
+        if (intlAirports) {
+            intlAirports = JSON.parse(intlAirports)
+            if (moment().diff(moment(intlAirports.lastUpdate), 'days') > 1) {
+                intlAirports = null
+            }
+        }
+        if (localAirports) {
+            localAirports = JSON.parse(localAirports)
+            if (moment().diff(moment(localAirports.lastUpdate), 'days') > 1) {
+                localAirports = null
+            }
+        }
+
+        if (intlAirports && localAirports) {
+            let airports = localAirports.airports
             setAirports(airports)
-        }).catch(err => {
-            console.log({
-                err,
-                errLoc: "async getAirports()"
-            });
-        })
+            return
+        }
+
+        await refetchAirports()
+    }
+
+    const refetchAirports = async () => {
+        let api = (new LionAPI()).airport()
+        let airports = await api.intl().get()
+        let local = airports.filter(airport => airport.countryName === 'Indonesia')
+        setAirports(local)
+        localStorage.setItem('__airports_data_intl', JSON.stringify({
+            airports: airports,
+            lastUpdate: moment().format()
+        }))
+        localStorage.setItem('__airports_data_local', JSON.stringify({
+            airports: local,
+            lastUpdate: moment().format()
+        }))
     }
 
     const checkInput = useCallback(() => {
@@ -141,12 +189,26 @@ const Flights = () => {
     }, [cancelSearching, router.events])
 
     useEffect(() => {
+        let search = JSON.parse(localStorage.getItem("__rc_flight_search"))
+        if (search) {
+            setDeparture(search.d)
+            setArrival(search.a)
+            setDepartureDate(search.d_date)
+            if (search.r_date) {
+                setTripType('round')
+                setReturnDate(search.r_date)
+            }
+            setAdult(search.adult)
+            setChild(search.child)
+            setInfant(search.infant)
+            setPassengerClass(search.class)
+        }
         getAirports()
         setRecentAirports(JSON.parse(localStorage.getItem("__rc_airports")) ?? [])
     }, [])
 
     return (
-        <AppLayout title="Pesawat ー Neutral" fixed={false}>
+        <AppLayout title={`Pesawat ー ${process.env.NEXT_PUBLIC_APP_NAME}`} fixed={false}>
             <div className="w-full min-h-screen pb-4">
                 {
                     searching
@@ -304,7 +366,7 @@ const Flights = () => {
                                                                     recentAirports.length > 0 && (
                                                                         <>
                                                                             <div className="flex items-center justify-start px-3 py-2">
-                                                                                <HistoryIcon class="w-5 h-5 mr-3" />
+                                                                                <HistoryIcon className="w-5 h-5 mr-3" />
                                                                                 <h5 className="text-gray-900 font-semibold text-base">Pencarian Terakhir</h5>
                                                                             </div>
                                                                             {
@@ -339,6 +401,7 @@ const Flights = () => {
                                                     </span>
                                                     <Datepicker
                                                         asSingle
+                                                        i18n="id"
                                                         useRange={false}
                                                         primaryColor="rose"
                                                         onChange={(val) => {
@@ -377,6 +440,7 @@ const Flights = () => {
                                                     </span>
                                                     <Datepicker
                                                         asSingle
+                                                        i18n="id"
                                                         useRange={false}
                                                         primaryColor="rose"
                                                         onChange={(val) => {

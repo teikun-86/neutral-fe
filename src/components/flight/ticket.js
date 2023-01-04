@@ -7,24 +7,23 @@ import Image from 'next/image';
 import moment from 'moment';
 import { formatIDR, randomString } from '@/util';
 import { useState } from "react";
-import { ArchiveBoxIcon, BoltIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { ArchiveBoxIcon, BoltIcon, ShoppingBagIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Tooltip } from "../tooltip";
 import { Transition } from "@headlessui/react";
 
-export const FlightTicket = ({ departure, ...props }) => {
+export const FlightTicket = ({ flight, airports = { departure: {}, arrival: {} }, onSelect = (flight) => { }, noButton = false, ...props }) => {
     const [open, setOpen] = useState(false)
     const [section, setSection] = useState("flight-detail")
-    
-    let splitted = departure.Duration.split(":")
+
+    const { departure, arrival } = airports
+
+    let splitted = flight.Duration.split(":")
     let flightDuration = {
         h: splitted[0].startsWith("0") ? splitted[0].substring(1) : splitted[0],
         m: splitted[1].startsWith("0") ? splitted[1].substring(1) : splitted[1],
     }
 
-    let classesAvailable = departure.BookingClassAvail
-    let cheapest = classesAvailable.sort((a, b) => {
-        return Number(a.Amount) - Number(b.Amount)
-    })
+    let available = flight.available
 
     const airlineLogo = {
         "Lion Air": lionAirLogo,
@@ -34,20 +33,30 @@ export const FlightTicket = ({ departure, ...props }) => {
         "Super Air Jet": superAirJetLogo,
         "Wings Air": wingsAirLogo,
     }
-    
+
+    const handleSelect = (flight) => {
+        onSelect(flight)
+        setOpen(false)
+    }
+
+    // check if the ArrivalDate is the same day as DepartureDate
+    let isSameDay = moment(flight.ArrivalDate).isSame(flight.DepartureDate, 'day')
+    // if not, then get the difference between the two dates
+    let diffDays = isSameDay ? 0 : moment(flight.ArrivalDate).diff(flight.DepartureDate, 'days')
+
     return (
-        <div key={departure.FlightNumber + randomString(12)} className="block w-full p-2 rounded-lg bg-white my-3 shadow">
+        <div key={flight.FlightNumber + randomString(12)} className="block w-full p-2 rounded-lg bg-white my-3 shadow">
             <div className="flex w-full items-center space-x-2">
                 <div className="w-20 h-14 grid place-items-center p-1">
-                    <Image src={airlineLogo[departure.OperatingAirline.CompanyShortName.replace("Operated by", "").trim()]} className="w-auto h-auto block" alt="Lion Air" />
+                    <Image src={airlineLogo[flight.OperatingAirline.CompanyShortName.replace("Operated by", "").trim()]} className="w-auto h-auto block" alt="Lion Air" />
                 </div>
-                <h6 className="text-lg font-semibold text-gray-900">{departure.OperatingAirline.CompanyShortName.replace("Operated by", "").trim()}</h6>
+                <h6 className="text-lg font-semibold text-gray-900">{flight.OperatingAirline.CompanyShortName.replace("Operated by", "").trim()}</h6>
             </div>
             <div className="flex items-center justify-between mt-2 flex-wrap">
                 <div className="flex items-center px-3 w-full md:w-1/2">
                     <div className="flex flex-col items-center justify-center">
-                        <span className="text-lg font-bold text-gray-700">{moment(departure.DepartureDateTime).format("HH:MM")}</span>
-                        <span className="px-2 py-1 rounded-full shadow font-semibold text-xs bg-gray-100">{departure.DepartureAirport}</span>
+                        <span className="text-lg font-bold text-gray-700">{moment(flight.DepartureDateTime).format("HH:MM")}</span>
+                        <span className="px-2 py-1 rounded-full shadow font-semibold text-xs bg-gray-100">{flight.DepartureAirport}</span>
                     </div>
                     <div className="grid place-items-center mx-3 w-full md:w-auto">
                         <span className="text-xs font-bold text-gray-700">{flightDuration.h}j {flightDuration.m}m</span>
@@ -56,8 +65,8 @@ export const FlightTicket = ({ departure, ...props }) => {
                                 <div className="absolute inset-0 flex items-center justify-center">
                                     <span className="w-2 h-2 rounded-full bg-rose-300 absolute left-0"></span>
                                     {
-                                        departure.RPH !== 0 && (
-                                            Array.from(Array(Number(departure.RPH))).map(tr => (
+                                        flight.StopQuantity !== "0" && (
+                                            Array.from(Array(Number(flight.StopQuantity))).map(tr => (
                                                 <span className="w-2 h-2 mx-1 rounded-full bg-gray-400" key={tr + randomString(5)}></span>
                                             ))
                                         )
@@ -68,33 +77,40 @@ export const FlightTicket = ({ departure, ...props }) => {
                         </div>
                         <span className="text-xs text-gray-700">
                             {
-                                departure.RPH === "0"
+                                flight.StopQuantity === "0"
                                     ? "Langsung"
-                                    : `${departure.RPH} Transit`
+                                    : `${flight.StopQuantity} Transit`
                             }
                         </span>
                     </div>
                     <div className="flex flex-col items-center justify-center">
-                        <span className="text-lg font-bold text-gray-700">{moment(departure.ArrivalDateTime).format("HH:MM")}</span>
-                        <span className="px-2 py-1 rounded-full shadow font-semibold text-xs bg-gray-100">{departure.ArrivalAirport}</span>
+                        <span className="text-lg font-bold text-gray-700">
+                            {moment(flight.ArrivalDateTime).format("HH:MM")}
+                            {
+                                diffDays > 0 && (
+                                    <sup className="text-xs text-gray-500">(+{diffDays}d)</sup>
+                                )
+                            }
+                        </span>
+                        <span className="px-2 py-1 rounded-full shadow font-semibold text-xs bg-gray-100">{flight.ArrivalAirport}</span>
                     </div>
                 </div>
                 <div className="flex items-center justify-between w-full md:w-1/2 px-3 py-2">
                     <Tooltip title={
-                        <p>Bagasi 20kg<br/>USB port/power</p>
+                        <p>Bagasi 20kg<br />USB port/power</p>
                     }>
                         <div className="md:hidden flex items-center justify-center my-2 space-x-2">
                             <ArchiveBoxIcon className="w-5 h-5 text-gray-600" />
                             <BoltIcon className="w-5 h-5 text-gray-600" />
                         </div>
                     </Tooltip>
-                    
+
                     <div className="flex flex-col items-end">
                         <h6 className="text-rose-600 text-lg font-semibold">
-                            {formatIDR(Number(cheapest[0].Amount).toFixed(Number(cheapest[0].DecimalPlaces)), Number(cheapest[0].DecimalPlaces))} <span className="text-sm text-gray-500">/pax</span>
+                            {formatIDR(Number(available.Amount).toFixed(Number(available.DecimalPlaces)), Number(available.DecimalPlaces))} <span className="text-sm text-gray-500">/pax</span>
                         </h6>
                         <Tooltip title={
-                            <p>Bagasi 20kg<br/>USB port/power</p>
+                            <p>Bagasi 20kg<br />USB port/power</p>
                         }>
                             <div className="hidden md:flex items-center justify-center my-2 space-x-2">
                                 <ArchiveBoxIcon className="w-5 h-5 text-gray-600" />
@@ -103,7 +119,11 @@ export const FlightTicket = ({ departure, ...props }) => {
                         </Tooltip>
                         <div className="flex items-center justify-end space-x-2 mt-2">
                             <button onClick={() => setOpen(open => !open)} className="btn-text text-gray-700 px-0">Detail Penerbangan</button>
-                            <button className="btn-rose rounded-full">Pilih Tiket</button>
+                            {
+                                !noButton && (
+                                    <button onClick={() => handleSelect(flight)} className="btn-rose rounded-full">Pilih</button>
+                                )
+                            }
                         </div>
                     </div>
                 </div>
@@ -126,11 +146,74 @@ export const FlightTicket = ({ departure, ...props }) => {
                         <button onClick={() => setSection("flight-detail")} className={`px-3 py-2 -mb-2.5 border-b-2 ${section === "flight-detail" ? "border-rose-600 text-rose-600" : "border-gray-300 text-gray-700"}`}>Detail Penerbangan</button>
                         <button onClick={() => setSection("price-detail")} className={`px-3 py-2 -mb-2.5 border-b-2 ${section === "price-detail" ? "border-rose-600 text-rose-600" : "border-gray-300 text-gray-700"}`}>Detail Harga</button>
                     </div>
-                    <div hidden={section !== "flight-detail"}>
-                        <p className="text-center">Flight Detail<br/>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab natus, fuga repellat quae similique distinctio quidem mollitia modi nulla maiores quia ducimus accusantium adipisci possimus praesentium vero voluptatibus a? Non!</p>
+                    <div hidden={section !== "flight-detail"} className="py-2">
+                        <div className="flex items-center justify-start space-x-2 h-64">
+                            <div className="flex items-center space-x-2 h-full">
+                                <div className="flex items-center justify-between h-full flex-col relative w-10">
+                                    <span className="text-gray-800 font-semibold text-sm">
+                                        {
+                                            moment(flight.DepartureDateTime).format("HH:MM")
+                                        }
+                                    </span>
+                                    <span className="text-gray-800 font-semibold text-sm whitespace-nowrap">
+                                        {
+                                            `${flight.Duration.split(":")[0]}j ${flight.Duration.split(":")[1]}m`
+                                        }
+                                    </span>
+                                    <span className="text-gray-800 font-semibold text-sm">
+                                        {
+                                            moment(flight.ArrivalDateTime).format("HH:MM")
+                                        }
+                                    </span>
+                                </div>
+                                <div className="w-10 h-full flex items-center flex-col relative">
+                                    <div className="w-2 h-2 rounded-full bg-white border border-rose-600 absolute -top-1 left-1/2 -translate-x-1/2"></div>
+                                    <div className="w-2 h-2 rounded-full bg-rose-600 ring-1 ring-rose-600 ring-offset-1 border border-rose-600 absolute -bottom-1 left-1/2 -translate-x-1/2"></div>
+                                    <div className="w-0.5 h-full bg-rose-600"></div>
+                                </div>
+                            </div>
+                            <div className="flex flex-col justify-between w-full h-auto">
+                                <div className="block">
+                                    <h6 className="text-gray-800 font-semibold text-base">{departure.airportName} ({departure.airportCode})</h6>
+                                    <p className="text-sm font-semibold text-gray-600 -mt-1 mb-2">{departure.cityName}</p>
+                                </div>
+                                <div className="block my-4 w-full px-2 py-2 rounded-lg bg-white border border-gray-200">
+                                    <div className="flex items-start justify-start space-x-2">
+                                        <div className="w-16 h-10 aspect-video grid place-items-center p-1">
+                                            <Image src={airlineLogo[flight.OperatingAirline.CompanyShortName.replace("Operated by", "").trim()]} className="w-auto h-auto block" alt="Lion Air" />
+                                        </div>
+                                        <div className="block">
+                                            <h6 className="text-lg font-semibold text-gray-900">{flight.OperatingAirline.CompanyShortName.replace("Operated by", "").trim()}</h6>
+                                            <p className="text-xs font-semibold text-gray-700">{flight.OperatingAirline.CompanyShortName}</p>
+                                            <p className="text-sm font-semibold text-gray-800 flex items-center">{flight.OperatingAirline.Code}-{flight.OperatingAirline.FlightNumber} <span className="middot mx-1"></span> {flight.available.Class}</p>
+                                        </div>
+                                    </div>
+                                    <div className="w-full">
+                                        <ul className="list-none">
+                                            <li className="flex items-center space-x-2">
+                                                <ArchiveBoxIcon className="w-5 h-5 lg:ml-2 text-gray-800/70" />
+                                                <span className="text-sm font-semibold text-gray-700">Bagasi 20KG</span>
+                                            </li>
+                                            <li className="flex items-center space-x-2">
+                                                <ShoppingBagIcon className="w-5 h-5 lg:ml-2 text-gray-800/70" />
+                                                <span className="text-sm font-semibold text-gray-700">Bagasi Kabin 7KG</span>
+                                            </li>
+                                            <li className="flex items-center space-x-2">
+                                                <BoltIcon className="w-5 h-5 lg:ml-2 text-gray-800/70" />
+                                                <span className="text-sm font-semibold text-gray-700">USB port/power</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div className="block">
+                                    <h6 className="text-gray-800 font-semibold text-base">{arrival.airportName} ({arrival.airportCode})</h6>
+                                    <p className="text-sm font-semibold text-gray-600 -mt-1 mb-2">{arrival.cityName}</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div hidden={section !== "price-detail"}>
-                        <p className="text-center">Price Detail<br/>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab natus, fuga repellat quae similique distinctio quidem mollitia modi nulla maiores quia ducimus accusantium adipisci possimus praesentium vero voluptatibus a? Non!</p>
+                        <p className="text-center">Price Detail<br />Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab natus, fuga repellat quae similique distinctio quidem mollitia modi nulla maiores quia ducimus accusantium adipisci possimus praesentium vero voluptatibus a? Non!</p>
                     </div>
                 </div>
             </Transition>

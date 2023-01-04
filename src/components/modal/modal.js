@@ -34,16 +34,16 @@ const Modal = (props = defaultProps) => {
                 break;
 
             case 'lg':
-                return "w-[90%] md:w-1/2 lg:w-1/3";
+                return "w-[90%] md:w-1/2 lg:w-1/2 xl:w-2/3";
                 break;
 
             case 'xl':
-                return "w-[90%] md:w-2/3 lg:w-1/2";
+                return "w-[90%] md:w-2/3 lg:w-2/3 xl:w-3/4";
                 break;
 
             default:
             case 'md':
-                return "w-[90%] md:w-1/3 lg:w-1/4";
+                return "w-[90%] md:w-1/3 lg:w-1/4 xl:w-1/3";
                 break;
         }
     };

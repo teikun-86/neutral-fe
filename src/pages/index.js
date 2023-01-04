@@ -1,4 +1,4 @@
-import travelBg from "@/assets/images/tokyo-tower.jpg";
+import travelBg from "@/assets/images/sunrise-moraine-lake-canada.jpg";
 import SearchBox from "@/components/search";
 import { ArrowPathIcon, BuildingOfficeIcon, CreditCardIcon, IdentificationIcon, QuestionMarkCircleIcon, ReceiptRefundIcon } from "@heroicons/react/24/outline";
 import { AirplaneTakeoffIcon, TrainIcon, ShipIcon, CarIcon, TruckIcon, KaabaIcon } from "@/components/icons";

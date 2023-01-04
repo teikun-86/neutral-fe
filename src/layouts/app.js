@@ -15,6 +15,7 @@ import { WifiOffIcon } from "@/components/icons";
 import { Transition } from "@headlessui/react";
 import { useViewport } from "@/hooks/viewport";
 import { useEffect, useState } from "react";
+import dayjs from "dayjs";
 
 const AppLayout = props => {
     const [modalOpen, setModalOpen] = useRecoilState(modalState)
@@ -49,10 +50,13 @@ const AppLayout = props => {
         })
     }
     
+    useEffect(() => {
+    }, []);
+    
     return (
         <>
             <Head>
-                <title>{props.title ?? "Neutral ー Your Best Travel Companion"}</title>
+                <title>{props.title ?? `${process.env.NEXT_PUBLIC_APP_NAME} ー ${process.env.NEXT_PUBLIC_APP_SLOGAN}`}</title>
             </Head>
             <div className="w-full min-h-screen bg-gray-50 p-0 m-0 antialiased">
                 <Transition show={!online}

@@ -10,9 +10,9 @@ img {
     user-select: none !important;
 }
 
-body {
+/* body {
     overscroll-behavior-y: none;
-}
+} */
 
 @layer components {
     .custom-scrollbar::-webkit-scrollbar {

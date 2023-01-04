@@ -8,9 +8,10 @@ export class Flight {
         DepartureDate: new Date(),
         ArrivalDate: new Date(),
         DirectionInd: "OneWay",
-        returnDate: null,
+        ReturnDate: null,
         Adult: 1,
-        Children: 0
+        Children: 0,
+        Infant: 0,
     }
     method = "GET"
     endpoint = ""
@@ -48,7 +49,7 @@ export class Flight {
     }
 
     returnDate(date) {
-        this.params.returnDate = date
+        this.params.ReturnDate = date
         return this
     }
     
@@ -59,6 +60,15 @@ export class Flight {
 
     children(pax = 0) {
         this.params.Children = pax
+        return this
+    }
+
+    infant(pax = 0) {
+        if (pax > this.params.Adult) {
+            throw new Error("Infant must be less than or equal to adult passenger count.")
+        }
+        
+        this.params.Infant = pax
         return this
     }
 
