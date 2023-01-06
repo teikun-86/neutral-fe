@@ -157,7 +157,7 @@ const Search = ({ flights, options }) => {
 
     const Filter = ({ responsive = false }) => {
         return (
-            <div className={`w-full block ${responsive ? "" : "bg-white rounded shadow p-2 my-2 max-h-[76vh] overflow-y-auto"} gray-scrollbar`}>
+            <div className={`w-full block ${responsive ? "" : "p-2 max-h-[76vh] overflow-y-auto"} gray-scrollbar`}>
                 <Disclosure defaultOpen={sortByOpen}>
                     {({ open }) => (
                         <>
@@ -439,8 +439,8 @@ const Search = ({ flights, options }) => {
 
         // calculate total price
         let totalPrice = 0
-        let departPrice = Number(depFlight.cheapest.Amount)
-        let returnPrice = retFlight ? Number(retFlight.cheapest.Amount) : 0
+        let departPrice = Number(depFlight.available.Amount)
+        let returnPrice = retFlight ? Number(retFlight.available.Amount) : 0
         
         if (options.returnFlight) {
             totalPrice = (departPrice + returnPrice) * options.passengers
@@ -464,9 +464,16 @@ const Search = ({ flights, options }) => {
         // router.push("/flights/checkout")
     }
 
+    const confirmFlight = () => {
+        setModalOpen(null)
+        let strId = randomString(32)
+        console.log({strId});
+        // router.push("/flights/checkout/" + strId)
+    }
+
     return (
         <AppLayout showGoToTopButton fixed={false} title={`Cari Tiket Pesawat ー ${process.env.NEXT_PUBLIC_APP_NAME}`}>
-            <div className="w-full py-2 pb-0 bg-gray-100 shadow-lg sticky transition duration-200 top-0 px-4 z-40">
+            <div className="w-full py-2 pb-0 bg-gray-100 shadow sticky transition duration-200 top-0 px-4 z-40">
                 <div className="w-full max-w-7xl mx-auto">
                     <h2 className="text-lg md:text-xl font-semibold text-gray-800">Pilih Penerbangan Pergi</h2>
                     <div className="md:flex items-center md:justify-between">
@@ -493,12 +500,14 @@ const Search = ({ flights, options }) => {
             </div>
             <div className="my-3 w-full max-w-7xl mx-auto flex">
                 <div className="hidden md:block w-3/12 py-3">
-                    <div className="w-full p-4 sticky top-24">
+                    <div className="w-full p-4 sticky top-20">
                         <div className="flex items-center justify-between">
                             <h6 className="text-gray-800 font-semibold text-lg">Filter</h6>
                             <button onClick={resetFilter} className="btn-rose rounded-full uppercase px-2 py-1">Reset</button>
                         </div>
-                        <Filter />
+                        <div className="py-2 bg-white shadow rounded-lg mt-2">
+                            <Filter />
+                        </div>
                     </div>
                 </div>
 
@@ -520,7 +529,7 @@ const Search = ({ flights, options }) => {
                                     <p className="text-left text-gray-700">Menampilkan {filteredDepartures.length} penerbangan terbaik {isFiltering ? "sesuai filter yang anda terapkan" : ""}</p>
                                     {
                                         filteredDepartures.map(dep => {
-                                            return <FlightTicket airports={{departure: options.departureAirport, arrival: options.arrivalAirport}} onSelect={selectFlight} key={dep.AirEquipType + randomString(12)} flight={dep} />
+                                            return <FlightTicket passengers={options.passengersDetail} airports={{departure: options.departureAirport, arrival: options.arrivalAirport}} onSelect={selectFlight} key={dep.AirEquipType + randomString(12)} flight={dep} />
                                         })
                                     }
                                 </>
@@ -556,7 +565,7 @@ const Search = ({ flights, options }) => {
                                 <XMarkIcon className="w-5 h-5" />
                             </button>
                         </Modal.Header>
-                        <Modal.Body>
+                        <Modal.Body className="max-h-[70vh] overflow-y-auto gray-scrollbar pb-0">
                             <div className="block space-y-2">
                                 <div className="flex items-center justify-start space-x-4">
                                     <h6 className="text-gray-700 font-normal text-lg">
@@ -569,7 +578,10 @@ const Search = ({ flights, options }) => {
                                         <span className="text-gray-800 font-semibold">{departFlight.ArrivalAirport}</span>
                                     </div>
                                 </div>
-                                <FlightDetail noButton departure={departFlight} />
+                                <FlightDetail airports={{
+                                    departure: options.departureAirport,
+                                    arrival: options.arrivalAirport
+                                }} passengers={options.passengersDetail} flight={departFlight} />
                             </div>
                             {
                                 returnFlight && (
@@ -595,7 +607,7 @@ const Search = ({ flights, options }) => {
                         </Modal.Body>
                         <Modal.Footer className="flex flex-col md:flex-row md:items-center md:justify-end md:space-x-2 space-y-2 md:space-y-0">
                             <button onClick={() => setModalOpen("")} className="btn-text text-gray-900">Tutup</button>
-                            <button className="btn-rose rounded-full uppercase tracking-wider">Checkout</button>
+                            <button onClick={confirmFlight} className="btn-rose rounded-full uppercase tracking-wider">Checkout</button>
                         </Modal.Footer>
                     </Modal>
                 )

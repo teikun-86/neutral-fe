@@ -1,0 +1,2624 @@
+[
+    {
+        "DepartureDateTime": "2023-01-21T03:30:00",
+        "ArrivalDateTime": "2023-01-21T05:00:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "6134",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Batik Air ",
+            "Code": "ID",
+            "CodeContext": "IATA",
+            "FlightNumber": "6134"
+        },
+        "AirEquipType": "32A",
+        "MarketingAirline": {
+            "Code": "ID",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "D",
+                "ResBookDesigQuantity": "4",
+                "Amount": "3493100.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Business"
+            },
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "2",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "A",
+            "ResBookDesigQuantity": "2",
+            "Amount": "2459630.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T03:40:00",
+        "ArrivalDateTime": "2023-01-21T05:10:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "690",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Lion Air ",
+            "Code": "JT",
+            "CodeContext": "IATA",
+            "FlightNumber": "690"
+        },
+        "AirEquipType": "737-800",
+        "MarketingAirline": {
+            "Code": "JT",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T05:00:00",
+        "ArrivalDateTime": "2023-01-21T06:30:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "6370",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Batik Air ",
+            "Code": "ID",
+            "CodeContext": "IATA",
+            "FlightNumber": "6370"
+        },
+        "AirEquipType": "737-800",
+        "MarketingAirline": {
+            "Code": "ID",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "D",
+                "ResBookDesigQuantity": "4",
+                "Amount": "3493100.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Business"
+            },
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "S",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1356030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T05:30:00",
+        "ArrivalDateTime": "2023-01-21T07:00:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "748",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Lion Air ",
+            "Code": "JT",
+            "CodeContext": "IATA",
+            "FlightNumber": "748"
+        },
+        "AirEquipType": "737-800",
+        "MarketingAirline": {
+            "Code": "JT",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T05:45:00",
+        "ArrivalDateTime": "2023-01-21T07:15:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "330",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Super Air Jet ",
+            "Code": "IU",
+            "CodeContext": "IATA",
+            "FlightNumber": "330"
+        },
+        "AirEquipType": "320",
+        "MarketingAirline": {
+            "Code": "IU",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "7",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "7",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "G",
+            "ResBookDesigQuantity": "7",
+            "Amount": "1280030.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T06:00:00",
+        "ArrivalDateTime": "2023-01-21T07:30:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "6572",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Batik Air ",
+            "Code": "ID",
+            "CodeContext": "IATA",
+            "FlightNumber": "6572"
+        },
+        "AirEquipType": "737-800",
+        "MarketingAirline": {
+            "Code": "ID",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "D",
+                "ResBookDesigQuantity": "4",
+                "Amount": "3493100.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Business"
+            },
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "S",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1356030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T07:00:00",
+        "ArrivalDateTime": "2023-01-21T08:30:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "6308",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Batik Air ",
+            "Code": "ID",
+            "CodeContext": "IATA",
+            "FlightNumber": "6308"
+        },
+        "AirEquipType": "32A",
+        "MarketingAirline": {
+            "Code": "ID",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "D",
+                "ResBookDesigQuantity": "4",
+                "Amount": "3493100.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Business"
+            },
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "S",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1356030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T07:40:00",
+        "ArrivalDateTime": "2023-01-21T09:10:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "6584",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Batik Air ",
+            "Code": "ID",
+            "CodeContext": "IATA",
+            "FlightNumber": "6584"
+        },
+        "AirEquipType": "32A",
+        "MarketingAirline": {
+            "Code": "ID",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "D",
+                "ResBookDesigQuantity": "4",
+                "Amount": "3493100.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Business"
+            },
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "S",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1356030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T08:30:00",
+        "ArrivalDateTime": "2023-01-21T10:00:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "570",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Lion Air ",
+            "Code": "JT",
+            "CodeContext": "IATA",
+            "FlightNumber": "570"
+        },
+        "AirEquipType": "737-800",
+        "MarketingAirline": {
+            "Code": "JT",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "G",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1280030.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T09:00:00",
+        "ArrivalDateTime": "2023-01-21T10:30:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "8580",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Batik Air ",
+            "Code": "ID",
+            "CodeContext": "IATA",
+            "FlightNumber": "8580"
+        },
+        "AirEquipType": "737-800",
+        "MarketingAirline": {
+            "Code": "ID",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "D",
+                "ResBookDesigQuantity": "4",
+                "Amount": "3493100.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Business"
+            },
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "S",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1356030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T09:30:00",
+        "ArrivalDateTime": "2023-01-21T11:00:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "694",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Lion Air ",
+            "Code": "JT",
+            "CodeContext": "IATA",
+            "FlightNumber": "694"
+        },
+        "AirEquipType": "737-800",
+        "MarketingAirline": {
+            "Code": "JT",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T10:00:00",
+        "ArrivalDateTime": "2023-01-21T11:30:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "6582",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Batik Air ",
+            "Code": "ID",
+            "CodeContext": "IATA",
+            "FlightNumber": "6582"
+        },
+        "AirEquipType": "737-800",
+        "MarketingAirline": {
+            "Code": "ID",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "D",
+                "ResBookDesigQuantity": "4",
+                "Amount": "3493100.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Business"
+            },
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "S",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1356030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T10:30:00",
+        "ArrivalDateTime": "2023-01-21T12:00:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "598",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Lion Air ",
+            "Code": "JT",
+            "CodeContext": "IATA",
+            "FlightNumber": "598"
+        },
+        "AirEquipType": "737-800",
+        "MarketingAirline": {
+            "Code": "JT",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "G",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1280030.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T11:30:00",
+        "ArrivalDateTime": "2023-01-21T13:00:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "572",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Lion Air ",
+            "Code": "JT",
+            "CodeContext": "IATA",
+            "FlightNumber": "572"
+        },
+        "AirEquipType": "737-800",
+        "MarketingAirline": {
+            "Code": "JT",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "G",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1280030.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T12:00:00",
+        "ArrivalDateTime": "2023-01-21T13:30:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "6574",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Batik Air ",
+            "Code": "ID",
+            "CodeContext": "IATA",
+            "FlightNumber": "6574"
+        },
+        "AirEquipType": "32A",
+        "MarketingAirline": {
+            "Code": "ID",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "D",
+                "ResBookDesigQuantity": "4",
+                "Amount": "3493100.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Business"
+            },
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "S",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1356030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T12:30:00",
+        "ArrivalDateTime": "2023-01-21T14:00:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "890",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Lion Air ",
+            "Code": "JT",
+            "CodeContext": "IATA",
+            "FlightNumber": "890"
+        },
+        "AirEquipType": "737-800",
+        "MarketingAirline": {
+            "Code": "JT",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T13:00:00",
+        "ArrivalDateTime": "2023-01-21T14:30:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "6406",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Batik Air ",
+            "Code": "ID",
+            "CodeContext": "IATA",
+            "FlightNumber": "6406"
+        },
+        "AirEquipType": "737-800",
+        "MarketingAirline": {
+            "Code": "ID",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "D",
+                "ResBookDesigQuantity": "4",
+                "Amount": "3493100.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Business"
+            },
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "S",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1356030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T13:30:00",
+        "ArrivalDateTime": "2023-01-21T15:00:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "592",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Lion Air ",
+            "Code": "JT",
+            "CodeContext": "IATA",
+            "FlightNumber": "592"
+        },
+        "AirEquipType": "737-800",
+        "MarketingAirline": {
+            "Code": "JT",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T14:00:00",
+        "ArrivalDateTime": "2023-01-21T15:30:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "6586",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Batik Air ",
+            "Code": "ID",
+            "CodeContext": "IATA",
+            "FlightNumber": "6586"
+        },
+        "AirEquipType": "32A",
+        "MarketingAirline": {
+            "Code": "ID",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "D",
+                "ResBookDesigQuantity": "4",
+                "Amount": "3493100.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Business"
+            },
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "S",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1356030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T14:30:00",
+        "ArrivalDateTime": "2023-01-21T16:00:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "580",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Lion Air ",
+            "Code": "JT",
+            "CodeContext": "IATA",
+            "FlightNumber": "580"
+        },
+        "AirEquipType": "737-800",
+        "MarketingAirline": {
+            "Code": "JT",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "G",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1280030.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T14:30:00",
+        "ArrivalDateTime": "2023-01-21T16:00:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "692",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Lion Air ",
+            "Code": "JT",
+            "CodeContext": "IATA",
+            "FlightNumber": "692"
+        },
+        "AirEquipType": "737-900ER",
+        "MarketingAirline": {
+            "Code": "JT",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T14:45:00",
+        "ArrivalDateTime": "2023-01-21T16:15:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "340",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Super Air Jet ",
+            "Code": "IU",
+            "CodeContext": "IATA",
+            "FlightNumber": "340"
+        },
+        "AirEquipType": "320",
+        "MarketingAirline": {
+            "Code": "IU",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "7",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "7",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "G",
+            "ResBookDesigQuantity": "7",
+            "Amount": "1280030.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T15:00:00",
+        "ArrivalDateTime": "2023-01-21T16:30:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "6578",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Batik Air ",
+            "Code": "ID",
+            "CodeContext": "IATA",
+            "FlightNumber": "6578"
+        },
+        "AirEquipType": "32A",
+        "MarketingAirline": {
+            "Code": "ID",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "D",
+                "ResBookDesigQuantity": "4",
+                "Amount": "3493100.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Business"
+            },
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "S",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1356030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T15:30:00",
+        "ArrivalDateTime": "2023-01-21T17:00:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "696",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Lion Air ",
+            "Code": "JT",
+            "CodeContext": "IATA",
+            "FlightNumber": "696"
+        },
+        "AirEquipType": "737-900ER",
+        "MarketingAirline": {
+            "Code": "JT",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T16:00:00",
+        "ArrivalDateTime": "2023-01-21T17:30:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "6594",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Batik Air ",
+            "Code": "ID",
+            "CodeContext": "IATA",
+            "FlightNumber": "6594"
+        },
+        "AirEquipType": "737-800",
+        "MarketingAirline": {
+            "Code": "ID",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "D",
+                "ResBookDesigQuantity": "4",
+                "Amount": "3493100.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Business"
+            },
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "S",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1356030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T16:30:00",
+        "ArrivalDateTime": "2023-01-21T18:00:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "578",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Lion Air ",
+            "Code": "JT",
+            "CodeContext": "IATA",
+            "FlightNumber": "578"
+        },
+        "AirEquipType": "737-900ER",
+        "MarketingAirline": {
+            "Code": "JT",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "G",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1280030.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T16:45:00",
+        "ArrivalDateTime": "2023-01-21T18:15:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "332",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Super Air Jet ",
+            "Code": "IU",
+            "CodeContext": "IATA",
+            "FlightNumber": "332"
+        },
+        "AirEquipType": "320",
+        "MarketingAirline": {
+            "Code": "IU",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "7",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "7",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "G",
+            "ResBookDesigQuantity": "7",
+            "Amount": "1280030.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T17:30:00",
+        "ArrivalDateTime": "2023-01-21T19:00:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "590",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Lion Air ",
+            "Code": "JT",
+            "CodeContext": "IATA",
+            "FlightNumber": "590"
+        },
+        "AirEquipType": "737-800",
+        "MarketingAirline": {
+            "Code": "JT",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T18:30:00",
+        "ArrivalDateTime": "2023-01-21T20:00:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "588",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Lion Air ",
+            "Code": "JT",
+            "CodeContext": "IATA",
+            "FlightNumber": "588"
+        },
+        "AirEquipType": "737-900ER",
+        "MarketingAirline": {
+            "Code": "JT",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "G",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1280030.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T18:45:00",
+        "ArrivalDateTime": "2023-01-21T20:15:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "342",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Super Air Jet ",
+            "Code": "IU",
+            "CodeContext": "IATA",
+            "FlightNumber": "342"
+        },
+        "AirEquipType": "320",
+        "MarketingAirline": {
+            "Code": "IU",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "7",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "7",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "7",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "7",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T19:00:00",
+        "ArrivalDateTime": "2023-01-21T20:30:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "6588",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Batik Air ",
+            "Code": "ID",
+            "CodeContext": "IATA",
+            "FlightNumber": "6588"
+        },
+        "AirEquipType": "32A",
+        "MarketingAirline": {
+            "Code": "ID",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "D",
+                "ResBookDesigQuantity": "4",
+                "Amount": "3493100.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Business"
+            },
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "S",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1356030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T05:30:00",
+        "ArrivalDateTime": "2023-01-21T06:55:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "7511",
+        "DepartureAirport": "HLP",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Batik Air ",
+            "Code": "ID",
+            "CodeContext": "IATA",
+            "FlightNumber": "7511"
+        },
+        "AirEquipType": "737-800",
+        "MarketingAirline": {
+            "Code": "ID",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "D",
+                "ResBookDesigQuantity": "4",
+                "Amount": "3493100.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Business"
+            },
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "S",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1356030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "B",
+                "ResBookDesigQuantity": "8",
+                "Amount": "1236400.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:25",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T16:00:00",
+        "ArrivalDateTime": "2023-01-21T17:30:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "7517",
+        "DepartureAirport": "HLP",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Batik Air ",
+            "Code": "ID",
+            "CodeContext": "IATA",
+            "FlightNumber": "7517"
+        },
+        "AirEquipType": "737-800",
+        "MarketingAirline": {
+            "Code": "ID",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "D",
+                "ResBookDesigQuantity": "4",
+                "Amount": "3493100.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Business"
+            },
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "S",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1356030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "B",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1236400.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T17:05:00",
+        "ArrivalDateTime": "2023-01-21T18:35:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "7519",
+        "DepartureAirport": "HLP",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Batik Air ",
+            "Code": "ID",
+            "CodeContext": "IATA",
+            "FlightNumber": "7519"
+        },
+        "AirEquipType": "32A",
+        "MarketingAirline": {
+            "Code": "ID",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "D",
+                "ResBookDesigQuantity": "4",
+                "Amount": "3493100.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Business"
+            },
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "S",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1356030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "B",
+                "ResBookDesigQuantity": "6",
+                "Amount": "1236400.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:30",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T08:35:00",
+        "ArrivalDateTime": "2023-01-21T08:30:00",
+        "StopQuantity": "0",
+        "RPH": "1",
+        "FlightNumber": "919",
+        "DepartureAirport": "DPS",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Lion Air ",
+            "Code": "JT",
+            "CodeContext": "IATA",
+            "FlightNumber": "919"
+        },
+        "AirEquipType": "737-900ER",
+        "MarketingAirline": {
+            "Code": "JT",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "S",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1356030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "B",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1236400.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "H",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1932580.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "00:55",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T04:30:00",
+        "ArrivalDateTime": "2023-01-21T07:20:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "6500",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "DPS",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Batik Air ",
+            "Code": "ID",
+            "CodeContext": "IATA",
+            "FlightNumber": "6500"
+        },
+        "AirEquipType": "737-800",
+        "MarketingAirline": {
+            "Code": "ID",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "D",
+                "ResBookDesigQuantity": "4",
+                "Amount": "3493100.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Business"
+            },
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:50",
+        "available": {
+            "ResBookDesigCode": "A",
+            "ResBookDesigQuantity": "9",
+            "Amount": "2459630.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T08:35:00",
+        "ArrivalDateTime": "2023-01-21T08:30:00",
+        "StopQuantity": "0",
+        "RPH": "1",
+        "FlightNumber": "919",
+        "DepartureAirport": "DPS",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Lion Air ",
+            "Code": "JT",
+            "CodeContext": "IATA",
+            "FlightNumber": "919"
+        },
+        "AirEquipType": "737-900ER",
+        "MarketingAirline": {
+            "Code": "JT",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "S",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1356030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "B",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1236400.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "H",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1932580.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "00:55",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T05:20:00",
+        "ArrivalDateTime": "2023-01-21T07:05:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "678",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "PKY",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Lion Air ",
+            "Code": "JT",
+            "CodeContext": "IATA",
+            "FlightNumber": "678"
+        },
+        "AirEquipType": "737-800",
+        "MarketingAirline": {
+            "Code": "JT",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "S",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1356030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "B",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1236400.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "H",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1932580.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:45",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T07:50:00",
+        "ArrivalDateTime": "2023-01-21T09:00:00",
+        "StopQuantity": "0",
+        "RPH": "1",
+        "FlightNumber": "683",
+        "DepartureAirport": "PKY",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Lion Air ",
+            "Code": "JT",
+            "CodeContext": "IATA",
+            "FlightNumber": "683"
+        },
+        "AirEquipType": "737-800",
+        "MarketingAirline": {
+            "Code": "JT",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "S",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1356030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "B",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1236400.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "H",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1932580.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:10",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T05:00:00",
+        "ArrivalDateTime": "2023-01-21T08:00:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "6656",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "LOP",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Batik Air ",
+            "Code": "ID",
+            "CodeContext": "IATA",
+            "FlightNumber": "6656"
+        },
+        "AirEquipType": "737-800",
+        "MarketingAirline": {
+            "Code": "ID",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "D",
+                "ResBookDesigQuantity": "4",
+                "Amount": "3493100.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Business"
+            },
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "02:00",
+        "available": {
+            "ResBookDesigCode": "A",
+            "ResBookDesigQuantity": "9",
+            "Amount": "2459630.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T08:45:00",
+        "ArrivalDateTime": "2023-01-21T08:50:00",
+        "StopQuantity": "0",
+        "RPH": "1",
+        "FlightNumber": "645",
+        "DepartureAirport": "LOP",
+        "ArrivalAirport": "SUB",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Lion Air ",
+            "Code": "JT",
+            "CodeContext": "IATA",
+            "FlightNumber": "645"
+        },
+        "AirEquipType": "737-900ER",
+        "MarketingAirline": {
+            "Code": "JT",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "9",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "S",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1356030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "B",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1236400.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "H",
+                "ResBookDesigQuantity": "9",
+                "Amount": "1932580.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:05",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "9",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    },
+    {
+        "DepartureDateTime": "2023-01-21T04:45:00",
+        "ArrivalDateTime": "2023-01-21T07:35:00",
+        "StopQuantity": "0",
+        "RPH": "0",
+        "FlightNumber": "730",
+        "DepartureAirport": "CGK",
+        "ArrivalAirport": "DPS",
+        "OperatingAirline": {
+            "CompanyShortName": "Operated by Super Air Jet ",
+            "Code": "IU",
+            "CodeContext": "IATA",
+            "FlightNumber": "730"
+        },
+        "AirEquipType": "320",
+        "MarketingAirline": {
+            "Code": "IU",
+            "CodeContext": "IATA"
+        },
+        "BookingClassAvail": [
+            {
+                "ResBookDesigCode": "A",
+                "ResBookDesigQuantity": "7",
+                "Amount": "2459630.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "G",
+                "ResBookDesigQuantity": "7",
+                "Amount": "1280030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "W",
+                "ResBookDesigQuantity": "7",
+                "Amount": "1204650.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "S",
+                "ResBookDesigQuantity": "7",
+                "Amount": "1356030.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "B",
+                "ResBookDesigQuantity": "7",
+                "Amount": "1236400.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            },
+            {
+                "ResBookDesigCode": "H",
+                "ResBookDesigQuantity": "7",
+                "Amount": "1932580.0000",
+                "CurrencyCode": "IDR",
+                "DecimalPlaces": "0",
+                "Class": "Economy"
+            }
+        ],
+        "Duration": "01:50",
+        "available": {
+            "ResBookDesigCode": "W",
+            "ResBookDesigQuantity": "7",
+            "Amount": "1204650.0000",
+            "CurrencyCode": "IDR",
+            "DecimalPlaces": "0",
+            "Class": "Economy"
+        }
+    }
+]

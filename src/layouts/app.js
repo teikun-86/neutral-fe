@@ -85,7 +85,7 @@ const AppLayout = props => {
 
             {
                 showGoToTopButton && showBtn && (
-                    <button onClick={goToTop} className="btn-rose rounded-full p-2 fixed bottom-3 right-3 opacity-70 hocus:opacity-100">
+                    <button onClick={goToTop} className="btn-rose rounded-full p-2 fixed bottom-3 right-3 opacity-80 hocus:opacity-100">
                         <ArrowUpIcon className="w-6 h-6" />
                     </button>
                 )

@@ -7,11 +7,11 @@ import Image from 'next/image';
 import moment from 'moment';
 import { formatIDR, randomString } from '@/util';
 import { useState } from "react";
-import { ArchiveBoxIcon, BoltIcon, ShoppingBagIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { ArchiveBoxIcon, BoltIcon, ChevronDownIcon, ShoppingBagIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Tooltip } from "../tooltip";
 import { Transition } from "@headlessui/react";
 
-export const FlightTicket = ({ flight, airports = { departure: {}, arrival: {} }, onSelect = (flight) => { }, noButton = false, ...props }) => {
+export const FlightTicket = ({ flight, airports = { departure: {}, arrival: {} }, onSelect = (flight) => { }, noButton = false, passengers = {adult: 1, child: 0, infant: 0}, ...props }) => {
     const [open, setOpen] = useState(false)
     const [section, setSection] = useState("flight-detail")
 
@@ -45,7 +45,13 @@ export const FlightTicket = ({ flight, airports = { departure: {}, arrival: {} }
     let diffDays = isSameDay ? 0 : moment(flight.ArrivalDate).diff(flight.DepartureDate, 'days')
 
     return (
-        <div key={flight.FlightNumber + randomString(12)} className="block w-full p-2 rounded-lg bg-white my-3 shadow">
+        <div key={flight.FlightNumber + randomString(12)} className="block w-full p-2 rounded-lg bg-white my-3 shadow relative">
+
+            {
+                Number(flight.available.ResBookDesigQuantity) <= 10 && (
+                    <span className="absolute top-2 right-2 flex items-center px-2 py-1 rounded-full bg-rose-50 text-rose-600 font-semibold text-xs">{flight.available.ResBookDesigQuantity} tersisa</span>
+                )
+            }
             <div className="flex w-full items-center space-x-2">
                 <div className="w-20 h-14 grid place-items-center p-1">
                     <Image src={airlineLogo[flight.OperatingAirline.CompanyShortName.replace("Operated by", "").trim()]} className="w-auto h-auto block" alt="Lion Air" />
@@ -53,6 +59,7 @@ export const FlightTicket = ({ flight, airports = { departure: {}, arrival: {} }
                 <h6 className="text-lg font-semibold text-gray-900">{flight.OperatingAirline.CompanyShortName.replace("Operated by", "").trim()}</h6>
             </div>
             <div className="flex items-center justify-between mt-2 flex-wrap">
+                
                 <div className="flex items-center px-3 w-full md:w-1/2">
                     <div className="flex flex-col items-center justify-center">
                         <span className="text-lg font-bold text-gray-700">{moment(flight.DepartureDateTime).format("HH:MM")}</span>
@@ -118,7 +125,10 @@ export const FlightTicket = ({ flight, airports = { departure: {}, arrival: {} }
                             </div>
                         </Tooltip>
                         <div className="flex items-center justify-end space-x-2 mt-2">
-                            <button onClick={() => setOpen(open => !open)} className="btn-text text-gray-700 px-0">Detail Penerbangan</button>
+                            <button onClick={() => setOpen(open => !open)} className="btn-text text-gray-700 px-0">
+                                Detail Penerbangan
+                                <ChevronDownIcon className={`w-6 h-6 ${open ? "rotate-180 text-rose-600" : ""} transition-all duration-200 ml-2`} />
+                            </button>
                             {
                                 !noButton && (
                                     <button onClick={() => handleSelect(flight)} className="btn-rose rounded-full">Pilih</button>
@@ -150,21 +160,35 @@ export const FlightTicket = ({ flight, airports = { departure: {}, arrival: {} }
                         <div className="flex items-center justify-start space-x-2 h-64">
                             <div className="flex items-center space-x-2 h-full">
                                 <div className="flex items-center justify-between h-full flex-col relative w-10">
-                                    <span className="text-gray-800 font-semibold text-sm">
-                                        {
-                                            moment(flight.DepartureDateTime).format("HH:MM")
-                                        }
-                                    </span>
+                                    <div className="flex flex-col items-center justify-center">
+                                        <span className="text-gray-800 font-semibold text-sm">
+                                            {
+                                                moment(flight.DepartureDateTime).format("HH:MM")
+                                            }
+                                        </span>
+                                        <span className="text-gray-700 font-semibold text-xs">
+                                            {
+                                                moment(flight.DepartureDateTime).format("D MMM")
+                                            }
+                                        </span>
+                                    </div>
                                     <span className="text-gray-800 font-semibold text-sm whitespace-nowrap">
                                         {
-                                            `${flight.Duration.split(":")[0]}j ${flight.Duration.split(":")[1]}m`
+                                            `${flightDuration.h}j ${flightDuration.m}m`
                                         }
                                     </span>
-                                    <span className="text-gray-800 font-semibold text-sm">
-                                        {
-                                            moment(flight.ArrivalDateTime).format("HH:MM")
-                                        }
-                                    </span>
+                                    <div className="flex flex-col items-center justify-center">
+                                        <span className="text-gray-800 font-semibold text-sm">
+                                            {
+                                                moment(flight.ArrivalDateTime).format("HH:MM")
+                                            }
+                                        </span>
+                                        <span className="text-gray-700 font-semibold text-xs">
+                                            {
+                                                moment(flight.ArrivalDateTime).format("D MMM")
+                                            }
+                                        </span>
+                                    </div>
                                 </div>
                                 <div className="w-10 h-full flex items-center flex-col relative">
                                     <div className="w-2 h-2 rounded-full bg-white border border-rose-600 absolute -top-1 left-1/2 -translate-x-1/2"></div>
@@ -213,7 +237,50 @@ export const FlightTicket = ({ flight, airports = { departure: {}, arrival: {} }
                         </div>
                     </div>
                     <div hidden={section !== "price-detail"}>
-                        <p className="text-center">Price Detail<br />Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab natus, fuga repellat quae similique distinctio quidem mollitia modi nulla maiores quia ducimus accusantium adipisci possimus praesentium vero voluptatibus a? Non!</p>
+                        <div className="block w-full py-2 px-4">
+                            <h6 className="text-gray-800 text-base font-semibold">Tarif</h6>
+                            <ul className="list-disc w-full pl-8 [&_li::marker]:text-gray-400">
+                                <li className="text-sm font-semibold text-gray-500">
+                                    <div className="flex items-center justify-between w-full">
+                                        <span>Dewasa ({passengers.adult}x)</span>
+                                        <span>{formatIDR(flight.available.Amount * passengers.adult)}</span>
+                                    </div>
+                                </li>
+                                {
+                                    passengers.child > 0 && (
+                                        <li className="text-sm font-semibold text-gray-500">
+                                            <div className="flex items-center justify-between w-full">
+                                                <span>Anak ({passengers.child}x)</span>
+                                                <span>{formatIDR(flight.available.Amount * passengers.child)}</span>
+                                            </div>
+                                        </li>
+                                    )
+                                }
+                                {
+                                    passengers.infant > 0 && (
+                                        <li className="text-sm font-semibold text-gray-500">
+                                            <div className="flex items-center justify-between w-full">
+                                                <span>Bayi ({passengers.infant}x)</span>
+                                                <span>{formatIDR(flight.available.Amount * passengers.infant)}</span>
+                                            </div>
+                                        </li>
+                                    )
+                                }
+                            </ul>
+                            <h6 className="text-gray-800 text-base font-semibold mt-4">Pajak dan biaya lainnya</h6>
+                            <ul className="list-disc w-full pl-8 [&_li::marker]:text-gray-400">
+                                <li className="text-sm font-semibold text-gray-500">
+                                    <div className="flex items-center justify-between w-full">
+                                        <span>Pajak</span>
+                                        <span className="text-rose-600">Termasuk</span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div className="flex items-center justify-between mt-3 border-t border-gray-300 py-2">
+                                <h6 className="text-gray-800 text-base font-semibold">Total</h6>
+                                <h6 className="text-rose-600 text-lg font-semibold">{formatIDR(flight.available.Amount * passengers.adult)}</h6>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </Transition>

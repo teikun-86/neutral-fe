@@ -93,17 +93,17 @@ const Modal = (props = defaultProps) => {
     );
 };
 
-const Header = props => {
+const Header = ({ className = "", ...props }) => {
     return (
-        <div className="py-3 px-4 relative">
+        <div className={`py-3 px-4 relative ${className}`} { ...props }>
             {props.children}
         </div>
     )
 }
 
-const Body = props => {
+const Body = ({className = "", ...props}) => {
     return (
-        <div className="py-3 px-4 relative">
+        <div className={`py-3 px-4 relative ${className}`} { ...props }>
             {props.children}
         </div>
     )

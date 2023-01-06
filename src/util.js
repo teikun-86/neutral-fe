@@ -2,31 +2,28 @@ export const mergeProps = (props, ...items) => {
     return Object.assign({}, props, ...items)
 }
 
-export const searchString = (needle, haystack) => {
-    return haystack
+export const searchString = (needle, haystack) =>
+    haystack
         .toLowerCase()
         .replace(/\s+/g, '')
         .includes(needle.toLowerCase().replace(/\s+/g, ''))
-}
 
-export const objectToQueryString = (obj) => {
-    let str = []
-    let keys = Object.keys(obj)
-    keys.forEach(x => {
-        str.push(`${x}=${obj[x]}`)
-    })
-    return str.join('&')
-}
+export const objectToQueryString = (obj) =>
+    Object.keys(obj)
+        .map(key => `${key}=${obj[key]}`)
+        .join('&');
 
-export const checkObjectUndefined = (obj) => {
-    let keys = Object.keys(obj)
-    for (let i = 0; i < keys.length; i ++) {
-        if (typeof obj[keys[i]] === 'undefined') return false
-    }
-    return true
-}
+export const checkObjectUndefined = (obj) =>
+    !Object.values(obj).includes(undefined)
+
 export const randomString = (len) => {
-    return Math.random().toString(36).substr(2, len);
+    let result = '';
+    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let charactersLength = characters.length;
+    for (let i = 0; i < len; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
 }
 
 export const formatIDR = (amount, decimalPlaces = 0) => {
@@ -38,10 +35,8 @@ export const formatIDR = (amount, decimalPlaces = 0) => {
     }).format(amount)
 }
 
-export const removeFromArray = (needle, haystack = []) => {
-    return haystack.filter(val => val !== needle)
-}
+export const removeFromArray = (needle, haystack = []) => 
+    haystack.filter(val => val !== needle)
 
-export const truncateString = (string, length = 12) => {
-    return string.length > length ? string.substring(0, length) + '...' : string
-}
+export const truncateString = (string, length = 12) => 
+    string.length > length ? `${string.substring(0, length)}...` : string;
