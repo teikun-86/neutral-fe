@@ -1,7 +1,7 @@
 import { axios } from "../axios"
 
 export class Flight {
-    prefix = "flight/"
+    prefix = "lionair/flight/"
     params = {
         DepartureAirport: "",
         ArrivalAirport: "",
@@ -15,11 +15,19 @@ export class Flight {
     }
     method = "GET"
     endpoint = ""
+    credentials = {
+        "key": "",
+        "secret": ""
+    }
     
-    constructor(endpoint = "", method = "GET", params = {}) {
+    constructor(endpoint = "", method = "GET", params = {}, credentials = {
+        "key": "",
+        "secret": ""
+    }) {
         this.params = params
         this.endpoint = endpoint
         this.method = method
+        this.credentials = credentials
     }
     
     departure(airport) {
@@ -74,17 +82,18 @@ export class Flight {
 
     async get() {
         this.endpoint = ""
-
-        console.log({
-            params: this.params
-        });
         
-        return await axios.post(`${this.prefix}${this.endpoint}`, this.params, {
+        return await axios.post(`${this.prefix}${this.endpoint}?key=${this.credentials.key}&secret=${this.credentials.secret}`, this.__buildParams(), {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
         }).then(res => res.data.data).catch(err => {
             console.log({err});
         })
+    }
+
+    __buildParams() {
+        let params = this.params
+        return params
     }
 }

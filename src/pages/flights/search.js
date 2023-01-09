@@ -15,6 +15,7 @@ import drawerState from '@/hooks/drawer';
 import { toast } from 'react-toastify';
 import { AirplaneLandingIcon, AirplaneTakeoffIcon } from '@/components/icons';
 import modalState from '@/hooks/modal';
+import { axios } from '@/libs/axios';
 
 const Search = ({ flights, options }) => {
     const router = useRouter()
@@ -385,10 +386,6 @@ const Search = ({ flights, options }) => {
         )
     }
 
-    const onRefresh = () => {
-        router.replace(router.asPath)
-    }
-
     const selectFlight = (flight) => {
         let depFlight = departFlight
         let retFlight = returnFlight
@@ -468,7 +465,7 @@ const Search = ({ flights, options }) => {
         setModalOpen(null)
         let strId = randomString(32)
         console.log({strId});
-        // router.push("/flights/checkout/" + strId)
+        router.push("/flights/checkout/" + strId)
     }
 
     return (

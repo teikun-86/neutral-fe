@@ -172,11 +172,6 @@ export const FlightTicket = ({ flight, airports = { departure: {}, arrival: {} }
                                             }
                                         </span>
                                     </div>
-                                    <span className="text-gray-800 font-semibold text-sm whitespace-nowrap">
-                                        {
-                                            `${flightDuration.h}j ${flightDuration.m}m`
-                                        }
-                                    </span>
                                     <div className="flex flex-col items-center justify-center">
                                         <span className="text-gray-800 font-semibold text-sm">
                                             {
@@ -192,6 +187,11 @@ export const FlightTicket = ({ flight, airports = { departure: {}, arrival: {} }
                                 </div>
                                 <div className="w-10 h-full flex items-center flex-col relative">
                                     <div className="w-2 h-2 rounded-full bg-white border border-rose-600 absolute -top-1 left-1/2 -translate-x-1/2"></div>
+                                    <span className="text-gray-800 font-semibold text-xs whitespace-nowrap bg-white p-1 rounded-full border-2 border-rose-600 rotate-90 absolute top-1/2 -translate-y-1/2">
+                                        {
+                                            `${flightDuration.h}j ${flightDuration.m}m`
+                                        }
+                                    </span>
                                     <div className="w-2 h-2 rounded-full bg-rose-600 ring-1 ring-rose-600 ring-offset-1 border border-rose-600 absolute -bottom-1 left-1/2 -translate-x-1/2"></div>
                                     <div className="w-0.5 h-full bg-rose-600"></div>
                                 </div>
