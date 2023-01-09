@@ -141,7 +141,8 @@ const Flights = () => {
         }
 
         if (intlAirports && localAirports) {
-            let airports = localAirports.airports
+            // let airports = localAirports.airports
+            let airports = intlAirports.airports
             setAirports(airports)
             return
         }
