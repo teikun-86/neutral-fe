@@ -15,66 +15,31 @@ import ovoLogo from "@/assets/images/payment/ovo-logo.png";
 import indomaretLogo from "@/assets/images/payment/indomaret-logo.png";
 import alfamartLogo from "@/assets/images/payment/alfamart-logo.png";
 import alfamidiLogo from "@/assets/images/payment/alfamidi-logo.png";
+import midtransLogo from "@/assets/images/payment/midtrans-logo.png";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
 import modalState from "@/hooks/modal";
 import drawerState from "@/hooks/drawer";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Drawer, Modal } from "@/components/modal";
 import { useViewport } from "@/hooks/viewport";
 import { formatIDR } from "@/util";
+import { midtransClient } from "@/libs/midtrans";
+import { SpinnerIcon } from "@/components/icons";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { LionAPI } from "@/libs/lion-api";
 
 const Payment = ({ props }) => {
     const router = useRouter()
 
     const [modalOpen, setModalOpen] = useRecoilState(modalState)
     const [drawerOpen, setDrawerOpen] = useRecoilState(drawerState)
-
+    const [loading, setLoading] = useState(false)
+    const [checkoutId, setCheckoutId] = useState(null)
     const [checkoutData, setCheckoutData] = useState(null)
     const [passengers, setPassengers] = useState([])
     const paymentMethods = {
-        "Virtual Account": [
-            {
-                "name": "BCA Virtual Account",
-                "image": bcaLogo,
-                "description": "Bayar dengan Virtual Account BCA",
-                "type": "virtual_account",
-                "code": "bca_va",
-                "status": "active"
-            },
-            {
-                "name": "BNI Virtual Account",
-                "image": bniLogo,
-                "description": "Bayar dengan Virtual Account BNI",
-                "type": "virtual_account",
-                "code": "bni_va",
-                "status": "active"
-            },
-            {
-                "name": "Mandiri Virtual Account",
-                "image": mandiriLogo,
-                "description": "Bayar dengan Virtual Account Mandiri",
-                "type": "virtual_account",
-                "code": "mandiri_va",
-                "status": "active"
-            },
-            {
-                "name": "Permata Virtual Account",
-                "image": permataLogo,
-                "description": "Bayar dengan Virtual Account Permata",
-                "type": "virtual_account",
-                "code": "permata_va",
-                "status": "active"
-            },
-            {
-                "name": "BRI Virtual Account",
-                "image": briLogo,
-                "description": "Bayar dengan Virtual Account BRI",
-                "type": "virtual_account",
-                "code": "bri_va",
-                "status": "active"
-            },
-        ],
         "Bank Transfer": [
             {
                 "name": "BCA Bank Transfer",
@@ -212,25 +177,48 @@ const Payment = ({ props }) => {
         "infant": "Bayi",
     }
 
-    const getCheckoutData = () => {
-        const data = JSON.parse(localStorage.getItem('__flight_checkout'))
-        let totalPassengers = data.passengers.adult + data.passengers.child + data.passengers.infant
+    const getCheckoutData = useCallback(async (checkoutId) => {
+        const data = (await(new LionAPI).cart().id(checkoutId).get().then(res => res.cart))
+
+        if (data.step !== "prebook") {
+            if (data.step === "checkout") {
+                router.push("/flights/checkout/" + checkoutId)
+                return
+            }
+
+            router.push("/flights/checkout/" + checkoutId + "/finish")
+            return
+        }
+
+        if (!data) {
+            setLoading(false)
+            setError(true)
+            return
+        }
+        
+        let totalPassengers = data.items.passengers.adult + data.items.passengers.child + data.items.passengers.infant
         const passengersList = []
 
         for (let i = 0; i < totalPassengers; i++) {
             passengersList.push({
                 name: "",
                 title: "Mr",
-                type: i < data.passengers.adult ? "adult" : i < data.passengers.adult + data.passengers.child ? "child" : "infant",
+                type: i < data.items.passengers.adult ? "adult" : i < data.items.passengers.adult + data.items.passengers.child ? "child" : "infant",
                 number: i + 1,
             })
         }
 
         setPassengers(passengersList)
 
-        let priceAdult = Number(data.depFlight.available.Amount)
-        let priceChild = Number(data.depFlight.available.Amount)
-        let priceInfant = Number(data.depFlight.available.Amount)
+        let priceAdult = Number(data.items.depFlight.Amount)
+        let priceChild = Number(data.items.depFlight.Amount)
+        let priceInfant = Number(data.items.depFlight.Amount)
+
+        if (data.items.retFlight) {
+            priceAdult += Number(data.items.retFlight.Amount)
+            priceChild += Number(data.items.retFlight.Amount)
+            priceInfant += Number(data.items.retFlight.Amount)
+        }
 
         let fees = [
             {
@@ -245,33 +233,50 @@ const Payment = ({ props }) => {
 
         const priceList = {
             adult: {
-                count: data.passengers.adult,
+                count: data.items.passengers.adult,
                 price: priceAdult
             },
             child: {
-                count: data.passengers.child,
+                count: data.items.passengers.child,
                 price: priceChild
             },
             infant: {
-                count: data.passengers.infant,
+                count: data.items.passengers.infant,
                 price: priceInfant
             },
             fees,
-            total: (priceAdult * data.passengers.adult) + (priceChild * data.passengers.child) + (priceInfant * data.passengers.infant) + fees.reduce((acc, cur) => acc + cur.price, 0)
+            total: (priceAdult * data.items.passengers.adult) + (priceChild * data.items.passengers.child) + (priceInfant * data.items.passengers.infant) + fees.reduce((acc, cur) => acc + cur.price, 0)
         }
 
         setPrices(priceList)
-        setCheckoutData(data)
+        setCheckoutData(data.items)
+    }, [router])
 
-        console.log({
-            data,
-            priceList
-        });
+    const payMidtrans = async () => {
+        const payload = {
+            transaction_details: {
+                order_id: `NTRFLIGHT-SB-${router.query.id}`,
+                gross_amount: prices.total
+            },
+            credit_card: {
+                secure: true
+            }
+        }
+        setLoading(true)
+        await axios.post("/api/payment/midtrans", payload).then(res => {
+            console.log({
+                data: res.data
+            });
+            setLoading(false)
+            window.location.href = res.data.transaction.redirect_url
+        }).catch(err => {
+            console.log({
+                err
+            });
+            setLoading(false)
+            toast.error("Terjadi kesalahan, silahkan coba lagi nanti")
+        })
     }
-
-    useEffect(() => {
-        getCheckoutData()
-    }, [])
 
     const openPriceDetail = () => {
         if (width >= 768) {
@@ -280,6 +285,25 @@ const Payment = ({ props }) => {
             setDrawerOpen("priceDetailDrawer")
         }
     }
+
+    useEffect(() => {
+        // disable body scroll when loading is true
+        if (loading) {
+            document.body.style.overflow = "hidden"
+        } else {
+            document.body.style.overflow = "auto"
+        }
+    }, [loading])
+
+    useEffect(() => {
+        const query = router.query
+
+        if (typeof query.id !== 'undefined') {
+            setCheckoutId(query.id)
+            getCheckoutData(query.id)
+        }
+
+    }, [router, getCheckoutData])
     
     return (
         <AppLayout title="Payment">
@@ -310,6 +334,23 @@ const Payment = ({ props }) => {
 
             <div className="w-full max-w-7xl mx-auto px-4 py-6">
                 <h3 className="text-xl font-bold text-gray-900">Pilih Metode Pembayaran</h3>
+
+                <div className="w-full bg-white p-3 rounded-lg my-6 shadow">
+                    <h5 className="text-lg font-semibold text-gray-800">Pihak Ketiga</h5>
+
+                    <div className="block space-y-3 mt-3">
+                        <button onClick={payMidtrans} className="flex items-center space-x-2 btn-light w-full shadow justify-start text-start">
+                            <Image src={midtransLogo} alt="Midtrans" className="w-10 h-auto" width={100} height={100} />
+                            <div>
+                                <h3 className="text-sm font-medium">Midtrans</h3>
+                                <p className="text-xs text-gray-500">
+                                    Pembayaran melalui Midtrans. Anda dapat membayar dengan kartu kredit, transfer bank, dan e-wallet.
+                                </p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                
                 {
                     Object.keys(paymentMethods).map((group) => {
                         const paymentMethod = paymentMethods[group];
@@ -338,7 +379,7 @@ const Payment = ({ props }) => {
                 }
                 {
                     checkoutData && (
-                       <div className="flex items-center justify-end bg-white sticky bottom-0 shadow rounded-t-lg">
+                       <div className="flex items-center justify-end bg-white sticky bottom-0 shadow rounded-lg px-4">
                             <button onClick={openPriceDetail} className="flex items-center mb-3 md:mb-0 justify-between cursor-pointer">
                                 <div className="btn-text space-x-2 text-rose-600">
                                     <span className="text-lg font-semibold text-gray-900">Total</span>
@@ -491,15 +532,18 @@ const Payment = ({ props }) => {
                 )
             }
 
+            {
+                loading && (
+                    <div className="fixed top-0 left-0 w-full h-screen grid place-items-center bg-black/50 z-50">
+                        <span className="grid place-items-center p-3 rounded-3xl bg-white shadow">
+                            <SpinnerIcon className="w-10 h-10 text-rose-600 animate-spin" />
+                        </span>
+                    </div>
+                )
+            }
+
         </AppLayout>
     );
 }
 
-export const getServerSideProps = async (context) => {
-    return {
-        props: {
-            checkoutId: context.params.id
-        },
-    }
-}
 export default Payment;

@@ -7,18 +7,19 @@ import Link from 'next/link';
 import { formatIDR, randomString, truncateString } from '@/util';
 import { useRouter } from 'next/router';
 import { Disclosure, Transition } from '@headlessui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CheckIcon } from '@heroicons/react/20/solid';
 import { Drawer, Modal } from '@/components/modal';
 import { useRecoilState } from 'recoil';
 import drawerState from '@/hooks/drawer';
 import { toast } from 'react-toastify';
-import { AirplaneLandingIcon, AirplaneTakeoffIcon } from '@/components/icons';
+import { AirplaneLandingIcon, AirplaneTakeoffIcon, SpinnerIcon } from '@/components/icons';
 import modalState from '@/hooks/modal';
 import { axios } from '@/libs/axios';
 
-const Search = ({ flights, options }) => {
+const Search = ({ query, options }) => {
     const router = useRouter()
+    const [loading, setLoading] = useState(true)
     const [drawerOpen, setDrawerOpen] = useRecoilState(drawerState)
     const [modalOpen, setModalOpen] = useRecoilState(modalState)
     const [departFlight, setDepartFlight] = useState(null)
@@ -36,8 +37,15 @@ const Search = ({ flights, options }) => {
     const [arrivalTimeFilter, setArrivalTimeFilter] = useState(null)
     const [section, setSection] = useState("depart")
     const [totalPrice, setTotalPrice] = useState(0)
-
     const [toCheckout, setToCheckout] = useState(null)
+    const [flights, setFlights] = useState({
+        Departure: [],
+        Return: []
+    })
+    const [departureAirport, setDepartureAirport] = useState(null)
+    const [arrivalAirport, setArrivalAirport] = useState(null)
+
+    const [switching, setSwitching] = useState(false)
 
     const [hasSelected, setHasSelected] = useState(false)
 
@@ -136,8 +144,8 @@ const Search = ({ flights, options }) => {
         }
 
         if (orderBy === "price") {
-            let aPrice = Number(a.available.Amount)
-            let bPrice = Number(b.available.Amount)
+            let aPrice = Number(a.Amount)
+            let bPrice = Number(b.Amount)
             if (orderDesc) {
                 return bPrice - aPrice
             } else {
@@ -398,23 +406,18 @@ const Search = ({ flights, options }) => {
         }
         setHasSelected(true)
 
-        if (section === "depart" && options.returnFlight) {
+
+        if (section === "depart" && options.roundTrip) {
             setSection("return")
+            setSwitching(true)
+            setTimeout(() => {
+                setSwitching(false)
+            }, 500)
             return
         }
 
         console.log({flight, section, options});
-
-        // if (departFlight === null) {
-        //     toast.error("Pilih penerbangan pergi terlebih dahulu")
-        //     return
-        // }
-
-        // if (options.returnFlight && returnFlight === null) {
-        //     toast.error("Pilih penerbangan pulang terlebih dahulu")
-        //     return
-        // }
-
+        
         const data = {
             depFlight,
             retFlight,
@@ -424,7 +427,9 @@ const Search = ({ flights, options }) => {
             totalPassengers: options.passengers,
         }
 
-        if (options.returnFlight) {
+        console.log({data});
+
+        if (options.roundTrip) {
             const departFlightDate = new Date(depFlight.departureDate)
             const returnFlightDate = new Date(retFlight.departureDate)
 
@@ -436,10 +441,10 @@ const Search = ({ flights, options }) => {
 
         // calculate total price
         let totalPrice = 0
-        let departPrice = Number(depFlight.available.Amount)
-        let returnPrice = retFlight ? Number(retFlight.available.Amount) : 0
+        let departPrice = Number(depFlight.Amount)
+        let returnPrice = retFlight ? Number(retFlight.Amount) : 0
         
-        if (options.returnFlight) {
+        if (options.roundTrip) {
             totalPrice = (departPrice + returnPrice) * options.passengers
         } else {
             totalPrice = departPrice * options.passengers
@@ -457,158 +462,230 @@ const Search = ({ flights, options }) => {
         setToCheckout(data)
         
         setModalOpen("confirmFlightModal")
-
-        // router.push("/flights/checkout")
     }
 
-    const confirmFlight = () => {
+    const confirmFlight = async () => {
+        setLoading(true)
         setModalOpen(null)
-        let strId = randomString(32)
-        console.log({strId});
-        router.push("/flights/checkout/" + strId)
+        let cart = (await (new LionAPI).cart().add(toCheckout))
+        console.log({cart});
+        setLoading(false)
+        router.push("/flights/checkout/" + cart.id)
     }
+
+    const resetCheckout = () => {
+        setDepartFlight(null)
+        setReturnFlight(null)
+        setHasSelected(false)
+        setToCheckout(null)
+        setTotalPrice(0)
+        setModalOpen(null)
+        setSection("depart")
+        setSwitching(true)
+        setTimeout(() => {
+            setSwitching(false)
+        }, 500)
+    }
+
+    const getFlights = async () => {
+        let classMap = {
+            "Ekonomi": "Economy",
+            "Bisnis": "Business",
+            "First": "First",
+            "Premium Ekonomi": "Economy Premium"
+        }
+
+        let api = new LionAPI()
+        let flight = api.flight().departure(query.d).arrival(query.a).departureDate(query.d_date).adult(query.adult).children(query.child).infant(query.infant).cabinClass(classMap[query.class])
+        if (query.r_date) {
+            flight.roundTrip().returnDate(query.r_date)
+        } else {
+            flight.oneWayTrip()
+        }
+        let res = await flight.get()
+
+        let airports = await api.airport().iata([query.d, query.a]).get()
+
+        let departureAirport = airports.filter(airport => airport.iata === query.d)[0]
+        let arrivalAirport = airports.filter(airport => airport.iata === query.a)[0]
+
+        setDepartureAirport(departureAirport)
+        setArrivalAirport(arrivalAirport)
+        setFlights(res)
+
+        setLoading(false)
+    }
+
+    useEffect(() => {
+        getFlights()
+    }, [])
 
     return (
         <AppLayout showGoToTopButton fixed={false} title={`Cari Tiket Pesawat ー ${process.env.NEXT_PUBLIC_APP_NAME}`}>
-            <div className="w-full py-2 pb-0 bg-gray-100 shadow sticky transition duration-200 top-0 px-4 z-40">
-                <div className="w-full max-w-7xl mx-auto">
-                    <h2 className="text-lg md:text-xl font-semibold text-gray-800">Pilih Penerbangan Pergi</h2>
-                    <div className="md:flex items-center md:justify-between">
-                        <div className="flex items-center flex-wrap space-x-2 text-sm md:text-base text-gray-900 font-semibold w-full">
-                            <div className="flex items-center space-x-2">
-                                <span><span className="hidden md:inline">{truncateString(options.departureAirport.airportName)}</span> ({options.departFrom})</span>
-                                {
-                                    options.roundTrip
-                                    ? <ArrowsRightLeftIcon className="w-5 h-5" />
-                                    : <ArrowRightIcon className="w-5 h-5" />
-                                }
-                                <span><span className="hidden md:inline">{truncateString(options.arrivalAirport.airportName)}</span> ({options.arriveAt})</span>
-                            </div>
-                            <span className="middot"></span>
-                            <span>{moment(options.departureDate).format("ddd, D MMM")}</span>
-                            <span className="middot"></span>
-                            <span>{options.passengers} Penumpang</span>
-                            <span className="middot"></span>
-                            <span>{options.class}</span>
-                        </div>
-                        <Link href="/flights" className="btn-rose rounded-full px-5 w-full md:w-auto my-2 whitespace-nowrap uppercase tracking-wider text-xs">Ubah Pencarian</Link>
-                    </div>
-                </div>
-            </div>
-            <div className="my-3 w-full max-w-7xl mx-auto flex">
-                <div className="hidden md:block w-3/12 py-3">
-                    <div className="w-full p-4 sticky top-20">
-                        <div className="flex items-center justify-between">
-                            <h6 className="text-gray-800 font-semibold text-lg">Filter</h6>
-                            <button onClick={resetFilter} className="btn-rose rounded-full uppercase px-2 py-1">Reset</button>
-                        </div>
-                        <div className="py-2 bg-white shadow rounded-lg mt-2">
-                            <Filter />
-                        </div>
-                    </div>
-                </div>
-
-                <div className="w-full md:w-9/12 p-3">
-                    {
-                        filteredDepartures.length <= 0
-                            ? <div className="flex items-center justify-center text-gray-700">
-                                {
-                                    isFiltering
-                                        ? <div className="flex items-center flex-col justify-center">
-                                            Tidak ada penerbangan yang sesuai dengan filter yang anda pilih.
-                                            <span>Ubah atau <button onClick={resetFilter} className="btn-text text-gray-900 underline px-1 py-0">Reset Filter.</button></span>
-                                        </div>
-                                        : "Tidak ada penerbangan tersedia pada tanggal tersebut. Pilih tanggal lain atau ubah bandara keberangkatan."
-                                }
-                            </div>
-                            : (
-                                <>
-                                    <p className="text-left text-gray-700">Menampilkan {filteredDepartures.length} penerbangan terbaik {isFiltering ? "sesuai filter yang anda terapkan" : ""}</p>
-                                    {
-                                        filteredDepartures.map(dep => {
-                                            return <FlightTicket passengers={options.passengersDetail} airports={{departure: options.departureAirport, arrival: options.arrivalAirport}} onSelect={selectFlight} key={dep.AirEquipType + randomString(12)} flight={dep} />
-                                        })
-                                    }
-                                </>
-                            )
-                    }
-                </div>
-            </div>
-            <button onClick={() => setDrawerOpen('flightFilterDrawer')} className="md:hidden fixed bottom-3 left-3 btn-rose rounded-full uppercase">
-                <Bars3BottomLeftIcon className="w-5 h-5 mr-2" />
-                Filter
-            </button>
-            <Drawer id="flightFilterDrawer">
-                <Drawer.Header>
-                    <h6 className="text-center text-lg font-semibold text-gray-800">Filter</h6>
-                </Drawer.Header>
-                <Drawer.Body>
-                    <div className="w-full bg-white sticky top-0 px-3 py-2">
-                        <p className="text-center text-gray-900 font-semibold">Menampilkan {filteredDepartures.length} penerbangan</p>
-                    </div>
-                    <Filter responsive />
-                </Drawer.Body>
-                <Drawer.Footer className="flex items-center justify-end space-x-3">
-                    <button onClick={() => setDrawerOpen("")} className="btn-gray rounded-full">Tutup</button>
-                    <button onClick={resetFilter} className="btn-rose rounded-full uppercase tracking-wider">Reset</button>
-                </Drawer.Footer>
-            </Drawer>
             {
-                toCheckout && (
-                    <Modal id="confirmFlightModal" size="lg">
-                        <Modal.Header>
-                            <h6 className="text-center text-lg font-semibold text-gray-800">Konfirmasi Penerbangan</h6>
-                            <button onClick={() => setModalOpen("")} className="btn-light px-2 py-2 rounded-full absolute top-3 right-3">
-                                <XMarkIcon className="w-5 h-5" />
-                            </button>
-                        </Modal.Header>
-                        <Modal.Body className="max-h-[70vh] overflow-y-auto gray-scrollbar pb-0">
-                            <div className="block space-y-2">
-                                <div className="flex items-center justify-start space-x-4">
-                                    <h6 className="text-gray-700 font-normal text-lg">
-                                        Pergi
-                                        <span className="text-gray-900 ml-1 font-semibold">{moment(departFlight.DepartureDateTime).format("ddd, D MMM YYYY")}</span>
-                                    </h6>
-                                    <div className="flex items-center space-x-1 rounded-full bg-gray-100 p-2">
-                                        <span className="text-gray-800 font-semibold">{departFlight.DepartureAirport}</span>
-                                        <ArrowRightIcon className="w-5 h-5" />
-                                        <span className="text-gray-800 font-semibold">{departFlight.ArrivalAirport}</span>
-                                    </div>
-                                </div>
-                                <FlightDetail airports={{
-                                    departure: options.departureAirport,
-                                    arrival: options.arrivalAirport
-                                }} passengers={options.passengersDetail} flight={departFlight} />
-                            </div>
-                            {
-                                returnFlight && (
-                                    <div className="flex items-center justify-start space-x-4 mt-3">
-                                        <h6 className="text-gray-700 font-normal text-lg">
-                                            Pulang
-                                            <span className="text-gray-900 ml-1 font-semibold">{moment(returnFlight.DepartureDateTime).format("ddd, D MMM YYYY")}</span>
-                                        </h6>
-                                        <div className="flex items-center space-x-1 rounded-full bg-gray-100 p-2">
-                                            <span className="text-gray-800 font-semibold">{returnFlight.DepartureAirport}</span>
-                                            <ArrowRightIcon className="w-5 h-5" />
-                                            <span className="text-gray-800 font-semibold">{returnFlight.ArrivalAirport}</span>
+                loading
+                ? (
+                    <div className="w-full flex items-center justify-center py-3">
+                        <SpinnerIcon className="w-8 h-8 text-rose-600 animate-spin" />
+                    </div>
+                )
+                : (
+                    <>
+                        <div className="w-full py-2 pb-0 bg-gray-100 shadow sticky transition duration-200 top-0 px-4 z-40">
+                            <div className="w-full max-w-7xl mx-auto">
+                                <h2 className="text-lg md:text-xl font-semibold text-gray-800">Pilih Penerbangan {section === "return" ? "Pulang" : "Pergi"}</h2>
+                                <div className="md:flex items-center md:justify-between">
+                                    <div className="flex items-center flex-wrap space-x-2 text-sm md:text-base text-gray-900 font-semibold w-full">
+                                        <div className={`flex items-center ${section === "return" ? "flex-row-reverse" : ""}`}>
+                                            <span><span className="hidden md:inline">{truncateString(departureAirport.name)}</span> ({options.departFrom})</span>
+                                            {
+                                                options.roundTrip
+                                                ? <ArrowsRightLeftIcon className="w-5 h-5 mx-2" />
+                                                : <ArrowRightIcon className="w-5 h-5 mx-2" />
+                                            }
+                                            <span><span className="hidden md:inline">{truncateString(arrivalAirport.name)}</span> ({options.arriveAt})</span>
                                         </div>
+                                        <span className="middot"></span>
+                                        <span>{moment(options.departureDate).format("ddd, D MMM")}</span>
+                                        <span className="middot"></span>
+                                        <span>{options.passengers} Penumpang</span>
+                                        <span className="middot"></span>
+                                        <span>{options.class}</span>
                                     </div>
-                                )
-                            }
-                            <div className="w-full rounded-lg mt-3 sticky bottom-0 flex items-center justify-end bg-white shadow py-2 px-3">
-                                <div className="flex items-end space-x-2 flex-col">
-                                    <h6 className="text-gray-700 font-normal text-sm">Total for {toCheckout.totalPassengers} pax</h6>
-                                    <h6 className="text-gray-900 font-semibold text-lg">{formatIDR(totalPrice)}</h6>
+                                    <Link href="/flights" className="btn-rose rounded-full px-5 w-full md:w-auto my-2 whitespace-nowrap uppercase tracking-wider text-xs">Ubah Pencarian</Link>
                                 </div>
                             </div>
-                        </Modal.Body>
-                        <Modal.Footer className="flex flex-col md:flex-row md:items-center md:justify-end md:space-x-2 space-y-2 md:space-y-0">
-                            <button onClick={() => setModalOpen("")} className="btn-text text-gray-900">Tutup</button>
-                            <button onClick={confirmFlight} className="btn-rose rounded-full uppercase tracking-wider">Checkout</button>
-                        </Modal.Footer>
-                    </Modal>
+                        </div>
+                        <div className="my-3 w-full max-w-7xl mx-auto flex">
+                            <div className="hidden md:block w-3/12 py-3">
+                                <div className="w-full p-4 sticky top-20">
+                                    <div className="flex items-center justify-between">
+                                        <h6 className="text-gray-800 font-semibold text-lg">Filter</h6>
+                                        <button onClick={resetFilter} className="btn-rose rounded-full uppercase px-2 py-1">Reset</button>
+                                    </div>
+                                    <div className="py-2 bg-white shadow rounded-lg mt-2">
+                                        <Filter />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="w-full md:w-9/12 p-3">
+                                {
+                                    switching
+                                    ?   <div className="w-full grid place-items-center py-5">
+                                            <SpinnerIcon className="w-10 h-10 text-rose-600 animate-spin" />
+                                        </div>
+                                    :   (
+                                            filteredDepartures.length <= 0
+                                                ?   <div className="flex items-center justify-center text-gray-700">
+                                                    {
+                                                        isFiltering
+                                                            ? <div className="flex items-center flex-col justify-center">
+                                                                Tidak ada penerbangan yang sesuai dengan filter yang anda pilih.
+                                                                <span>Ubah atau <button onClick={resetFilter} className="btn-text text-gray-900 underline px-1 py-0">Reset Filter.</button></span>
+                                                            </div>
+                                                            : "Tidak ada penerbangan tersedia pada tanggal tersebut. Pilih tanggal lain atau ubah bandara keberangkatan."
+                                                    }
+                                                    </div>
+                                                : (
+                                                    <>
+                                                        <p className="text-left text-gray-700">Menampilkan {filteredDepartures.length} penerbangan terbaik {isFiltering ? "sesuai filter yang anda terapkan" : ""}</p>
+                                                        {
+                                                            filteredDepartures.map(dep => {
+                                                                return <FlightTicket passengers={options.passengersDetail} airports={{departure: departureAirport, arrival: arrivalAirport}} onSelect={selectFlight} key={dep.AirEquipType + randomString(12)} flight={dep} />
+                                                            })
+                                                        }
+                                                    </>
+                                                )
+                                        )
+                                }
+                            </div>
+                        </div>
+                        <button onClick={() => setDrawerOpen('flightFilterDrawer')} className="md:hidden fixed bottom-3 left-3 btn-rose rounded-full uppercase">
+                            <Bars3BottomLeftIcon className="w-5 h-5 mr-2" />
+                            Filter
+                        </button>
+                        <Drawer id="flightFilterDrawer">
+                            <Drawer.Header>
+                                <h6 className="text-center text-lg font-semibold text-gray-800">Filter</h6>
+                            </Drawer.Header>
+                            <Drawer.Body>
+                                <div className="w-full bg-white sticky top-0 px-3 py-2">
+                                    <p className="text-center text-gray-900 font-semibold">Menampilkan {filteredDepartures.length} penerbangan</p>
+                                </div>
+                                <Filter responsive />
+                            </Drawer.Body>
+                            <Drawer.Footer className="flex items-center justify-end space-x-3">
+                                <button onClick={() => setDrawerOpen("")} className="btn-gray rounded-full">Tutup</button>
+                                <button onClick={resetFilter} className="btn-rose rounded-full uppercase tracking-wider">Reset</button>
+                            </Drawer.Footer>
+                        </Drawer>
+                        {
+                            toCheckout && (
+                                <Modal static id="confirmFlightModal" size="lg">
+                                    <Modal.Header>
+                                        <h6 className="text-center text-lg font-semibold text-gray-800">Konfirmasi Penerbangan</h6>
+                                    </Modal.Header>
+                                    <Modal.Body className="max-h-[70vh] overflow-y-auto gray-scrollbar pb-0">
+                                        <div className="block space-y-2">
+                                            <div className="flex items-center justify-start space-x-4">
+                                                <h6 className="text-gray-700 font-normal text-lg">
+                                                    Pergi
+                                                    <span className="text-gray-900 ml-1 font-semibold">{moment(departFlight.DepartureDateTime).format("ddd, D MMM YYYY")}</span>
+                                                </h6>
+                                                <div className="flex items-center space-x-1 rounded-full bg-gray-100 p-2">
+                                                    <span className="text-gray-800 font-semibold">{departFlight.DepartureAirport.iata}</span>
+                                                    <ArrowRightIcon className="w-5 h-5" />
+                                                    <span className="text-gray-800 font-semibold">{departFlight.ArrivalAirport.iata}</span>
+                                                </div>
+                                            </div>
+                                            <FlightDetail airports={{
+                                                departure: departureAirport,
+                                                arrival: arrivalAirport
+                                            }} passengers={options.passengersDetail} flight={departFlight} />
+                                        </div>
+                                        {
+                                            returnFlight && (
+                                                <div className="block space-y-2 my-4">
+                                                    <div className="flex items-center justify-start space-x-4">
+                                                        <h6 className="text-gray-700 font-normal text-lg">
+                                                            Pulang
+                                                            <span className="text-gray-900 ml-1 font-semibold">{moment(returnFlight.DepartureDateTime).format("ddd, D MMM YYYY")}</span>
+                                                        </h6>
+                                                        <div className="flex items-center space-x-1 rounded-full bg-gray-100 p-2">
+                                                            <span className="text-gray-800 font-semibold">{returnFlight.DepartureAirport}</span>
+                                                            <ArrowRightIcon className="w-5 h-5" />
+                                                            <span className="text-gray-800 font-semibold">{returnFlight.ArrivalAirport}</span>
+                                                        </div>
+                                                    </div>
+                                                    <FlightDetail airports={{
+                                                        departure: arrivalAirport,
+                                                        arrival: departureAirport
+                                                    }} passengers={options.passengersDetail} flight={returnFlight} />
+                                                </div>
+                                            )
+                                        }
+                                        <div className="w-full rounded-lg mt-3 sticky bottom-0 flex items-center justify-end bg-white shadow py-2 px-3">
+                                            <div className="flex items-end space-x-2 flex-col">
+                                                <h6 className="text-gray-700 font-normal text-sm">Total for {toCheckout.totalPassengers} pax</h6>
+                                                <h6 className="text-gray-900 font-semibold text-lg">{formatIDR(totalPrice)}</h6>
+                                            </div>
+                                        </div>
+                                    </Modal.Body>
+                                    <Modal.Footer className="flex flex-col md:flex-row md:items-center md:justify-end md:space-x-2 space-y-2 md:space-y-0">
+                                        <button onClick={() => {
+                                            setModalOpen("")
+                                            resetCheckout()
+                                        }} className="btn-text text-gray-900">Pilih Ulang</button>
+                                        <button onClick={confirmFlight} className="btn-rose rounded-full uppercase tracking-wider">Checkout</button>
+                                    </Modal.Footer>
+                                </Modal>
+                            )
+                        }
+                    </>
                 )
             }
+            
         </AppLayout>
     );
 };
@@ -618,52 +695,22 @@ const Search = ({ flights, options }) => {
  * @param {import('next').NextApiRequest} req 
  */
 export async function getServerSideProps(req) {
-    let classMap = {
-        "Ekonomi": "Economy",
-        "Bisnis": "Business",
-        "First": "First",
-        "Premium Ekonomi": "Economy Premium"
-    }
-    
-    
     let query = req.query
-    let api = new LionAPI()
-    let flights = api.flight().departure(query.d).arrival(query.a).departureDate(query.d_date).adult(query.adult).children(query.child).infant(query.infant)
-    if (query.r_date) {
-        flights.roundTrip().returnDate(query.r_date)
-    } else {
-        flights.oneWayTrip()
+
+    let required = ["d", "a", "d_date", "adult", "child", "infant", "class"]
+    for (let i = 0; i < required.length; i++) {
+        if (!query[required[i]]) {
+            return {
+                redirect: {
+                    destination: "/flights",
+                }
+            }
+        }
     }
-    let res = await flights.get()
-
-    let classToShow = classMap[query.class]
-
-    let departures = res === undefined ? [] : res.Departure.map(dep => {
-        let check = dep.BookingClassAvail.filter(bca => bca.Class === classToShow)
-        if (check.length > 0)
-            dep.available = check.sort((a, b) => Number(a.Amount) - Number(b.Amount))[0]
-        return dep
-    }).filter(dep => dep.available !== undefined)
-
-    let returns = res === undefined ? [] : res.Return.map(ret => {
-        let check = ret.BookingClassAvail.filter(bca => bca.Class === classToShow)
-        if (check.length > 0)
-            ret.available = check.sort((a, b) => Number(a.Amount) - Number(b.Amount))[0]
-        return ret
-    }).filter(ret => ret.available !== undefined)
-
-    
-    let results = {
-        Departure: departures,
-        Return: returns
-    }
-
-    let departureAirport = await api.airport().iata(query.d).first()
-    let arrivalAirport = await api.airport().iata(query.a).first()
 
     return {
         props: {
-            flights: results,
+            query: query,
             options: {
                 departFrom: query.d,
                 arriveAt: query.a,
@@ -675,8 +722,6 @@ export async function getServerSideProps(req) {
                     infant: Number(query.infant)
                 },
                 class: query.class,
-                departureAirport,
-                arrivalAirport,
                 returnDate: query.r_date ?? null,
                 roundTrip: query.r_date !== undefined
             }

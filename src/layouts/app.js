@@ -15,7 +15,7 @@ import { WifiOffIcon } from "@/components/icons";
 import { Transition } from "@headlessui/react";
 import { useViewport } from "@/hooks/viewport";
 import { useEffect, useState } from "react";
-import dayjs from "dayjs";
+import { useAuth } from "@/hooks/auth";
 
 const AppLayout = props => {
     const [modalOpen, setModalOpen] = useRecoilState(modalState)
@@ -27,6 +27,8 @@ const AppLayout = props => {
             setShowBtn(result.y > 100)
         }
     })
+
+    const { user, socialLogin, logout } = useAuth()
 
     const { online } = useNetwork({
         onOnline: () => {
@@ -51,7 +53,12 @@ const AppLayout = props => {
     }
     
     useEffect(() => {
-    }, []);
+        const query = router.query
+        if (query?.social && query?.user_id) {
+            socialLogin(query.social, query.user_id)
+            router.push(router.pathname)
+        }
+    }, [router.query]);
     
     return (
         <>
@@ -76,8 +83,8 @@ const AppLayout = props => {
                 </Transition>
                 {
                     router.pathname === '/'
-                    ?   <Navbar fixed={props.fixed ?? true} isInViewport={props.isInViewport ?? null} />
-                    :   <GlobalNavbar stickyOnScroll={props.stickyOnScroll ?? false} />
+                    ?   <Navbar user={user} logout={logout} fixed={props.fixed ?? true} isInViewport={props.isInViewport ?? null} />
+                    :   <GlobalNavbar user={user} logout={logout} stickyOnScroll={props.stickyOnScroll ?? false} />
                 }
 
                 {props.children}

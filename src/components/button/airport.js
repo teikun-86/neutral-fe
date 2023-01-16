@@ -8,11 +8,7 @@ export const AirportButton = props => {
     return (
         <div className="w-full cursor-pointer flex items-center justify-between p-2 bg-white hover:bg-gray-50">
             <span className="p-2 relative">
-                {
-                    airport.type === 'city'
-                        ? <BuildingOffice2Icon className="w-6 h-6 mr-2 text-rose-500" />
-                        : <AirplaneTakeoffIcon className="w-6 h-6 mr-2 text-rose-500" />
-                }
+            <AirplaneTakeoffIcon className="w-6 h-6 mr-2 text-rose-500" />
             </span>
             <div className="w-[90%]">
                 <p className={`block truncate text-gray-800 ${selected ? "font-medium" : "font-normal"}`}>
@@ -20,7 +16,7 @@ export const AirportButton = props => {
                         highlightClassName="text-rose-500 bg-transparent font-semibold"
                         searchWords={query.split(" ")}
                         autoEscape={true}
-                        textToHighlight={airport.airportName}
+                        textToHighlight={airport.name}
                      />
                 </p>
                 <small className="text-sm font-semibold text-gray-500">
@@ -28,7 +24,7 @@ export const AirportButton = props => {
                         highlightClassName="text-rose-500 bg-transparent font-semibold"
                         searchWords={query.split(" ")}
                         autoEscape={true}
-                        textToHighlight={`${airport.cityName}, ${airport.countryName}`}
+                        textToHighlight={`${airport.city}, ${airport.country}`}
                     />
                 </small>
             </div>
@@ -37,7 +33,7 @@ export const AirportButton = props => {
                     highlightClassName="text-rose-500 bg-transparent font-semibold"
                     searchWords={query.split(" ")}
                     autoEscape={true}
-                    textToHighlight={airport.airportCode}
+                    textToHighlight={airport.iata}
                 />
             </span>
         </div>

@@ -1,8 +1,7 @@
-import axios from "axios"
+import { axios } from "@/libs/axios"
 
 export class Airport {
-    prefix = "/api/airports/"
-    baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+    prefix = "/airports/"
     params = {}
     method = "GET"
     endpoint = ""
@@ -61,7 +60,7 @@ export class Airport {
     async get() {
         this.endpoint = ""
 
-        return await axios.get(`${this.baseUrl}${this.prefix}${this.endpoint}`, {
+        return await axios.get(`${this.prefix}${this.endpoint}`, {
             params: this.params
         }).then(res => res.data.airports)
     }
@@ -69,8 +68,10 @@ export class Airport {
     async first() {
         this.endpoint = ""
         
-        return await axios.get(`${this.baseUrl}${this.prefix}${this.endpoint}`, {
+        let airport = await axios.get(`${this.prefix}${this.endpoint}`, {
             params: this.params
-        }).then(res => res.data.airport)
+        }).then(res => res.data.airports)
+
+        return airport.length > 0 ? airport[0] : null
     }
 }

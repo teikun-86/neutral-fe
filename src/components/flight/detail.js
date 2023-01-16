@@ -23,11 +23,6 @@ export const FlightDetail = ({ flight, airports = { departure: {}, arrival: {} }
         m: splitted[1].startsWith("0") ? splitted[1].substring(1) : splitted[1],
     }
 
-    let classesAvailable = flight.BookingClassAvail
-    let cheapest = classesAvailable.sort((a, b) => {
-        return Number(a.Amount) - Number(b.Amount)
-    })
-
     const airlineLogo = {
         "Lion Air": lionAirLogo,
         "Thai Lion Air": thaiLionAirLogo,
@@ -35,6 +30,7 @@ export const FlightDetail = ({ flight, airports = { departure: {}, arrival: {} }
         "Batik Air Malaysia": batikAirLogo,
         "Super Air Jet": superAirJetLogo,
         "Wings Air": wingsAirLogo,
+        "Malindo Air": batikAirLogo,
     }
 
     // check if the ArrivalDate is the same day as DepartureDate
@@ -54,7 +50,7 @@ export const FlightDetail = ({ flight, airports = { departure: {}, arrival: {} }
                 <div className="flex items-center px-3 w-full lg:w-1/2">
                     <div className="flex flex-col items-center justify-center">
                         <span className="text-lg font-bold text-gray-700">{moment(flight.DepartureDateTime).format("HH:MM")}</span>
-                        <span className="px-2 py-1 rounded-full shadow font-semibold text-xs bg-gray-100">{flight.DepartureAirport}</span>
+                        <span className="px-2 py-1 rounded-full shadow font-semibold text-xs bg-gray-100">{flight.DepartureAirport.iata}</span>
                     </div>
                     <div className="grid place-items-center mx-3 w-full lg:w-auto">
                         <span className="text-xs font-bold text-gray-700">{flightDuration.h}j {flightDuration.m}m</span>
@@ -90,7 +86,7 @@ export const FlightDetail = ({ flight, airports = { departure: {}, arrival: {} }
                                 )
                             }
                         </span>
-                        <span className="px-2 py-1 rounded-full shadow font-semibold text-xs bg-gray-100">{flight.ArrivalAirport}</span>
+                        <span className="px-2 py-1 rounded-full shadow font-semibold text-xs bg-gray-100">{flight.ArrivalAirport.iata}</span>
                     </div>
                 </div>
                 <div className="w-full lg:w-1/2 px-3 pt-3 lg:pt-0">
@@ -178,10 +174,10 @@ export const FlightDetail = ({ flight, airports = { departure: {}, arrival: {} }
                                     <div className="w-0.5 h-full bg-rose-600"></div>
                                 </div>
                             </div>
-                            <div className="flex flex-col justify-between w-full h-auto">
+                            <div className="flex flex-col text-start justify-between w-full h-auto">
                                 <div className="block">
-                                    <h6 className="text-gray-800 font-semibold text-base">{departure.airportName} ({departure.airportCode})</h6>
-                                    <p className="text-sm font-semibold text-gray-600 -mt-1 mb-2">{departure.cityName}</p>
+                                    <h6 className="text-gray-800 font-semibold text-base">{departure.name} ({departure.iata})</h6>
+                                    <p className="text-sm font-semibold text-gray-600 -mt-1 mb-2">{departure.city}</p>
                                 </div>
                                 <div className="block my-4 w-full px-2 py-2 rounded-lg bg-white border border-gray-200">
                                     <div className="flex items-start justify-start space-x-2">
@@ -191,7 +187,7 @@ export const FlightDetail = ({ flight, airports = { departure: {}, arrival: {} }
                                         <div className="block">
                                             <h6 className="text-lg font-semibold text-gray-900">{flight.OperatingAirline.CompanyShortName.replace("Operated by", "").trim()}</h6>
                                             <p className="text-xs font-semibold text-gray-700">{flight.OperatingAirline.CompanyShortName}</p>
-                                            <p className="text-sm font-semibold text-gray-800 flex items-center">{flight.OperatingAirline.Code}-{flight.OperatingAirline.FlightNumber} <span className="middot mx-1"></span> {flight.available.Class}</p>
+                                            <p className="text-sm font-semibold text-gray-800 flex items-center">{flight.OperatingAirline.Code}-{flight.OperatingAirline.FlightNumber} <span className="middot mx-1"></span> {flight.Class}</p>
                                         </div>
                                     </div>
                                     <div className="w-full">
@@ -212,8 +208,8 @@ export const FlightDetail = ({ flight, airports = { departure: {}, arrival: {} }
                                     </div>
                                 </div>
                                 <div className="block">
-                                    <h6 className="text-gray-800 font-semibold text-base">{arrival.airportName} ({arrival.airportCode})</h6>
-                                    <p className="text-sm font-semibold text-gray-600 -mt-1 mb-2">{arrival.cityName}</p>
+                                    <h6 className="text-gray-800 font-semibold text-base">{arrival.name} ({arrival.iata})</h6>
+                                    <p className="text-sm font-semibold text-gray-600 -mt-1 mb-2">{arrival.city}</p>
                                 </div>
                             </div>
                         </div>
@@ -225,7 +221,7 @@ export const FlightDetail = ({ flight, airports = { departure: {}, arrival: {} }
                                 <li className="text-sm font-semibold text-gray-500">
                                     <div className="flex items-center justify-between w-full">
                                         <span>Dewasa ({passengers.adult}x)</span>
-                                        <span>{formatIDR(flight.available.Amount * passengers.adult)}</span>
+                                        <span>{formatIDR(flight.Amount * passengers.adult)}</span>
                                     </div>
                                 </li>
                                 {
@@ -233,7 +229,7 @@ export const FlightDetail = ({ flight, airports = { departure: {}, arrival: {} }
                                         <li className="text-sm font-semibold text-gray-500">
                                             <div className="flex items-center justify-between w-full">
                                                 <span>Anak ({passengers.child}x)</span>
-                                                <span>{formatIDR(flight.available.Amount * passengers.child)}</span>
+                                                <span>{formatIDR(flight.Amount * passengers.child)}</span>
                                             </div>
                                         </li>
                                     )
@@ -243,7 +239,7 @@ export const FlightDetail = ({ flight, airports = { departure: {}, arrival: {} }
                                         <li className="text-sm font-semibold text-gray-500">
                                             <div className="flex items-center justify-between w-full">
                                                 <span>Bayi ({passengers.infant}x)</span>
-                                                <span>{formatIDR(flight.available.Amount * passengers.infant)}</span>
+                                                <span>{formatIDR(flight.Amount * passengers.infant)}</span>
                                             </div>
                                         </li>
                                     )
@@ -260,7 +256,7 @@ export const FlightDetail = ({ flight, airports = { departure: {}, arrival: {} }
                             </ul>
                             <div className="flex items-center justify-between mt-3 border-t border-gray-300 py-2">
                                 <h6 className="text-gray-800 text-base font-semibold">Subtotal</h6>
-                                <h6 className="text-rose-600 text-lg font-semibold">{formatIDR(flight.available.Amount * passengers.adult)}</h6>
+                                <h6 className="text-rose-600 text-lg font-semibold">{formatIDR(flight.Amount * passengers.adult)}</h6>
                             </div>
                         </div>
                     </div>

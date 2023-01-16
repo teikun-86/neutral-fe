@@ -43,13 +43,13 @@ const Flights = () => {
     const [passengerClass, setPassengerClass] = useState('Ekonomi')
 
     const queryAirports = useCallback((query) => {
+        if (query.trim().length < 3) return setQueriedAirports([])
+        
         let results = airports.filter(airport => {
-            return searchString(query, airport.airportCode)
-                || searchString(query, airport.airportName)
-                || searchString(query, airport.airportLocation)
-                || searchString(query, airport.cityCode)
-                || searchString(query, airport.cityName)
-                || searchString(query, airport.countryName)
+            return searchString(query.trim(), airport.iata)
+                || searchString(query.trim(), airport.name)
+                || searchString(query.trim(), airport.country)
+                || searchString(query.trim(), airport.city)
         })
         setQueriedAirports(results)
     }, [airports])
@@ -80,8 +80,8 @@ const Flights = () => {
         if (!checkInput()) return
         
         let params = {
-            d: departure.airportCode,
-            a: arrival.airportCode,
+            d: departure.iata,
+            a: arrival.iata,
             d_date: moment(departureDate).format("YYYY-MM-DD"),
             adult: adult,
             child: child,
@@ -92,10 +92,10 @@ const Flights = () => {
         if (tripType === 'round') params.r_date = moment(returnDate).format("YYYY-MM-DD")
 
         let recents = recentAirports
-        let depIndex = recents.findIndex(airport => airport.airportCode === departure.airportCode)
+        let depIndex = recents.findIndex(airport => airport.iata === departure.iata)
         if (depIndex !== -1) recents.splice(depIndex, 1)
         recents.unshift(departure)
-        let arrIndex = recents.findIndex(airport => airport.airportCode === arrival.airportCode)
+        let arrIndex = recents.findIndex(airport => airport.iata === arrival.iata)
         if (arrIndex !== -1) recents.splice(arrIndex, 1)
         recents.unshift(arrival)
         if (recents.length > 5) recents.pop()
@@ -153,7 +153,7 @@ const Flights = () => {
     const refetchAirports = async () => {
         let api = (new LionAPI()).airport()
         let airports = await api.intl().get()
-        let local = airports.filter(airport => airport.countryName === 'Indonesia')
+        let local = airports.filter(airport => airport.country === 'Indonesia')
         setAirports(local)
         localStorage.setItem('__airports_data_intl', JSON.stringify({
             airports: airports,
@@ -254,7 +254,7 @@ const Flights = () => {
                                                         setDeparture(value)
                                                         setDepError(false)
                                                     }}>
-                                                        <Combobox.Input onChange={debounceQueryAirports} placeholder="Cari Kota/Bandara" type="text" id="departureInput" className="select-all w-full px-1 text-base font-semibold text-gray-900 border-0 outline-none focus:outline-none focus:ring-0" displayValue={(d) => d.type ? `${d.airportName} (${d.airportCode})` : ""} />
+                                                        <Combobox.Input onChange={debounceQueryAirports} placeholder="Cari Kota/Bandara" type="text" id="departureInput" className="select-all w-full px-1 text-base font-semibold text-gray-900 border-0 outline-none focus:outline-none focus:ring-0" displayValue={(d) => d.type ? `${d.name} (${d.iata})` : ""} />
                                                         <Combobox.Container afterLeave={() => {
                                                             setQuery('')
                                                             setQueriedAirports([])
@@ -273,7 +273,7 @@ const Flights = () => {
                                                                         ? (
                                                                             <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
                                                                                 {
-                                                                                    query === '' ? "Cari Kota/Bandara" : "Tidak ada hasil. Coba cari tujuan lain."
+                                                                                    query.trim().length < 3 ? "Ketik minimal 3 karakter untuk mencari" : "Tidak ada hasil. Coba cari tujuan lain."
                                                                                 }
                                                                             </div>
                                                                         )
@@ -331,7 +331,7 @@ const Flights = () => {
                                                         setArrival(value)
                                                         setArrERror(false)
                                                     }}>
-                                                        <Combobox.Input onChange={debounceQueryAirports} placeholder="Cari Kota/Bandara" type="text" id="arrivalInput" className="select-all w-full px-1 text-base font-semibold text-gray-900 border-0 outline-none focus:outline-none focus:ring-0" displayValue={(d) => d.type ? `${d.airportName} (${d.airportCode})` : ""} />
+                                                        <Combobox.Input onChange={debounceQueryAirports} placeholder="Cari Kota/Bandara" type="text" id="arrivalInput" className="select-all w-full px-1 text-base font-semibold text-gray-900 border-0 outline-none focus:outline-none focus:ring-0" displayValue={(d) => d.type ? `${d.name} (${d.iata})` : ""} />
                                                         <Combobox.Container afterLeave={() => {
                                                             setQuery('')
                                                             setQueriedAirports([])
@@ -350,7 +350,7 @@ const Flights = () => {
                                                                         ? (
                                                                             <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
                                                                                 {
-                                                                                    query === '' ? "Cari Kota/Bandara" : "Tidak ada hasil. Coba cari tujuan lain."
+                                                                                    query.trim().length < 3 ? "Ketik minimal 3 karakter untuk mencari" : "Tidak ada hasil. Coba cari tujuan lain."
                                                                                 }
                                                                             </div>
                                                                         )

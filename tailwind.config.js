@@ -19,6 +19,7 @@ module.exports = {
             animation: {
                 "width-half": "width-half 0.2s ease-in-out",
                 "width-2/3": "width-2/3 0.2s ease-in-out",
+                "ripple": "ripple 1s cubic-bezier(0, 0, 0.2, 1)",
             },
             keyframes: {
                 "width-half": {
@@ -37,6 +38,16 @@ module.exports = {
                         width: "66.666667%",
                     }
                 },
+                "ripple": {
+                    "0%": {
+                        transform: "scale(.8)",
+                        opacity: 1,
+                    },
+                    "100%": {
+                        transform: "scale(2.4)",
+                        opacity: 0,
+                    }
+                }
             }
         },
     },

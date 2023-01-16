@@ -3,7 +3,7 @@ import { Input } from "@/components/forms";
 import { SpinnerIcon } from "@/components/icons";
 import AppLayout from "@/layouts/app";
 import { CheckIcon, ChevronDownIcon, ChevronRightIcon, ChevronUpIcon, ExclamationCircleIcon, IdentificationIcon, UserIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import countryCodes from "@/data/call-codes";
 import Image from "next/image";
 import Alert from "@/components/alert";
@@ -14,20 +14,29 @@ import { Drawer, Modal } from "@/components/modal";
 import { useRecoilState } from "recoil";
 import modalState from "@/hooks/modal";
 import drawerState from "@/hooks/drawer";
+import { axios } from "@/libs/axios";
+import { LionAPI } from "@/libs/lion-api";
+import { useAuth } from "@/hooks/auth";
+import { toast } from "react-toastify";
 
-const Checkout = ({ checkoutId, ...props }) => {
+const Checkout = (props) => {
     const router = useRouter()
+    const { user } = useAuth()
 
     const [modalOpen, setModalOpen] = useRecoilState(modalState)
     const [drawerOpen, setDrawerOpen] = useRecoilState(drawerState)
+
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(false)
+    const [checkoutId, setCheckoutId] = useState(null)
 
     const [checkoutData, setCheckoutData] = useState(null)
     const [passengers, setPassengers] = useState([])
     const [countryQuery, setCountryQuery] = useState("")
     const [contact, setContact] = useState({
-        name: "",
+        name: user ? user.name : "",
         title: "Mr",
-        email: "",
+        email: user ? user.email : "",
         phone: "",
         countryCode: {
             code: "ID",
@@ -68,25 +77,46 @@ const Checkout = ({ checkoutId, ...props }) => {
         "infant": "Bayi",
     }
 
-    const getCheckoutData = () => {
-        const data = JSON.parse(localStorage.getItem('__flight_checkout'))
-        let totalPassengers = data.passengers.adult + data.passengers.child + data.passengers.infant
+    const getCheckoutData = useCallback(async (checkoutId) => {
+        const data = (await (new LionAPI).cart().id(checkoutId).get().then(res => res.cart))
+
+        if (data.step !== "checkout") {
+            if (data.step === "prebook") {
+                router.push("/flights/checkout/" + checkoutId + "/payment")
+                return
+            }
+            
+            router.push("/flights/checkout/" + checkoutId + "/finish")
+            return
+        }
+
+        if (!data) {
+            setLoading(false)
+            setError(true)
+            return
+        }
+        
+        const items = data.items;
+
+        console.log({data});
+        
+        let totalPassengers = items.passengers.adult + items.passengers.child + items.passengers.infant
         const passengersList = []
 
         for (let i = 0; i < totalPassengers; i++) {
             passengersList.push({
                 name: "",
                 title: "Mr",
-                type: i < data.passengers.adult ? "adult" : i < data.passengers.adult + data.passengers.child ? "child" : "infant",
+                type: i < items.passengers.adult ? "adult" : i < items.passengers.adult + items.passengers.child ? "child" : "infant",
                 number: i + 1,
             })
         }
 
         setPassengers(passengersList)
 
-        let priceAdult = Number(data.depFlight.available.Amount)
-        let priceChild = Number(data.depFlight.available.Amount)
-        let priceInfant = Number(data.depFlight.available.Amount)
+        let priceAdult = Number(items.depFlight.Amount)
+        let priceChild = Number(items.depFlight.Amount)
+        let priceInfant = Number(items.depFlight.Amount)
 
         let fees = [
             {
@@ -98,27 +128,34 @@ const Checkout = ({ checkoutId, ...props }) => {
                 price: 12000
             }
         ]
+
+        if (items.retFlight) {
+            priceAdult += Number(items.retFlight.Amount)
+            priceChild += Number(items.retFlight.Amount)
+            priceInfant += Number(items.retFlight.Amount)
+        }
         
         const priceList = {
             adult: {
-                count: data.passengers.adult,
+                count: items.passengers.adult,
                 price: priceAdult
             },
             child: {
-                count: data.passengers.child,
+                count: items.passengers.child,
                 price: priceChild
             },
             infant: {
-                count: data.passengers.infant,
+                count: items.passengers.infant,
                 price: priceInfant
             },
             fees,
-            total: (priceAdult * data.passengers.adult) + (priceChild * data.passengers.child) + (priceInfant * data.passengers.infant) + fees.reduce((acc, cur) => acc + cur.price, 0)
+            total: (priceAdult * items.passengers.adult) + (priceChild * items.passengers.child) + (priceInfant * items.passengers.infant) + fees.reduce((acc, cur) => acc + cur.price, 0)
         }
 
+
         setPrices(priceList)
-        setCheckoutData(data)
-    }
+        setCheckoutData(items)
+    }, [router])
 
     const handleContact = (key, value) => {
         setContact(order => {
@@ -142,7 +179,7 @@ const Checkout = ({ checkoutId, ...props }) => {
         setOrderInvalid(fieldsToCheck.some(field => contact[field] === '') || passengers.some(passenger => passenger.name === ''))
     }
 
-    const continueToPayment = () => {
+    const continueToPayment = async () => {
         const data = {
             contact,
             passengers,
@@ -150,8 +187,25 @@ const Checkout = ({ checkoutId, ...props }) => {
             date: new Date().toISOString(),
         }
 
-        localStorage.setItem('__flight_to_pay', JSON.stringify(data))
+        let validated = validate()
+
+        // setLoading(true)
+        let res = await (new LionAPI()).cart().id(checkoutId).prebook(validated)
+        if (!res.success) {
+            toast.error(res.message)
+            return
+        }
+
         router.push(`/flights/checkout/${checkoutId}/payment`)
+    }
+
+    const validate = () => {
+        return {
+            contact,
+            passengers,
+            step: "payment",
+            date: new Date().toISOString(),
+        }
     }
 
     const openPriceDetail = () => {
@@ -163,10 +217,14 @@ const Checkout = ({ checkoutId, ...props }) => {
     }
 
     useEffect(() => {
-        let to = setTimeout(() => {
-            getCheckoutData()
-        }, 1000)
-    }, [])
+        const query = router.query
+
+        if (typeof query.id !== 'undefined') {
+            setCheckoutId(query.id)
+            getCheckoutData(query.id)
+        }
+        
+    }, [router, getCheckoutData])
 
     return (
         <AppLayout title="Checkout Flight">
@@ -198,7 +256,16 @@ const Checkout = ({ checkoutId, ...props }) => {
                     ? (
                         <>
                             <div className="w-full grid place-items-center py-2">
-                                <SpinnerIcon className="w-10 h-10 text-rose-600 animate-spin" />
+                                {
+                                    loading
+                                    ? <SpinnerIcon className="w-10 h-10 text-rose-600 animate-spin" />
+                                    : (
+                                        <div className="flex flex-col items-center">
+                                            <ExclamationCircleIcon className="w-12 h-12 text-rose-500" />
+                                            <span className="text-gray-500">Terjadi kesalahan</span>
+                                        </div>
+                                    )
+                                }
                             </div>
                         </>
                     )
@@ -231,11 +298,11 @@ const Checkout = ({ checkoutId, ...props }) => {
                                                         {({ open }) => (
                                                             <>
                                                                 <Dropdown.Button as="div" className="relative">
-                                                                    <label className={`absolute ${open || contact.title.trim().length > 0 ? "-top-3 text-xs left-3 text-rose-600" : "top-1.5 text-sm left-2 text-gray-700"} bg-white p-1 transition-all duration-200 font-medium tracking-wide cursor-pointer rounded-lg`}>Titel</label>
-                                                                    <button className="w-full bg-white form-input border-gray-300 focus:border-rose-600 ring-0 focus:ring-0 outline-none focus:outline-none transition-all text-start cursor-pointer duration-200 rounded-lg h-[2.6rem]" >
+                                                                    <label className={`absolute ${open || contact.title.trim().length > 0 ? "-top-3 text-xs left-3" : "top-1.5 text-sm left-2 text-gray-700"} bg-white p-1 transition-all duration-200 font-medium tracking-wide cursor-pointer rounded-lg`}>Titel</label>
+                                                                    <button className="w-full bg-white form-input border-gray-300 focus:border-sky-600 ring-0 focus:ring-0 outline-none focus:outline-none transition-all text-start cursor-pointer duration-200 rounded-lg h-[2.6rem]" >
                                                                         {titleMap[contact.title]}
                                                                     </button>
-                                                                    <ChevronDownIcon className={`w-5 h-5 absolute top-3 right-3 ${open ? "rotate-180 text-rose-600" : ""} transition-all cursor-pointer duration-200`} />
+                                                                    <ChevronDownIcon className={`w-5 h-5 absolute top-3 right-3 ${open ? "rotate-180" : ""} transition-all cursor-pointer duration-200`} />
                                                                 </Dropdown.Button>
                                                                 <Dropdown.Content className="!w-full">
                                                                     <Dropdown.Item onClick={() => handleContact("title", "Mr")}>
@@ -263,14 +330,14 @@ const Checkout = ({ checkoutId, ...props }) => {
                                                         {({ open }) => (
                                                             <>
                                                                 <Dropdown.Button as="div" className="relative">
-                                                                    <label className={`absolute ${open || contact.countryCode.name !== undefined ? "-top-3 text-xs left-3 text-rose-600" : "top-1.5 text-sm left-2 text-gray-700"} bg-white p-1 transition-all duration-200 font-medium tracking-wide cursor-pointer rounded-lg`}>Kode Negara</label>
-                                                                    <button className="w-full bg-white form-input border-gray-300 focus:border-rose-600 ring-0 focus:ring-0 outline-none focus:outline-none transition-all text-start cursor-pointer duration-200 rounded-lg h-[2.6rem] flex items-center space-x-1" >
+                                                                    <label className={`absolute ${open || contact.countryCode.name !== undefined ? "-top-3 text-xs left-3 " : "top-1.5 text-sm left-2 text-gray-700"} bg-white p-1 transition-all duration-200 font-medium tracking-wide cursor-pointer rounded-lg`}>Kode Negara</label>
+                                                                    <button className="w-full bg-white form-input border-gray-300 focus:border-sky-600 ring-0 focus:ring-0 outline-none focus:outline-none transition-all text-start cursor-pointer duration-200 rounded-lg h-[2.6rem] flex items-center space-x-1" >
                                                                         <span className="w-6 h-3 grid place-items-center mr-2">
-                                                                            <Image src={`http://purecatamphetamine.github.io/country-flag-icons/3x2/${contact.countryCode.code}.svg`} width={100} height={100} alt="Indonesia" />
+                                                                            <Image src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${contact.countryCode.code}.svg`} width={100} height={100} alt="Indonesia" />
                                                                         </span>
                                                                         ({contact.countryCode.dial_code})
                                                                     </button>
-                                                                    <ChevronDownIcon className={`w-5 h-5 absolute top-3 right-3 ${open ? "rotate-180 text-rose-600" : ""} transition-all cursor-pointer duration-200`} />
+                                                                    <ChevronDownIcon className={`w-5 h-5 absolute top-3 right-3 ${open ? "rotate-180 " : ""} transition-all cursor-pointer duration-200`} />
                                                                 </Dropdown.Button>
                                                                 <Dropdown.Content afterLeave={() => setCountryQuery('')} className="left-0 max-h-72 overflow-y-auto gray-scrollbar pt-0">
                                                                     <div className="w-full px-2 py-1 bg-white sticky top-0">
@@ -280,7 +347,7 @@ const Checkout = ({ checkoutId, ...props }) => {
                                                                         countryCodes.filter((country) => {
                                                                             return countryQuery.trim().length <= 0 ? true : country.name.toLowerCase().includes(countryQuery.toLowerCase()) || country.dial_code.toLowerCase().includes(countryQuery.toLowerCase()) || country.code.toLowerCase().includes(countryQuery.toLowerCase())
                                                                         }).map((country, idx) => {
-                                                                            const flagUrl = `http://purecatamphetamine.github.io/country-flag-icons/3x2/${country.code}.svg`;
+                                                                            const flagUrl = `https://purecatamphetamine.github.io/country-flag-icons/3x2/${country.code}.svg`;
                                                                             return (
                                                                                 <Dropdown.Item className="flex items-center justify-start text-start" key={idx} onClick={() => handleContact("countryCode", country)}>
                                                                                     <span className="w-6 h-3 grid place-items-center mr-2">
@@ -322,16 +389,16 @@ const Checkout = ({ checkoutId, ...props }) => {
                                                                 </div>
                                                                 <div className="w-full">
                                                                     <div className="flex flex-wrap w-full items-start">
-                                                                        <div className="w-32 p-3 z-20">
+                                                                        <div className="w-32 p-3 z-50">
                                                                             <Dropdown className="w-full">
                                                                                 {({ open }) => (
                                                                                     <>
                                                                                         <Dropdown.Button as="div" className="relative">
-                                                                                            <label className={`absolute ${open || passenger.title.length > 0 ? "-top-3 text-xs left-3 text-rose-600" : "top-1.5 text-sm left-2 text-gray-700"} bg-white p-1 transition-all duration-200 font-medium tracking-wide cursor-pointer rounded-lg`}>Titel</label>
-                                                                                            <button className="w-full bg-white form-input border-gray-300 focus:border-rose-600 ring-0 focus:ring-0 outline-none focus:outline-none transition-all text-start cursor-pointer duration-200 rounded-lg h-[2.6rem]" >
+                                                                                            <label className={`absolute ${open || passenger.title.length > 0 ? "-top-3 text-xs left-3 " : "top-1.5 text-sm left-2 text-gray-700"} bg-white p-1 transition-all duration-200 font-medium tracking-wide cursor-pointer rounded-lg`}>Titel</label>
+                                                                                            <button className="w-full bg-white form-input border-gray-300 focus:border-sky-600 ring-0 focus:ring-0 outline-none focus:outline-none transition-all text-start cursor-pointer duration-200 rounded-lg h-[2.6rem]" >
                                                                                                 {titleMap[passenger.title]}
                                                                                             </button>
-                                                                                            <ChevronDownIcon className={`w-5 h-5 absolute top-3 right-3 ${open ? "rotate-180 text-rose-600" : ""} transition-all cursor-pointer duration-200`} />
+                                                                                            <ChevronDownIcon className={`w-5 h-5 absolute top-3 right-3 ${open ? "rotate-180 " : ""} transition-all cursor-pointer duration-200`} />
                                                                                         </Dropdown.Button>
                                                                                         <Dropdown.Content className="!w-full">
                                                                                             <Dropdown.Item onClick={() => handlePassenger("title", "Mr", idx)}>
@@ -522,13 +589,4 @@ const Checkout = ({ checkoutId, ...props }) => {
     );
 }
 
-export const getServerSideProps = async (context) => {
-    const { params } = context;
-
-    return {
-        props: {
-            checkoutId: params.id
-        },
-    }
-}
 export default Checkout;

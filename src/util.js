@@ -40,3 +40,11 @@ export const removeFromArray = (needle, haystack = []) =>
 
 export const truncateString = (string, length = 12) => 
     string.length > length ? `${string.substring(0, length)}...` : string;
+
+export const chunkArray = (array, chunkSize = 1000) => {
+    let tempArray = [];
+    for (let i = 0; i < array.length; i += chunkSize) {
+        tempArray.push(array.slice(i, i + chunkSize));
+    }
+    return tempArray;
+}

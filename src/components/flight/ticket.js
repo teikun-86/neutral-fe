@@ -14,16 +14,18 @@ import { Transition } from "@headlessui/react";
 export const FlightTicket = ({ flight, airports = { departure: {}, arrival: {} }, onSelect = (flight) => { }, noButton = false, passengers = {adult: 1, child: 0, infant: 0}, ...props }) => {
     const [open, setOpen] = useState(false)
     const [section, setSection] = useState("flight-detail")
-
+    
     const { departure, arrival } = airports
 
-    let splitted = flight.Duration.split(":")
+    const firstFlight = flight
+    // const flight.transitsht.slice(1, flight.length - 1)
+    const lastFlight  = flight
+
+    let splitted = firstFlight.Duration.split(":")
     let flightDuration = {
         h: splitted[0].startsWith("0") ? splitted[0].substring(1) : splitted[0],
         m: splitted[1].startsWith("0") ? splitted[1].substring(1) : splitted[1],
     }
-
-    let available = flight.available
 
     const airlineLogo = {
         "Lion Air": lionAirLogo,
@@ -32,6 +34,7 @@ export const FlightTicket = ({ flight, airports = { departure: {}, arrival: {} }
         "Batik Air Malaysia": batikAirLogo,
         "Super Air Jet": superAirJetLogo,
         "Wings Air": wingsAirLogo,
+        "Malindo Air": batikAirLogo,
     }
 
     const handleSelect = (flight) => {
@@ -40,30 +43,30 @@ export const FlightTicket = ({ flight, airports = { departure: {}, arrival: {} }
     }
 
     // check if the ArrivalDate is the same day as DepartureDate
-    let isSameDay = moment(flight.ArrivalDate).isSame(flight.DepartureDate, 'day')
+    let isSameDay = moment(lastFlight.ArrivalDateTime).isSame(firstFlight.DepartureDateTime, 'day')
     // if not, then get the difference between the two dates
-    let diffDays = isSameDay ? 0 : moment(flight.ArrivalDate).diff(flight.DepartureDate, 'days')
+    let diffDays = isSameDay ? 0 : moment(lastFlight.ArrivalDateTime).diff(firstFlight.DepartureDateTime, 'days')
 
     return (
-        <div key={flight.FlightNumber + randomString(12)} className="block w-full p-2 rounded-lg bg-white my-3 shadow relative">
+        <div key={firstFlight.FlightNumber + randomString(12)} className="block w-full p-2 rounded-lg bg-white my-3 shadow relative">
 
             {
-                Number(flight.available.ResBookDesigQuantity) <= 10 && (
-                    <span className="absolute top-2 right-2 flex items-center px-2 py-1 rounded-full bg-rose-50 text-rose-600 font-semibold text-xs">{flight.available.ResBookDesigQuantity} tersisa</span>
+                Number(firstFlight.ResBookDesigQuantity) <= 10 && (
+                    <span className="absolute top-2 right-2 flex items-center px-2 py-1 rounded-full bg-rose-50 text-rose-600 font-semibold text-xs">{firstFlight.ResBookDesigQuantity} tersisa</span>
                 )
             }
             <div className="flex w-full items-center space-x-2">
                 <div className="w-20 h-14 grid place-items-center p-1">
-                    <Image src={airlineLogo[flight.OperatingAirline.CompanyShortName.replace("Operated by", "").trim()]} className="w-auto h-auto block" alt="Lion Air" />
+                    <Image src={airlineLogo[firstFlight.OperatingAirline.CompanyShortName.replace("Operated by", "").trim()]} className="w-auto h-auto block" alt={firstFlight.OperatingAirline.CompanyShortName.replace("Operated by", "").trim()} />
                 </div>
-                <h6 className="text-lg font-semibold text-gray-900">{flight.OperatingAirline.CompanyShortName.replace("Operated by", "").trim()}</h6>
+                <h6 className="text-lg font-semibold text-gray-900">{firstFlight.OperatingAirline.CompanyShortName.replace("Operated by", "").trim()}</h6>
             </div>
             <div className="flex items-center justify-between mt-2 flex-wrap">
                 
                 <div className="flex items-center px-3 w-full md:w-1/2">
                     <div className="flex flex-col items-center justify-center">
-                        <span className="text-lg font-bold text-gray-700">{moment(flight.DepartureDateTime).format("HH:MM")}</span>
-                        <span className="px-2 py-1 rounded-full shadow font-semibold text-xs bg-gray-100">{flight.DepartureAirport}</span>
+                        <span className="text-lg font-bold text-gray-700">{moment(firstFlight.DepartureDateTime).format("HH:MM")}</span>
+                        <span className="px-2 py-1 rounded-full shadow font-semibold text-xs bg-gray-100">{firstFlight.DepartureAirport.iata}</span>
                     </div>
                     <div className="grid place-items-center mx-3 w-full md:w-auto">
                         <span className="text-xs font-bold text-gray-700">{flightDuration.h}j {flightDuration.m}m</span>
@@ -72,8 +75,8 @@ export const FlightTicket = ({ flight, airports = { departure: {}, arrival: {} }
                                 <div className="absolute inset-0 flex items-center justify-center">
                                     <span className="w-2 h-2 rounded-full bg-rose-300 absolute left-0"></span>
                                     {
-                                        flight.StopQuantity !== "0" && (
-                                            Array.from(Array(Number(flight.StopQuantity))).map(tr => (
+                                        flight.transits !== 0 && (
+                                            Array.from(Array(flight.transits)).map(tr => (
                                                 <span className="w-2 h-2 mx-1 rounded-full bg-gray-400" key={tr + randomString(5)}></span>
                                             ))
                                         )
@@ -84,22 +87,22 @@ export const FlightTicket = ({ flight, airports = { departure: {}, arrival: {} }
                         </div>
                         <span className="text-xs text-gray-700">
                             {
-                                flight.StopQuantity === "0"
+                                flight.transits === 0
                                     ? "Langsung"
-                                    : `${flight.StopQuantity} Transit`
+                                    : `${flight.transits} Transit`
                             }
                         </span>
                     </div>
                     <div className="flex flex-col items-center justify-center">
                         <span className="text-lg font-bold text-gray-700">
-                            {moment(flight.ArrivalDateTime).format("HH:MM")}
+                            {moment(firstFlight.ArrivalDateTime).format("HH:MM")}
                             {
                                 diffDays > 0 && (
                                     <sup className="text-xs text-gray-500">(+{diffDays}d)</sup>
                                 )
                             }
                         </span>
-                        <span className="px-2 py-1 rounded-full shadow font-semibold text-xs bg-gray-100">{flight.ArrivalAirport}</span>
+                        <span className="px-2 py-1 rounded-full shadow font-semibold text-xs bg-gray-100">{lastFlight.ArrivalAirport.iata}</span>
                     </div>
                 </div>
                 <div className="flex items-center justify-between w-full md:w-1/2 px-3 py-2">
@@ -114,7 +117,7 @@ export const FlightTicket = ({ flight, airports = { departure: {}, arrival: {} }
 
                     <div className="flex flex-col items-end">
                         <h6 className="text-rose-600 text-lg font-semibold">
-                            {formatIDR(Number(available.Amount).toFixed(Number(available.DecimalPlaces)), Number(available.DecimalPlaces))} <span className="text-sm text-gray-500">/pax</span>
+                            {formatIDR(Number(flight.Amount).toFixed(Number(flight.DecimalPlaces)), Number(flight.DecimalPlaces))} <span className="text-sm text-gray-500">/pax</span>
                         </h6>
                         <Tooltip title={
                             <p>Bagasi 20kg<br />USB port/power</p>
@@ -198,18 +201,18 @@ export const FlightTicket = ({ flight, airports = { departure: {}, arrival: {} }
                             </div>
                             <div className="flex flex-col justify-between w-full h-auto">
                                 <div className="block">
-                                    <h6 className="text-gray-800 font-semibold text-base">{departure.airportName} ({departure.airportCode})</h6>
-                                    <p className="text-sm font-semibold text-gray-600 -mt-1 mb-2">{departure.cityName}</p>
+                                    <h6 className="text-gray-800 font-semibold text-base">{departure.name} ({departure.iata})</h6>
+                                    <p className="text-sm font-semibold text-gray-600 -mt-1 mb-2">{departure.city}</p>
                                 </div>
                                 <div className="block my-4 w-full px-2 py-2 rounded-lg bg-white border border-gray-200">
                                     <div className="flex items-start justify-start space-x-2">
                                         <div className="w-16 h-10 aspect-video grid place-items-center p-1">
-                                            <Image src={airlineLogo[flight.OperatingAirline.CompanyShortName.replace("Operated by", "").trim()]} className="w-auto h-auto block" alt="Lion Air" />
+                                            <Image src={airlineLogo[firstFlight.OperatingAirline.CompanyShortName.replace("Operated by", "").trim()]} className="w-auto h-auto block" alt="Lion Air" />
                                         </div>
                                         <div className="block">
-                                            <h6 className="text-lg font-semibold text-gray-900">{flight.OperatingAirline.CompanyShortName.replace("Operated by", "").trim()}</h6>
-                                            <p className="text-xs font-semibold text-gray-700">{flight.OperatingAirline.CompanyShortName}</p>
-                                            <p className="text-sm font-semibold text-gray-800 flex items-center">{flight.OperatingAirline.Code}-{flight.OperatingAirline.FlightNumber} <span className="middot mx-1"></span> {flight.available.Class}</p>
+                                            <h6 className="text-lg font-semibold text-gray-900">{firstFlight.OperatingAirline.CompanyShortName.replace("Operated by", "").trim()}</h6>
+                                            <p className="text-xs font-semibold text-gray-700">{firstFlight.OperatingAirline.CompanyShortName}</p>
+                                            <p className="text-sm font-semibold text-gray-800 flex items-center">{firstFlight.OperatingAirline.Code}-{firstFlight.OperatingAirline.FlightNumber} <span className="middot mx-1"></span> {firstFlight.Class}</p>
                                         </div>
                                     </div>
                                     <div className="w-full">
@@ -230,8 +233,8 @@ export const FlightTicket = ({ flight, airports = { departure: {}, arrival: {} }
                                     </div>
                                 </div>
                                 <div className="block">
-                                    <h6 className="text-gray-800 font-semibold text-base">{arrival.airportName} ({arrival.airportCode})</h6>
-                                    <p className="text-sm font-semibold text-gray-600 -mt-1 mb-2">{arrival.cityName}</p>
+                                    <h6 className="text-gray-800 font-semibold text-base">{arrival.name} ({arrival.iata})</h6>
+                                    <p className="text-sm font-semibold text-gray-600 -mt-1 mb-2">{arrival.city}</p>
                                 </div>
                             </div>
                         </div>
@@ -243,7 +246,7 @@ export const FlightTicket = ({ flight, airports = { departure: {}, arrival: {} }
                                 <li className="text-sm font-semibold text-gray-500">
                                     <div className="flex items-center justify-between w-full">
                                         <span>Dewasa ({passengers.adult}x)</span>
-                                        <span>{formatIDR(flight.available.Amount * passengers.adult)}</span>
+                                        <span>{formatIDR(firstFlight.Amount * passengers.adult)}</span>
                                     </div>
                                 </li>
                                 {
@@ -251,7 +254,7 @@ export const FlightTicket = ({ flight, airports = { departure: {}, arrival: {} }
                                         <li className="text-sm font-semibold text-gray-500">
                                             <div className="flex items-center justify-between w-full">
                                                 <span>Anak ({passengers.child}x)</span>
-                                                <span>{formatIDR(flight.available.Amount * passengers.child)}</span>
+                                                <span>{formatIDR(firstFlight.Amount * passengers.child)}</span>
                                             </div>
                                         </li>
                                     )
@@ -261,7 +264,7 @@ export const FlightTicket = ({ flight, airports = { departure: {}, arrival: {} }
                                         <li className="text-sm font-semibold text-gray-500">
                                             <div className="flex items-center justify-between w-full">
                                                 <span>Bayi ({passengers.infant}x)</span>
-                                                <span>{formatIDR(flight.available.Amount * passengers.infant)}</span>
+                                                <span>{formatIDR(firstFlight.Amount * passengers.infant)}</span>
                                             </div>
                                         </li>
                                     )
@@ -278,7 +281,7 @@ export const FlightTicket = ({ flight, airports = { departure: {}, arrival: {} }
                             </ul>
                             <div className="flex items-center justify-between mt-3 border-t border-gray-300 py-2">
                                 <h6 className="text-gray-800 text-base font-semibold">Total</h6>
-                                <h6 className="text-rose-600 text-lg font-semibold">{formatIDR(flight.available.Amount * passengers.adult)}</h6>
+                                <h6 className="text-rose-600 text-lg font-semibold">{formatIDR(firstFlight.Amount * passengers.adult)}</h6>
                             </div>
                         </div>
                     </div>

@@ -3,7 +3,7 @@ import { Fragment } from 'react'
 
 const Dropdown = ({ className, ...props}) => {
     return (
-        <div className="block h-full">
+        <div className="block">
             <Menu as="div" className={`!relative inline-block text-left ${className}`}>
                 {
                     props.children
@@ -43,7 +43,7 @@ const Content = ({className = "", afterLeave = () => {}, ...props}) => {
 
 const Item = ({ className = "", as = "button", ...props }) => {
     return (
-        <Menu.Item as={as} className={`w-full bg-white hover:bg-gray-50 focus:bg-gray-100 px-2 py-1 transition-all duration-100 ${className}`} {... props}>
+        <Menu.Item as={as} className={`w-full bg-white hover:bg-gray-50 focus:bg-gray-100 px-2 py-1  transition-all duration-100 ${className}`} {... props}>
             {props.children}
         </Menu.Item>
     )

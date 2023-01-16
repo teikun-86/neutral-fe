@@ -53,8 +53,18 @@ export default function Home() {
                 </div>
             </div>
             <div className="w-full max-w-7xl mx-auto px-4">     
-                <h2 className="text-2xl font-bold text-gray-900 text-center">Jaminan Harga Termurah!</h2>
-                <h2 className="text-2xl font-bold text-gray-900 text-center mt-4 mb-2">Butuh Bantuan? Cek Informasi Berikut!</h2>
+                <section id="country" className="block">
+                    <h2 className="text-2xl font-bold text-gray-900">Destinasi Pilihan</h2>
+                    <div className="w-full overflow-x-auto whitespace-nowrap flex flex-nowrap items-center space-x-2">
+                        <button className="btn-outline-rose rounded-full py-1 tracking-wider">Indonesia</button>
+                        <button className="btn-light rounded-full py-1 tracking-wider">Japan</button>
+                        <button className="btn-light rounded-full py-1 tracking-wider">Singapore</button>
+                        <button className="btn-light rounded-full py-1 tracking-wider">Malaysia</button>
+                    </div>
+                </section>
+            
+                <h2 className="text-2xl font-bold text-gray-900">Jaminan Harga Termurah!</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mt-4 mb-2">Butuh Bantuan? Cek Informasi Berikut!</h2>
 
                 <div className="flex w-full justify-center items-center flex-wrap">
                     <div className="w-1/2 sm:w-1/3 lg:w-1/4 p-2 sm:p-3">

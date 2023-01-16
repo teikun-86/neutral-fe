@@ -6,7 +6,7 @@ const Footer = () => {
     return (
         <>
 
-            <footer className="w-full bg-primary-500 p-3">
+            <footer className="w-full bg-red-600 p-3">
                 <div className="flex w-full max-w-7xl mx-auto py-2 flex-wrap lg:justify-between">
                     <div className="w-full lg:w-1/4 p-3">
                         <h1 className="text-3xl font-bold text-white text-center lg:text-start">Neutral</h1>

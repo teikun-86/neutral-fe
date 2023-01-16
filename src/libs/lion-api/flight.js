@@ -1,7 +1,8 @@
 import { axios } from "../axios"
+import { Airport } from "./airport"
 
 export class Flight {
-    prefix = "lionair/flight/"
+    prefix = "flight/"
     params = {
         DepartureAirport: "",
         ArrivalAirport: "",
@@ -12,6 +13,7 @@ export class Flight {
         Adult: 1,
         Children: 0,
         Infant: 0,
+        Class: "Economy",
     }
     method = "GET"
     endpoint = ""
@@ -41,7 +43,7 @@ export class Flight {
     }
 
     roundTrip() {
-        this.params.DirectionInd = "Round"
+        this.params.DirectionInd = "Return"
         return this
     }
 
@@ -57,7 +59,7 @@ export class Flight {
     }
 
     returnDate(date) {
-        this.params.ReturnDate = date
+        this.params.ArrivalDate = date
         return this
     }
     
@@ -80,14 +82,21 @@ export class Flight {
         return this
     }
 
+    cabinClass(cabinClass) {
+        this.params.Class = cabinClass
+        return this
+    }
+
     async get() {
-        this.endpoint = ""
+        this.endpoint = "search"
         
-        return await axios.post(`${this.prefix}${this.endpoint}?key=${this.credentials.key}&secret=${this.credentials.secret}`, this.__buildParams(), {
+        return await axios.post(`${this.prefix}${this.endpoint}`, this.__buildParams(), {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
-        }).then(res => res.data.data).catch(err => {
+        }).then(res => {
+            return res.data.flights
+        }).catch(err => {
             console.log({err});
         })
     }
@@ -95,5 +104,76 @@ export class Flight {
     __buildParams() {
         let params = this.params
         return params
+    }
+
+    async __buildFlightData(classToShow, flights = {
+        Departure: [],
+        Return: []
+    }) {
+
+        let airports = await new Airport().intl().get()
+
+        const getAirportByIata = (iata) => {
+            let res = airports.filter(a => a.airportCode === iata)
+            return res.length > 0 ? res[0] : iata
+        }
+
+        let dataToShow = [
+            "DepartureAirport",
+            "ArrivalAirport",
+            "DepartureDateTime",
+            "ArrivalDateTime",
+            "FlightNumber",
+            "OperatingAirline",
+            "available"
+        ]
+
+        const process = (flights) => flights.map(flightGroup => {
+            return flightGroup.map(flight => {
+                flight.DepartureAirport = getAirportByIata(flight.DepartureAirport)
+                flight.ArrivalAirport = getAirportByIata(flight.ArrivalAirport)
+
+                flight.available = flight.BookingClassAvail[0] ?? {}
+
+                let data = {}
+                dataToShow.forEach(dt => {
+                    data[dt] = flight[dt]
+                })
+
+
+                flight.BookingClassAvail = flight.BookingClassAvail.filter(bca => bca.Class === classToShow).map(bca => {
+                    return {
+                        ...bca,
+                        ...data,
+                        availableSeats: Number(bca.ResBookDesigQuantity),
+                    }
+                })
+                return flight
+            })
+        })
+        
+        let departures = flights === undefined ? [] : process(flights.Departure)
+        let returns = flights === undefined ? [] : process(flights.Return)
+
+        return {
+            Departure: departures,
+            Return: returns
+        }
+    }
+
+    async prebook(data) {
+        this.endpoint = "prebook"
+        this.method = "POST"
+        this.params = data
+
+        return await axios.post(`${this.prefix}${this.endpoint}`, this.__buildParams(), {
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        }).then(res => {
+            return res.data
+        }).catch(err => {
+            console.log({err});
+        })
     }
 }

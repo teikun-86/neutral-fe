@@ -4,7 +4,12 @@ const nextConfig = {
   swcMinify: true,
   images: {
     domains: [
-        "purecatamphetamine.github.io"
+        "purecatamphetamine.github.io",
+        "graph.facebook.com",
+        "lh3.googleusercontent.com",
+        "avatars.githubusercontent.com",
+        "localhost",
+        "neutral-be.io"
     ]
   }
 }
