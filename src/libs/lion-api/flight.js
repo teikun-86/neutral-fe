@@ -90,10 +90,11 @@ export class Flight {
     async get() {
         this.endpoint = "search"
         
-        return await axios.post(`${this.prefix}${this.endpoint}`, this.__buildParams(), {
+        return await axios.get(`${this.prefix}${this.endpoint}`, {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
-            }
+            },
+            params: this.__buildParams()
         }).then(res => {
             return res.data.flights
         }).catch(err => {
