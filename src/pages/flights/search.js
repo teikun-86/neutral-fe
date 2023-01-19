@@ -646,21 +646,21 @@ const Search = ({ query, options }) => {
                                         </div>
                                         {
                                             returnFlight && (
-                                                <div className="block space-y-2 my-4">
+                                                <div className="block space-y-2 mt-3">
                                                     <div className="flex items-center justify-start space-x-4">
                                                         <h6 className="text-gray-700 font-normal text-lg">
                                                             Pulang
                                                             <span className="text-gray-900 ml-1 font-semibold">{moment(returnFlight.DepartureDateTime).format("ddd, D MMM YYYY")}</span>
                                                         </h6>
                                                         <div className="flex items-center space-x-1 rounded-full bg-gray-100 p-2">
-                                                            <span className="text-gray-800 font-semibold">{returnFlight.DepartureAirport}</span>
+                                                            <span className="text-gray-800 font-semibold">{returnFlight.DepartureAirport.iata}</span>
                                                             <ArrowRightIcon className="w-5 h-5" />
-                                                            <span className="text-gray-800 font-semibold">{returnFlight.ArrivalAirport}</span>
+                                                            <span className="text-gray-800 font-semibold">{returnFlight.ArrivalAirport.iata}</span>
                                                         </div>
                                                     </div>
                                                     <FlightDetail airports={{
-                                                        departure: arrivalAirport,
-                                                        arrival: departureAirport
+                                                        departure: departureAirport,
+                                                        arrival: arrivalAirport
                                                     }} passengers={options.passengersDetail} flight={returnFlight} />
                                                 </div>
                                             )
