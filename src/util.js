@@ -35,6 +35,14 @@ export const formatIDR = (amount, decimalPlaces = 0) => {
     }).format(amount)
 }
 
+export const formatCurrency = (amount, decimalPlaces = 0, currency = 'IDR') => 
+    Intl.NumberFormat("id-ID", {
+        style: 'currency',
+        currency: currency,
+        minimumFractionDigits: 0,
+        maximumFractionDigits: decimalPlaces,
+    }).format(amount)
+
 export const removeFromArray = (needle, haystack = []) => 
     haystack.filter(val => val !== needle)
 

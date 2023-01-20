@@ -1,0 +1,74 @@
+{
+    "nav": {
+        "check_order": "Cek Order",
+        "elite_rewards": "Elite Rewards",
+        "flight": "Pesawat",
+        "hotel": "Hotel",
+        "login": "Masuk",
+        "register": "Daftar",
+        "logout": "Keluar",
+        "profile": "Profil",
+        "train": "Kereta Api",
+        "pelni": "Pelni",
+        "car_rent": "Sewa Mobil",
+        "cargo": "Cargo",
+        "hajj_umrah": "Haji & Umrah",
+        "visa": "VISA",
+        "pay_later": "Pay Later",
+        "land_arrangement": "Land Arrangement"
+    },
+    "main": {
+        "greeting": "Jalan-jalan kemana nih?",
+        "searchbox": "Cari tiket pesawat, hotel, kereta api, dan lainnya",
+        "destination": {
+            "title": "Destinasi Pilihan",
+            "desc": "Penerbangan menyenangkan bersama {link} ke berbagai destinasi pilihan. Baik domestik maupun internasional",
+            "indonesia": "Indonesia",
+            "japan": "Japan",
+            "singapore": "Singapore",
+            "malaysia": "Malaysia"
+        },
+        "tour": {
+            "title": "Tur & Wisata Pilihan",
+            "desc": "Tour bersama {link} ke berbagai destinasi pilihan. Baik lokal maupun internasional",
+            "local": "Lokal",
+            "international": "Internasional"
+        },
+        "price": {
+            "start_from": "Mulai dari"
+        },
+        "select_land_arrangement": "Pilih Land Arrangement"
+    },
+    "command": {
+        "confirm": "Konfirmasi",
+        "cancel": "Batal",
+        "close": "Tutup",
+        "reload": "Muat Ulang"
+    },
+    "state": {
+        "offline": {
+            "status": "Kamu sedang offline!",
+            "title": "Kamu membutuhkan koneksi internet untuk menggunakan aplikasi ini.",
+            "desc": "Periksa koneksi internete kamu dan coba lagi dengan menekan tombol \"Muat Ulang\" di bawah ini."
+        }
+    },
+    "title": {
+        "login": "Masuk untuk menikmati segala keuntungan dan kemudahan dari {link}"
+    },
+    "input": {
+        "email_or_phone": "Email atau Nomor Telepon",
+        "name": "Nama",
+        "email": "Email",
+        "phone": "Nomor Telepon",
+        "password": "Password",
+        "confirm_password": "Konfirmasi Password",
+        "call_code": "Kode Negara"
+    },
+    "dont_have_account": "Belum punya akun?",
+    "already_have_account": "Sudah punya akun?",
+    "login_easier": "Atau masuk lebih mudah dengan",
+    "forgot_password": "Lupa Password?",
+    "info": {
+        "name": "Isi sesuai KTP/SIM/Passport/Kitas"
+    }
+}

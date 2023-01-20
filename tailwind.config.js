@@ -20,6 +20,7 @@ module.exports = {
                 "width-half": "width-half 0.2s ease-in-out",
                 "width-2/3": "width-2/3 0.2s ease-in-out",
                 "ripple": "ripple 1s cubic-bezier(0, 0, 0.2, 1)",
+                "bounce-fast": "bounce 0.5s infinite",
             },
             keyframes: {
                 "width-half": {

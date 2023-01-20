@@ -9,8 +9,14 @@ const nextConfig = {
         "lh3.googleusercontent.com",
         "avatars.githubusercontent.com",
         "localhost",
-        "neutral-be.io"
+        "neutral-be.io",
+        "secure.gravatar.com"
     ]
+  },
+  i18n: {
+    locales: ['id', 'en', 'jp'],
+    defaultLocale: 'id',
+    localeDetection: true,
   }
 }
 

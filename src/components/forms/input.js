@@ -17,6 +17,7 @@ export const Input = ({
     maxChar = null,
     onEnter = (e) => { },
     disabled = false,
+    autoFocus = false,
     ...props
 }) => {
     const [focus, setFocus] = useState(false)
@@ -30,8 +31,8 @@ export const Input = ({
     }
     
     return (
-        <div className="relative w-full z-10 mb-3">
-            <input disabled={disabled} type={typeS} {...props} id={id} name={name} className={`form-input rounded-lg border border-gray-300 focus:border-sky-600 transition-all duration-200 ring-0 focus:ring-0 outline-none focus:outline-none w-full block ${className} peer/input placeholder:opacity-0 focus:placeholder:opacity-100 placeholder:transition-opacity placeholder:duration-500 disabled:opacity-50 peer/input disabled:cursor-not-allowed`} onFocus={() => setFocus(true)} onChange={(e) => {
+        <div className="relative w-full z-10">
+            <input disabled={disabled} type={typeS} {...props} id={id} name={name} className={`form-input rounded-lg border border-gray-300 focus:border-sky-600 transition-all duration-200 ring-0 focus:ring-0 outline-none focus:outline-none w-full block ${className} peer/input placeholder:opacity-0 focus:placeholder:opacity-100 placeholder:transition-opacity placeholder:duration-500 disabled:opacity-50 peer/input disabled:cursor-not-allowed mb-3`} autoFocus={autoFocus} onFocus={() => setFocus(true)} onChange={(e) => {
                 // if autoCapitalize is true, capitalize the first letter of each word
                 if (autoCapitalize) {
                     e.target.value = e.target.value.replace(/\w\S*/g, (txt) => {

@@ -12,3 +12,4 @@ export * from "@/components/icons/circle";
 export * from "@/components/icons/spinner";
 export * from "@/components/icons/facebook";
 export * from "@/components/icons/google";
+export * from "@/components/icons/three-dots";

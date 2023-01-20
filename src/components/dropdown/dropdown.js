@@ -3,13 +3,11 @@ import { Fragment } from 'react'
 
 const Dropdown = ({ className, ...props}) => {
     return (
-        <div className="block">
-            <Menu as="div" className={`!relative inline-block text-left ${className}`}>
-                {
-                    props.children
-                }
-            </Menu>
-        </div>
+        <Menu as="div" className={`!relative inline-block text-left ${className}`}>
+            {
+                props.children
+            }
+        </Menu>
     )
 }
 

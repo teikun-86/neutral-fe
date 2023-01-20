@@ -25,6 +25,10 @@ img {
         @apply bg-rose-600 rounded-lg;
     }
 
+    .no-scrollbar::-webkit-scrollbar {
+        @apply w-0 h-0 hidden;
+    }
+
     .gray-scrollbar::-webkit-scrollbar {
         @apply w-2 h-1;
     }
@@ -56,7 +60,7 @@ img {
     }
 
     .btn-outline-rose {
-        @apply cursor-pointer select-none disabled:opacity-50 disabled:cursor-not-allowed inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-rose-50 text-base font-medium text-rose-600 hover:bg-rose-600 hover:text-white focus:bg-rose-600 focus:text-white focus:outline-none sm:w-auto sm:text-sm transition duration-100 border-rose-600;
+        @apply cursor-pointer select-none disabled:opacity-50 disabled:cursor-not-allowed inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-rose-50 text-base font-medium text-rose-600 hover:bg-rose-100/80 focus:bg-rose-100/80 focus:outline-none sm:w-auto sm:text-sm transition duration-100 border-rose-600;
     }
 
     .btn-rose-gradient {
@@ -84,7 +88,7 @@ img {
     }
 
     .btn-light {
-        @apply cursor-pointer select-none disabled:opacity-50 disabled:cursor-not-allowed inline-flex justify-center items-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-600 hover:bg-gray-50 focus:bg-gray-100 focus:outline-none sm:w-auto sm:text-sm transition duration-100;
+        @apply cursor-pointer select-none disabled:opacity-50 disabled:cursor-not-allowed inline-flex justify-center items-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-600 hover:bg-gray-50 focus:bg-gray-100 focus:outline-none outline-none sm:w-auto sm:text-sm transition duration-100;
     }
 
     input[type="file"] {

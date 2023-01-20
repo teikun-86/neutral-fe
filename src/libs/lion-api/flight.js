@@ -98,7 +98,7 @@ export class Flight {
         }).then(res => {
             return res.data.flights
         }).catch(err => {
-            console.log({err});
+            console.log(err.response.data.message);
         })
     }
 

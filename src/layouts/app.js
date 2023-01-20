@@ -16,11 +16,13 @@ import { Transition } from "@headlessui/react";
 import { useViewport } from "@/hooks/viewport";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/auth";
+import { useLocale } from "@/hooks/locale";
 
 const AppLayout = props => {
     const [modalOpen, setModalOpen] = useRecoilState(modalState)
     const [drawerOpen, setDrawerOpen] = useRecoilState(drawerState)
     const router = useRouter()
+    const { __ } = useLocale()
     const [showBtn, setShowBtn] = useState(false)
     const { width, scrollY } = useViewport({
         onScroll: (result) => {
@@ -100,11 +102,11 @@ const AppLayout = props => {
 
             <Modal size="md" id="landArrangementModal">
                 <Modal.Header>
-                    <h3 className="text-xl font-semibold text-gray-900">Land Arrangement</h3>
+                    <h3 className="text-xl font-semibold text-gray-900">{__('nav.land_arrangement')}</h3>
                     <button onClick={() => setModalOpen('')} className="absolute top-3 right-3 focus:outline-none outline-none text-gray-700 hover:text-gray-900 hover:bg-gray-50 focus:bg-gray-100 transition-all duration-200 p-2 rounded-full"><XMarkIcon className="w-5 h-5 hover:shadow-sm focus:shadow-sm" /></button>
                 </Modal.Header>
                 <Modal.Body>
-                    <p className="text-center text-gray-700 mb-3 text-sm">Pilih Land Arrangement</p>
+                    <p className="text-center text-gray-700 mb-3 text-sm">{__('main.select_land_arrangement')}</p>
                     <div className="flex items-center justify-center w-full h-full space-x-3">
                         <a onClick={(e) => {
                             setModalOpen('')
@@ -125,14 +127,14 @@ const AppLayout = props => {
                     </div>
                 </Modal.Body>
                 <Modal.Footer className="flex items-center justify-end space-x-3">
-                    <button className="btn-rose" onClick={() => setModalOpen('')}>Cancel</button>
+                    <button className="btn-rose" onClick={() => setModalOpen('')}>{__('command.cancel')}</button>
                 </Modal.Footer>
             </Modal>
             <Drawer id="landArrangementDrawer" afterClose={() => {
                 setDrawerOpen('responsiveNavDrawer')
             }}>
                 <Drawer.Header>
-                    <h4 className="text-xl w-2/3 mx-auto font-bold text-gray-900 text-center mb-3">Pilih Land Arrangement</h4>
+                    <h4 className="text-xl w-2/3 mx-auto font-bold text-gray-900 text-center mb-3">{__('main.select_land_arrangement')}</h4>
                 </Drawer.Header>
                 <Drawer.Body className="!min-h-[45vh]">
                     <div className="flex items-center justify-center w-full h-full space-x-3">
@@ -153,17 +155,17 @@ const AppLayout = props => {
             </Drawer>
             <Drawer id="offlineDrawer">
                 <Drawer.Header>
-                    <h4 className="text-xl font-bold text-gray-900 text-center mb-3">Kamu Sedang Offline!</h4>
+                    <h4 className="text-xl font-bold text-gray-900 text-center mb-3">{__('state.offline.status')}</h4>
                 </Drawer.Header>
                 <Drawer.Body>
                     <div className="grid place-items-center">
                         <WifiOffIcon className="w-32 h-32 mb-4 text-rose-600" />
-                        <h5 className="text-base font-semibold text-gray-900 text-center">Kamu butuh koneksi ke internet untuk menggunakan aplikasi ini!</h5>
-                        <p className="text-center text-sm font-normal text-gray-800">Coba cek koneksi Wi-Fi, paket data, sinyal seluler kamu, lalu tekan &quot;Reload&quot;.</p>
+                        <h5 className="text-base font-semibold text-gray-900 text-center">{__('state.offline.title')}</h5>
+                        <p className="text-center text-sm font-normal text-gray-800">{__('state.offline.desc')}</p>
                     </div>
                 </Drawer.Body>
                 <Drawer.Footer>
-                    <button onClick={() => router.reload()} className="btn-rose w-full my-2">Reload</button>
+                    <button onClick={() => router.reload()} className="btn-rose w-full my-2">{__('command.reload')}</button>
                 </Drawer.Footer>
             </Drawer>
             <Footer />

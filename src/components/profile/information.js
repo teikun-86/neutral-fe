@@ -132,7 +132,7 @@ export const ProfileInformation = ({ user, updateProfile = async () => {}, resen
             </main>
 
             <footer className="flex items-center justify-end max-w-xl">
-                <button disabled={name.trim() === user.name} onClick={update} className="btn-rose rounded-full">Update</button>
+                <button disabled={name.trim() === user.name && avatar === null} onClick={update} className="btn-rose rounded-full">Update</button>
             </footer>
         </section>
     )

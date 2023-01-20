@@ -25,8 +25,13 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         
         await csrf()
 
+        let data = {
+            ...props,
+            lang: router.locale,
+        }
+
         axios
-            .post('/auth/register', props)
+            .post('/auth/register', data)
             .then((res) => {
                 setLoading(false)
                 mutate()
@@ -37,7 +42,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
                 
                 if (error.response.status !== 422) throw error
 
-                setErrors(Object.values(error.response.data.errors).flat())
+                setErrors(error.response.data.errors)
             })
     }
 
@@ -48,8 +53,13 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         
         await csrf()
 
+        let data = {
+            ...props,
+            lang: router.locale,
+        }
+
         axios
-            .post('/auth/login', props)
+            .post('/auth/login', data)
             .then(() => {
                 setLoading(false)
                 return mutate()
@@ -58,10 +68,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
                 setLoading(false)
                 if (error.response.status !== 422) throw error
 
-                // get all errors
-                const errors = Object.values(error.response.data.errors).flat()
-
-                setErrors(errors)
+                setErrors(error.response.data.errors)
             })
     }
 
@@ -121,33 +128,42 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             })
     }
 
-    const forgotPassword = async ({ setErrors, setStatus, email }) => {
-        await csrf()
-
+    const forgotPassword = async ({ setErrors = () => {}, setStatus = () => {}, setLoading = () => {}, email }) => {
+        setLoading(true)
         setErrors([])
         setStatus(null)
+        
+        await csrf()
+
 
         axios
             .post('/auth/forgot-password', { email })
-            .then(response => setStatus(response.data.status))
+            .then(response => {
+                setStatus(response.data.status)
+                setLoading(false)
+            })
             .catch(error => {
+                setLoading(false)
+                
                 if (error.response.status !== 422) throw error
 
-                setErrors(error.response.data.errors)
+                setErrors(Object.values(error.response.data.errors).flat())
             })
     }
 
-    const resetPassword = async ({ setErrors, setStatus, ...props }) => {
-        await csrf()
-
+    const resetPassword = async ({ setErrors = () => {}, setStatus = () => {}, setLoading = () => {}, ...props }) => {
+        setLoading(true)
         setErrors([])
         setStatus(null)
+        
+        await csrf()
 
         axios
             .post('/auth/reset-password', { token: router.query.token, ...props })
-            .then(response =>
-                router.push('/auth/login?reset=' + btoa(response.data.status)),
-            )
+            .then(response => { 
+                setLoading(false)
+                router.push('/auth/login?reset=' + btoa(response.data.status))
+             })
             .catch(error => {
                 if (error.response.status !== 422) throw error
                 setErrors(error.response.data.errors)

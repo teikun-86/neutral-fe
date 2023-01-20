@@ -65,29 +65,17 @@ export const UpdatePassword = ({
 
             <header>
                 <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
-                    Ubah Password
+                    Reset Password
                 </h2>
 
                 <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    Ubah password untuk meningkatkan keamanan akun anda.
+                    Reset password untuk meningkatkan keamanan akun anda.
                 </p>
-                {
-                    (user.google_id !== null || user.facebook_id !== null) && (
-                        <p className="text-sm text-gray-700 mb-4">
-                            Password tidak dapat diubah karena anda login menggunakan akun {user.google_id !== null ? 'Google' : 'Facebook'}.
-                        </p>
-                    )
-                }
             </header>
 
             <main className="my-4 max-w-xl">
-                <Input id="password" disabled={user.google_id !== null || user.facebook_id !== null} type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} label="Password" required />
-                <Input id="passwordConfirmation" disabled={user.google_id !== null || user.facebook_id !== null} type="password" name="password_confirmation" value={passwordConfirmation} onChange={(e) => setPasswordConfirmation(e.target.value)} label="Konfirmasi Password" required />
+                <p className="text-gray-800">Untuk alasan keamanan, Anda tidak dapat merubah password secara langsung. Silahkan log out dan pergi ke halaman <strong className="underline underline-offset-2 font-medium">Lupa Password</strong> untuk mengubahnya.</p>
             </main>
-
-            <footer className="flex items-center justify-end max-w-xl">
-                <button disabled={user.google_id !== null || user.facebook_id !== null} onClick={update} className="btn-rose rounded-full">Update</button>
-            </footer>
         </section>
     )
 }

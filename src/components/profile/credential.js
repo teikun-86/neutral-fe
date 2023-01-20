@@ -8,7 +8,7 @@ export const ProfileCredentials = ({
     updateCredentials = async () => { },
 }) => {
     const [email, setEmail] = useState(user.email)
-    const [phone, setPhone] = useState(user.phone)
+    const [phone, setPhone] = useState(user.phone ?? "")
 
     const [loading, setLoading] = useState(false)
     const [errors, setErrors] = useState([])
@@ -41,27 +41,6 @@ export const ProfileCredentials = ({
                     </div>
                 )
             }
-            {
-                status === 'success' && (
-                    <Alert type="success" title="Sukses!" className="mb-6">
-                        Informasi profil berhasil diperbarui.
-                    </Alert>
-                )
-            }
-
-            {
-                errors.length > 0 && (
-                    <Alert type="error" title="Terjadi Kesalahan!" className="mb-6">
-                        <ul className="list-disc list-inside">
-                            {
-                                errors.map((error, index) => (
-                                    <li key={index}>{error}</li>
-                                ))
-                            }
-                        </ul>
-                    </Alert>
-                )
-            }
 
             <header>
                 <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
@@ -74,6 +53,27 @@ export const ProfileCredentials = ({
             </header>
 
             <main className="my-4 max-w-xl">
+                {
+                    status === 'success' && (
+                        <Alert type="success" title="Sukses!" className="mb-6">
+                            Informasi profil berhasil diperbarui.
+                        </Alert>
+                    )
+                }
+
+                {
+                    errors.length > 0 && (
+                        <Alert type="error" title="Terjadi Kesalahan!" className="mb-6">
+                            <ul className="list-disc list-inside">
+                                {
+                                    errors.map((error, index) => (
+                                        <li key={index}>{error}</li>
+                                    ))
+                                }
+                            </ul>
+                        </Alert>
+                    )
+                }
                 <Input id="email" disabled={user.google_id !== null || user.facebook_id !== null} type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} label="Email" invalidMessage="Isi dengan alamat email yang valid!" required />
                 {
                     (user.google_id !== null || user.facebook_id !== null) && (

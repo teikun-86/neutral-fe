@@ -1,0 +1,74 @@
+{
+    "nav": {
+        "check_order": "Check Order",
+        "elite_rewards": "Elite Rewards",
+        "flight": "Flight",
+        "hotel": "Hotel",
+        "login": "Log In",
+        "register": "Register",
+        "logout": "Log Out",
+        "profile": "Profile",
+        "train": "Trains",
+        "pelni": "Pelni",
+        "car_rent": "Rent a Car",
+        "cargo": "Cargo",
+        "hajj_umrah": "Hajj & Umrah",
+        "visa": "VISA",
+        "pay_later": "Pay Later",
+        "land_arrangement": "Land Arrangement"
+    },
+    "main": {
+        "greeting": "Where do you want to go?",
+        "searchbox": "Search for flights, hotels, trains, and more",
+        "destination": {
+            "title": "Preferred Destination",
+            "desc": "Preferred destination for your joyful trip with {link}.",
+            "indonesia": "Indonesia",
+            "japan": "Japan",
+            "singapore": "Singapore",
+            "malaysia": "Malaysia"
+        },
+        "tour": {
+            "title": "Preferred Tours",
+            "desc": "Tour with {link} to various destinations in both local and international.",
+            "local": "Local",
+            "international": "International"
+        },
+        "price": {
+            "start_from": "Starts from"
+        },
+        "select_land_arrangement": "Select Land Arrangement"
+    },
+    "command": {
+        "confirm": "Confirm",
+        "cancel": "Cancel",
+        "close": "Close",
+        "reload": "Reload"
+    },
+    "state": {
+        "offline": {
+            "status": "You're offline!",
+            "title": "You need an internet connection to use this app.",
+            "desc": "Please check your internet connection and try again by clicking the \"Reload\" button below."
+        }
+    },
+    "title": {
+        "login": "Log In to enjoy every benefits and services in {link}"
+    },
+    "input": {
+        "email_or_phone": "Email or Phone Number",
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone Number",
+        "password": "Password",
+        "confirm_password": "Confirm Password",
+        "call_code": "Call Code"
+    },
+    "dont_have_account": "Don't have an account?",
+    "already_have_account": "Already have an account?",
+    "login_easier": "Or log in easier with",
+    "forgot_password": "Forgot Password?",
+    "info": {
+        "name": "Fill in your name as it appears on your ID card."
+    }
+}

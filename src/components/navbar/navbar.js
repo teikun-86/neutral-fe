@@ -13,6 +13,7 @@ import { AirplaneTakeoffIcon, KaabaIcon } from "../icons";
 import { searchString, truncateString } from "@/util";
 import drawerState from "@/hooks/drawer";
 import Image from "next/image";
+import { useLocale } from "@/hooks/locale";
 
 export const Navbar = ({ isInViewport = null, fixed = true, user = null, logout = () => {} }) => {
     const [showNavbar, setBgActive] = useState(false)
@@ -21,6 +22,8 @@ export const Navbar = ({ isInViewport = null, fixed = true, user = null, logout 
     const [drawerOpen, setDrawerOpen] = useRecoilState(drawerState)
     
     const router = useRouter()
+
+    const { __, locale, localeMap } = useLocale()
 
     const onScroll = () => {
         setBgActive(window.scrollY >= 300)
@@ -74,19 +77,40 @@ export const Navbar = ({ isInViewport = null, fixed = true, user = null, logout 
                         <div className="flex items-center justify-between w-full max-w-7xl px-4 mx-auto h-full">
                             <Link className="text-3xl md:text-4xl font-bold text-rose-600" href="/">Neutral</Link>
                             <div className="h-full justify-end items-center space-x-3 hidden md:flex">
+                                <Dropdown>
+                                    {({open}) => (
+                                        <>
+                                            <Dropdown.Button className="btn-text text-rose-600 px-2 py-1 group select-none">
+                                                <Image alt={localeMap[locale].name} src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${localeMap[locale].flag}.svg`} width={64} height={64} className="w-6 mr-2" />
+                                                {localeMap[locale].localeShort.toUpperCase()}
+                                                <ChevronDownIcon className="w-5 h-5 ml-2" />
+                                            </Dropdown.Button>
+                                            <Dropdown.Content>
+                                                {
+                                                    localeMap && Object.keys(localeMap).map((key) => (
+                                                        <Dropdown.Item className="flex items-center justify-start" key={key} as={Link} href={router.pathname} shallow={true} locale={localeMap[key].localeShort}>
+                                                            <Image alt={localeMap[key].name} src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${localeMap[key].flag}.svg`} width={64} height={64} className="w-6" />
+                                                            <span className="ml-2">{localeMap[key].name}</span>
+                                                        </Dropdown.Item>
+                                                    ))
+                                                }
+                                            </Dropdown.Content>
+                                        </>
+                                    )}
+                                </Dropdown>
                                 <NavLink className={`${showNavbar ? "text-gray-700 hocus:text-gray-900" : ""}`} href="#elite-rewards">
-                                    Elite Rewards
+                                    {__('nav.elite_rewards')}
                                 </NavLink>
                                 <NavLink className={`${showNavbar ? "text-gray-700 hocus:text-gray-900" : ""}`} href="#check-order">
-                                    Cek Order
+                                    {__('nav.check_order')}
                                 </NavLink>
                                 {
                                     !user ? (
                                         <>
                                             <NavLink className={`${showNavbar ? "text-gray-700 hocus:text-gray-900" : ""}`} href="/auth/login">
-                                                Masuk
+                                                {__('nav.login')}
                                             </NavLink>
-                                            <Link href="/auth/register" className="btn-rose">Daftar</Link>
+                                            <Link href="/auth/register" className="btn-rose">{__('nav.register')}</Link>
                                         </>
                                     )
                                     : (
@@ -108,9 +132,13 @@ export const Navbar = ({ isInViewport = null, fixed = true, user = null, logout 
                                                                 <p className="text-xs text-gray-500 truncate">{user.email}</p>
                                                             </div>
                                                         </Link>
+                                                        <Dropdown.Item as={Link} href="/@me" className="flex items-center justify-start">
+                                                            <UserIcon className="w-5 h-5 mr-2" />
+                                                            {__('nav.profile')}
+                                                        </Dropdown.Item>
                                                         <Dropdown.Item onClick={logout} className="flex items-center justify-start">
                                                             <ArrowLeftOnRectangleIcon className="w-5 h-5 mr-2" />
-                                                            Log out
+                                                            {__('nav.logout')}
                                                         </Dropdown.Item>
                                                     </Dropdown.Content>
                                                 </>
@@ -138,38 +166,38 @@ export const Navbar = ({ isInViewport = null, fixed = true, user = null, logout 
                         <div className="w-full bg-white shadow-md">
                             <div className="w-full max-w-7xl mx-auto px-2 h-full flex flex-wrap items-center justify-between">
                                 <div className="w-full lg:w-1/2 py-2 px-2">
-                                    <SearchBox />
+                                    <SearchBox placeholder={__('main.searchbox')} />
                                 </div>
                                 <div className="w-full lg:w-1/2 px-2 py-2 hidden lg:block">
                                     <div className="w-full justify-start flex items-center py-1 relative md:justify-end h-14">
-                                        <UnderlinedLink className="mx-1 ml-3" href="/flights">Pesawat</UnderlinedLink>
-                                        <UnderlinedLink className="mx-1" href="/hotel">Hotel</UnderlinedLink>
-                                        <UnderlinedLink className="mx-1" href="/trains">Kereta Api</UnderlinedLink>
-                                        <UnderlinedLink className="mx-1" href="/pelni">Pelni</UnderlinedLink>
-                                        <UnderlinedLink className="mx-1" href="/rent-car">Sewa Mobil</UnderlinedLink>
-                                        <UnderlinedLink className="mx-1" href="/cargo">Cargo</UnderlinedLink>
-                                        <Dropdown className="h-full">
+                                        <UnderlinedLink className="mx-1 ml-3" href="/flights">{__('nav.flight')}</UnderlinedLink>
+                                        <UnderlinedLink className="mx-1" href="/hotel">{__('nav.hotel')}</UnderlinedLink>
+                                        <UnderlinedLink className="mx-1" href="/trains">{__('nav.train')}</UnderlinedLink>
+                                        <UnderlinedLink className="mx-1" href="/pelni">{__('nav.pelni')}</UnderlinedLink>
+                                        <UnderlinedLink className="mx-1" href="/rent-car">{__('nav.car_rent')}</UnderlinedLink>
+                                        <UnderlinedLink className="mx-1" href="/cargo">{__('nav.cargo')}</UnderlinedLink>
+                                        <Dropdown className="h-full mx-1">
                                             {({ open }) => (
                                                 <>
                                                     <Dropdown.Button as="div" className="h-full">
-                                                        <UnderlinedLink active={open} as="button">Haji & Umrah</UnderlinedLink>
+                                                        <UnderlinedLink active={open} as="button">{__('nav.hajj_umrah')}</UnderlinedLink>
                                                     </Dropdown.Button>
                                                     <Dropdown.Content>
                                                         <button className="w-full bg-white hocus:bg-gray-100 outline-none focus:outline-none ring-0 focus:ring-0 transition duration-200 flex items-center justify-start space-x-2 px-3 py-2 text-sm font-semibold text-gray-900 tracking-wider" onClick={() => setModalOpen('landArrangementModal')}>
                                                             <KaabaIcon className="w-5 h-5 mr-2 text-rose-500" />
-                                                            Land Arrangement
+                                                            {__('nav.land_arrangement')}
                                                         </button>
                                                         <Link className="w-full bg-white hocus:bg-gray-100 outline-none focus:outline-none ring-0 focus:ring-0 transition duration-200 flex items-center justify-start space-x-2 px-3 py-2 text-sm font-semibold text-gray-900 tracking-wider" href="/flights">
                                                             <AirplaneTakeoffIcon className="w-5 h-5 mr-2 text-rose-500" />
-                                                            Pesawat
+                                                            {__('nav.flight')}
                                                         </Link>
                                                         <Link className="w-full bg-white hocus:bg-gray-100 outline-none focus:outline-none ring-0 focus:ring-0 transition duration-200 flex items-center justify-start space-x-2 px-3 py-2 text-sm font-semibold text-gray-900 tracking-wider" href="/hajj-and-umrah/pay-later">
                                                             <CreditCardIcon className="w-5 h-5 mr-2 text-rose-500" />
-                                                            Pay Later
+                                                            {__('nav.pay_later')}
                                                         </Link>
                                                         <Link className="w-full bg-white hocus:bg-gray-100 outline-none focus:outline-none ring-0 focus:ring-0 transition duration-200 flex items-center justify-start space-x-2 px-3 py-2 text-sm font-semibold text-gray-900 tracking-wider" href="/hajj-and-umrah/visa">
                                                             <IdentificationIcon className="w-5 h-5 mr-2 text-rose-500" />
-                                                            VISA
+                                                            {__('nav.visa')}
                                                         </Link>
                                                     </Dropdown.Content>
                                                 </>
@@ -183,7 +211,7 @@ export const Navbar = ({ isInViewport = null, fixed = true, user = null, logout 
                 </div>
             </div>
 
-            <ResponsiveNavbar show={showSidebar} closeSidebar={closeSidebar} />
+            <ResponsiveNavbar user={user} logout={logout} />
         </header>
     );
 };

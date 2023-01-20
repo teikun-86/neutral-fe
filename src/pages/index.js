@@ -9,12 +9,16 @@ import { Service } from "@/components/button";
 import useInViewport from "@/hooks/inviewport";
 import { useRef } from "react";
 import AppLayout from "@/layouts/app";
+import { Destination, Tour } from "@/components/landing";
+import { useLocale } from "@/hooks/locale";
 
 export default function Home() {
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const searchboxRef = useRef(null)
     const { isInViewport } = useInViewport({refElement: searchboxRef, visible: true})
     const router = useRouter()
+
+    const { __ } = useLocale()
 
     return (
         <AppLayout isInViewport={isInViewport}>
@@ -25,43 +29,37 @@ export default function Home() {
             >
                 <div className="w-full min-h-[80vh] bg-gradient-to-r from-black/60 to-black/60 via-black/20 flex items-center pt-16">
                     <div className="w-full block max-w-7xl mx-auto px-4">
-                        <h1 className="text-center text-white text-3xl font-bold mb-3">Jalan-jalan kemana nih?</h1>
+                        <h1 className="text-center text-white text-3xl font-bold mb-3">{__('main.greeting')}</h1>
                         <div ref={searchboxRef} className="sm:w-2/3 lg:w-1/2 mx-auto">
-                            <SearchBox />
+                            <SearchBox placeholder={__('main.searchbox')} />
                         </div>
                         <div className="grid place-items-center w-full mt-6">
                             <div className="flex items-center justify-center flex-wrap">
-                                <Service href="/flights" icon={<AirplaneTakeoffIcon className="w-10 h-10 text-red-600" />}>Pesawat</Service>
-                                <Service href="/hotel" icon={<BuildingOfficeIcon className="w-10 h-10 text-red-600" />}>Hotel</Service>
-                                <Service href="/trains" icon={<TrainIcon className="w-10 h-10 text-red-600" />}>Kereta Api</Service>
-                                <Service href="/pelni" icon={<ShipIcon className="w-10 h-10 text-red-600" />}>Pelni</Service>
-                                <Service href="/car" icon={<CarIcon className="w-10 h-10 text-red-600" />}>Sewa Mobil</Service>
-                                <Service href="/cargo" icon={<TruckIcon className="w-10 h-10 text-red-600" />}>Cargo</Service>
+                                <Service href="/flights" icon={<AirplaneTakeoffIcon className="w-10 h-10 text-red-600" />}>{__('nav.flight')}</Service>
+                                <Service href="/hotel" icon={<BuildingOfficeIcon className="w-10 h-10 text-red-600" />}>{__('nav.hotel')}</Service>
+                                <Service href="/trains" icon={<TrainIcon className="w-10 h-10 text-red-600" />}>{__('nav.train')}</Service>
+                                <Service href="/pelni" icon={<ShipIcon className="w-10 h-10 text-red-600" />}>{__('nav.pelni')}</Service>
+                                <Service href="/car" icon={<CarIcon className="w-10 h-10 text-red-600" />}>{__('nav.car_rent')}</Service>
+                                <Service href="/cargo" icon={<TruckIcon className="w-10 h-10 text-red-600" />}>{__('nav.cargo')}</Service>
                             </div>
-                            <h6 className="text-white font-semibold text-lg mt-2">Haji & Umrah</h6>
+                            <h6 className="text-white font-semibold text-lg">{__('nav.hajj_umrah')}</h6>
                             <div className="flex items-start justify-center flex-wrap mt-4">
                                 <Service onClick={(e) => {
                                     e.preventDefault()
                                     setModalOpen('landArrangementModal')
-                                }} icon={<KaabaIcon className="w-10 h-10 text-red-600" />}>Land<br/>Arrangement</Service>
-                                <Service href="/flights" icon={<AirplaneTakeoffIcon className="w-10 h-10 text-red-600" />}>Pesawat</Service>
-                                <Service href="/hajj-and-umrah/pay-later" icon={<CreditCardIcon className="w-10 h-10 text-red-600" />}>Pay Later</Service>
-                                <Service href="/hajj-and-umrah/visa" icon={<IdentificationIcon className="w-10 h-10 text-red-600" />}>Visa</Service>
+                                }} icon={<KaabaIcon className="w-10 h-10 text-red-600" />}>{__('nav.land_arrangement')}</Service>
+                                <Service href="/flights" icon={<AirplaneTakeoffIcon className="w-10 h-10 text-red-600" />}>{__('nav.flight')}</Service>
+                                <Service href="/hajj-and-umrah/pay-later" icon={<CreditCardIcon className="w-10 h-10 text-red-600" />}>{__('nav.pay_later')}</Service>
+                                <Service href="/hajj-and-umrah/visa" icon={<IdentificationIcon className="w-10 h-10 text-red-600" />}>{__('nav.visa')}</Service>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div className="w-full max-w-7xl mx-auto px-4">     
-                <section id="country" className="block">
-                    <h2 className="text-2xl font-bold text-gray-900">Destinasi Pilihan</h2>
-                    <div className="w-full overflow-x-auto whitespace-nowrap flex flex-nowrap items-center space-x-2">
-                        <button className="btn-outline-rose rounded-full py-1 tracking-wider">Indonesia</button>
-                        <button className="btn-light rounded-full py-1 tracking-wider">Japan</button>
-                        <button className="btn-light rounded-full py-1 tracking-wider">Singapore</button>
-                        <button className="btn-light rounded-full py-1 tracking-wider">Malaysia</button>
-                    </div>
-                </section>
+                <Destination __={__} />
+
+                <Tour __={__} />
             
                 <h2 className="text-2xl font-bold text-gray-900">Jaminan Harga Termurah!</h2>
                 <h2 className="text-2xl font-bold text-gray-900 mt-4 mb-2">Butuh Bantuan? Cek Informasi Berikut!</h2>

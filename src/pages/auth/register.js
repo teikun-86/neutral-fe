@@ -10,8 +10,12 @@ import { ArrowLeftIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import { Dropdown } from "@/components/dropdown";
 import countryCodes from "@/data/call-codes";
 import Alert from "@/components/alert";
+import { InputError } from "@/components/forms/input-error";
+import { useLocale } from "@/hooks/locale";
 
 const Register = () => {
+    const { __, locale } = useLocale();
+
     const [loading, setLoading] = useState(false)
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
@@ -34,18 +38,19 @@ const Register = () => {
             setErrors: setErrors,
             name,
             email,
-            phone: `${countryCode.dial_code}${phone}`,
+            phone: phone,
+            call_code: countryCode.dial_code,
             password,
             password_confirmation: passwordConfirmation
         })
     }
 
     const loginWith = (provider) => {
-        window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/social/${provider}/`
+        window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/social/${provider}/?lang=${locale}`
     }
 
     return (
-        <GuestLayout title="Register">
+        <GuestLayout title={__('nav.register')}>
             <div className="w-full grid place-items-center min-h-screen bg-cover bg-no-repeat bg-center">
                 <div className="w-full sm:max-w-md p-3">
                     <div className="flex flex-col items-center justify-center mb-2">
@@ -53,12 +58,21 @@ const Register = () => {
                             <Image src={btwLogo} alt="BTW Logo" className="h-10 w-auto" />
                         </Link>
                         <h2 className="text-xl font-bold text-gray-800 text-center">
-                            Daftar
+                            {__('nav.register')}
                         </h2>
-                        <p className="text-center">Mendaftar untuk memesan lebih mudah dan dapatkan keuntungan lainnya!</p>
+                        <p className="text-center">{__('title.register', {
+                            link: process.env.NEXT_PUBLIC_APP_NAME
+                        })}</p>
                     </div>
 
-                    <div className="w-full px-6 py-4 bg-white shadow-md overflow-hidden rounded-lg">
+                    <div className="w-full px-6 py-4 bg-white shadow-md overflow-hidden rounded-lg relative">
+                        {
+                            loading && (
+                                <div className="absolute inset-0 bg-white/50 flex items-center justify-center z-[80]">
+                                    <SpinnerIcon className="w-10 h-10 text-rose-600 animate-spin" />
+                                </div>
+                            )
+                        }
                         {
                             errors.length > 0 && (
                                 <Alert type="error" title="Oops! Terjadi kesalahan!">
@@ -72,9 +86,17 @@ const Register = () => {
                                 </Alert>
                             )
                         }
-                        <Input autoCapitalize info="Isi sesuai KTP/SIM/Passport/Kitas" placeholder="John Doe" type="text" id="name" name="name" label="Nama" onChange={(e) => setName(e.target.value)} />
-                        <Input placeholder="johndoe@example.com" type="email" id="email" name="email" label="Email" onChange={(e) => setEmail(e.target.value)} invalidMessage="Isi dengan email yang valid!" />
-                        <div className="flex items-start space-x-2">
+                        <div className="my-3">
+                            <Input className="mb-0" autoCapitalize info={__('info.name')} placeholder="John Doe" type="text" id="name" name="name" label={__('input.name')} onChange={(e) => setName(e.target.value)} />
+                            <InputError errors={errors.name} />
+                        </div>
+                        
+                        <div className="my-3">
+                            <Input className="mb-0" placeholder="johndoe@example.com" type="email" id="email" name="email" label={__('input.email')} onChange={(e) => setEmail(e.target.value)} invalidMessage={__('invalid.email')} />
+                            <InputError errors={errors.email} />
+                        </div>
+                        
+                        <div className="flex items-start space-x-2 my-3">
                             <div className="w-1/4">
                                 <Dropdown className="w-full z-50">
                                     {({ open }) => (
@@ -89,7 +111,7 @@ const Register = () => {
                                             </Dropdown.Button>
                                             <Dropdown.Content afterLeave={() => setCountryQuery('')} className="left-0 max-h-72 overflow-y-auto gray-scrollbar pt-0">
                                                 <div className="w-full px-2 py-1 bg-white sticky top-0">
-                                                    <Input type="text" id="searchCountry" onChange={(e) => setCountryQuery(e.target.value)} label="Cari Kode Negara" />
+                                                    <Input type="text" id="searchCountry" onChange={(e) => setCountryQuery(e.target.value)} label={__('input.call_code')} />
                                                 </div>
                                                 {
                                                     countryCodes.filter((country) => {
@@ -113,30 +135,33 @@ const Register = () => {
                                 </Dropdown>
                             </div>
                             <div className="w-3/4">
-                                <Input placeholder="81234567890" type="text" id="phone" name="phone" label="Nomor Telepon" onChange={(e) => setPhone(e.target.value)} onlyNumbers />
+                                <Input className="mb-0" placeholder="81234567890" type="text" id="phone" name="phone" label={__('input.phone')} onChange={(e) => setPhone(e.target.value)} onlyNumbers />
+                                <InputError errors={errors.phone} />
                             </div>
                             
                         </div>
-                        <Input placeholder="**********" type="password" id="passwordInput" name="passwordInput" label="Password" onChange={(e) => setPassword(e.target.value)} />
-                        <Input placeholder="**********" type="password" id="passwordConfirmInput" name="passwordConfirmInput" label="Konfirmasi Password" onChange={(e) => setPasswordConfirmation(e.target.value)} />
+                        <div className="my-3">
+                            <Input className="mb-0" placeholder="**********" type="password" id="passwordInput" name="passwordInput" label={__('input.password')} onChange={(e) => setPassword(e.target.value)} />
+                            <InputError errors={errors.password} />
+                        </div>
+                        
+                        <div className="my-3">
+                            <Input className="mb-0" placeholder="**********" type="password" id="passwordConfirmInput" name="passwordConfirmInput" label={__('input.confirm_password')} onChange={(e) => setPasswordConfirmation(e.target.value)} />
+                            <InputError errors={errors.password_confirmation} />
+                        </div>
 
                         <button type="button" className="btn-rose w-full relative" disabled={loading} onClick={handleRegister}>
-                            {
-                                loading && (
-                                    <SpinnerIcon className="text-white w-5 h-5 animate-spin absolute right-2 top-2" />
-                                )
-                            }
-                            <span>Daftar</span>
+                            <span>{__('nav.register')}</span>
                         </button>
                         <div className="flex items-center justify-center my-2">
                             <hr className="w-10 border-t border-gray-300" />
-                            <span className="text-center w-auto text-xs text-gray-600 font-medium mx-2">Sudah memiliki akun?</span>
+                            <span className="text-center w-auto text-xs text-gray-600 font-medium mx-2">{__('already_have_account')}</span>
                             <hr className="w-10 border-t border-gray-300" />
                         </div>
-                        <Link href="/auth/login" className="btn-light w-full">Login</Link>
+                        <Link href="/auth/login" className="btn-light w-full">{__('nav.login')}</Link>
                         <div className="flex items-center justify-center my-2">
                             <hr className="w-10 border-t border-gray-300" />
-                            <span className="text-center w-auto text-xs text-gray-600 font-medium mx-2">Atau mendaftar lebih mudah dengan</span>
+                            <span className="text-center w-auto text-xs text-gray-600 font-medium mx-2">{__('login_easier')}</span>
                             <hr className="w-10 border-t border-gray-300" />
                         </div>
                         <div className="flex items-center justify-center space-x-2">

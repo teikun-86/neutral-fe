@@ -5,7 +5,7 @@ import superAirJetLogo from "@/assets/images/airlines/super-air-jet-logo.svg"
 import wingsAirLogo from "@/assets/images/airlines/wings-air-logo.png"
 import Image from 'next/image';
 import moment from 'moment';
-import { formatIDR, randomString } from '@/util';
+import { formatCurrency, randomString } from '@/util';
 import { useState } from "react";
 import { ArchiveBoxIcon, BoltIcon, ChevronDownIcon, ShoppingBagIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Tooltip } from "../tooltip";
@@ -18,7 +18,6 @@ export const FlightTicket = ({ flight, airports = { departure: {}, arrival: {} }
     const { departure, arrival } = airports
 
     const firstFlight = flight
-    // const flight.transitsht.slice(1, flight.length - 1)
     const lastFlight  = flight
 
     let splitted = firstFlight.Duration.split(":")
@@ -36,6 +35,8 @@ export const FlightTicket = ({ flight, airports = { departure: {}, arrival: {} }
         "Wings Air": wingsAirLogo,
         "Malindo Air": batikAirLogo,
     }
+
+    const price = formatCurrency(firstFlight.Amount, firstFlight.DecimalPlaces, firstFlight.CurrencyCode)
 
     const handleSelect = (flight) => {
         onSelect(flight)
@@ -117,7 +118,7 @@ export const FlightTicket = ({ flight, airports = { departure: {}, arrival: {} }
 
                     <div className="flex flex-col items-end">
                         <h6 className="text-rose-600 text-lg font-semibold">
-                            {formatIDR(Number(flight.Amount).toFixed(Number(flight.DecimalPlaces)), Number(flight.DecimalPlaces))} <span className="text-sm text-gray-500">/pax</span>
+                            {price} <span className="text-sm text-gray-500">/pax</span>
                         </h6>
                         <Tooltip title={
                             <p>Bagasi 20kg<br />USB port/power</p>
@@ -246,7 +247,7 @@ export const FlightTicket = ({ flight, airports = { departure: {}, arrival: {} }
                                 <li className="text-sm font-semibold text-gray-500">
                                     <div className="flex items-center justify-between w-full">
                                         <span>Dewasa ({passengers.adult}x)</span>
-                                        <span>{formatIDR(firstFlight.Amount * passengers.adult)}</span>
+                                        <span>{formatCurrency(firstFlight.Amount * passengers.adult, firstFlight.DecimalPlaces, firstFlight.CurrencyCode)}</span>
                                     </div>
                                 </li>
                                 {
@@ -254,7 +255,7 @@ export const FlightTicket = ({ flight, airports = { departure: {}, arrival: {} }
                                         <li className="text-sm font-semibold text-gray-500">
                                             <div className="flex items-center justify-between w-full">
                                                 <span>Anak ({passengers.child}x)</span>
-                                                <span>{formatIDR(firstFlight.Amount * passengers.child)}</span>
+                                                <span>{formatCurrency(firstFlight.Amount * passengers.child, firstFlight.DecimalPlaces, firstFlight.CurrencyCode)}</span>
                                             </div>
                                         </li>
                                     )
@@ -264,7 +265,7 @@ export const FlightTicket = ({ flight, airports = { departure: {}, arrival: {} }
                                         <li className="text-sm font-semibold text-gray-500">
                                             <div className="flex items-center justify-between w-full">
                                                 <span>Bayi ({passengers.infant}x)</span>
-                                                <span>{formatIDR(firstFlight.Amount * passengers.infant)}</span>
+                                                <span>{formatCurrency(firstFlight.Amount * passengers.infant, firstFlight.DecimalPlaces, firstFlight.CurrencyCode)}</span>
                                             </div>
                                         </li>
                                     )
@@ -281,7 +282,7 @@ export const FlightTicket = ({ flight, airports = { departure: {}, arrival: {} }
                             </ul>
                             <div className="flex items-center justify-between mt-3 border-t border-gray-300 py-2">
                                 <h6 className="text-gray-800 text-base font-semibold">Total</h6>
-                                <h6 className="text-rose-600 text-lg font-semibold">{formatIDR(firstFlight.Amount * passengers.adult)}</h6>
+                                <h6 className="text-rose-600 text-lg font-semibold">{formatCurrency(firstFlight.Amount * passengers.adult, firstFlight.DecimalPlaces, firstFlight.CurrencyCode)}</h6>
                             </div>
                         </div>
                     </div>

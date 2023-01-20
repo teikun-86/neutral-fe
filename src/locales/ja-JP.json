@@ -1,0 +1,78 @@
+{
+    "nav": {
+        "check_order": "オーダーをチェック",
+        "elite_rewards": "エリートリワード",
+        "flight": "飛行機",
+        "hotel": "ホテル",
+        "login": "ログイン",
+        "register": "登録",
+        "logout": "ログアウト",
+        "profile": "プロフィール",
+        "train": "列車",
+        "pelni": "舩",
+        "car_rent": "レンタカー",
+        "cargo": "荷物",
+        "hajj_umrah": "ハッジとウマーラ",
+        "visa": "ビザ",
+        "pay_later": "後払い",
+        "land_arrangement": "ランドアレンジメント"
+    },
+    "main": {
+        "greeting": "どこに行きたいのですか？",
+        "searchbox": "フライト、ホテル、列車などを検索",
+        "destination": {
+            "title": "おすすめの目的地",
+            "desc": "{link}との楽しい旅行のために、あなたへのおすすめの目的地をいくつかご紹介します。",
+            "indonesia": "インドネシア",
+            "japan": "日本",
+            "singapore": "シンガポール",
+            "malaysia": "マレーシア"
+        },
+        "tour": {
+            "title": "おすすめのツアー",
+            "desc": "{link}との楽しい旅行のために、あなたへのおすすめのツアーをいくつかご紹介します。",
+            "local": "ローカル",
+            "international": "国際"
+        },
+        "price": {
+            "start_from": "から始まる価格"
+        },
+        "select_land_arrangement": "ランドアレンジメントを選択"
+    },
+    "command": {
+        "confirm": "確認",
+        "cancel": "キャンセル",
+        "close": "閉じる",
+        "reload": "リロード"
+    },
+    "state": {
+        "offline": {
+            "status": "あなたはオフラインです。",
+            "title": "このアプリを使用するにはインターネット接続が必要です。",
+            "desc": "インターネット接続を確認してから、「リロード」をタップしてください。"
+        }
+    },
+    "title": {
+        "login": "{link}での特典と便利さをお楽しめるために、ログイン！",
+        "register": "{link}での特典と便利さをお楽しめるために、登録！"
+    },
+    "input": {
+        "email_or_phone": "メールアドレスまたは電話番号",
+        "name": "名前",
+        "email": "メールアドレス",
+        "phone": "電話番号",
+        "password": "パスワード",
+        "confirm_password": "パスワードを確認",
+        "call_code": "ダイヤルコード"
+    },
+    "dont_have_account": "アカウントをお持ちでないですか？",
+    "already_have_account": "すでにアカウントをお持ちですか？",
+    "login_easier": "より簡単にログインする方法",
+    "forgot_password": "パスワードをお忘れですか？",
+    "info": {
+        "name": "名前を入力してください。"
+    },
+    "invalid": {
+        "email": "メールアドレスが無効です。"
+    }
+}
