@@ -15,7 +15,8 @@
         "hajj_umrah": "Haji & Umrah",
         "visa": "VISA",
         "pay_later": "Pay Later",
-        "land_arrangement": "Land Arrangement"
+        "land_arrangement": "Land Arrangement",
+        "language": "Bahasa"
     },
     "main": {
         "greeting": "Jalan-jalan kemana nih?",
@@ -43,7 +44,8 @@
         "confirm": "Konfirmasi",
         "cancel": "Batal",
         "close": "Tutup",
-        "reload": "Muat Ulang"
+        "reload": "Muat Ulang",
+        "save": "Simpan"
     },
     "state": {
         "offline": {
@@ -62,7 +64,8 @@
         "phone": "Nomor Telepon",
         "password": "Password",
         "confirm_password": "Konfirmasi Password",
-        "call_code": "Kode Negara"
+        "call_code": "Kode Negara",
+        "change_avatar": "Ganti Avatar"
     },
     "dont_have_account": "Belum punya akun?",
     "already_have_account": "Sudah punya akun?",
@@ -70,5 +73,36 @@
     "forgot_password": "Lupa Password?",
     "info": {
         "name": "Isi sesuai KTP/SIM/Passport/Kitas"
-    }
+    },
+    "my_account": "Akun Saya",
+    "basic_info": "Informasi Dasar",
+    "your_basic_info": "Informasi Dasar Akun Anda",
+    "email_and_phone": "Email dan Nomor Telepon",
+    "email_and_phone_desc": "Informasi kontak yang digunakan untuk login dan menghubungi anda.",
+    "email": {
+        "nochange": "Email tidak dapat diubah karena anda login menggunakan akun {provider}."
+    },
+    "reset_password": "Atur Ulang Password",
+    "reset_password_desc": "Atur ulang password akun anda untuk keamanan akun anda.",
+    "reset_password_info": "Untuk alasan keamanan, Anda tidak dapat merubah password secara langsung. Silahkan log out dan pergi ke halaman Lupa Password untuk mengubahnya.",
+    "forgot_password_desc": "Lupa password? Jangan khawatir, beri tahu kami email anda dan kami akan mengirimkan link untuk mereset password anda.",
+    "send_password_reset_link": "Email Link Atur Ulang Password",
+    "auth": {
+        "verify_email": "Verifikasi Email",
+        "verify_email_desc": "Terima kasih telah mendaftar! Sebelum memulai, mohon verifikasi email anda dengan mengklik link yang telah kami kirimkan ke email anda. Jika anda tidak menerima email, Klik tombol di bawah ini untuk mengirim ulang link verifikasi.",
+        "resend_verification_link": "Kirim Ulang Link Verifikasi",
+        "verification_email_sent": "Link verifikasi telah dikirim ke email anda. Silahkan cek email anda.",
+        "verified": "Email anda telah diverifikasi."
+    },
+    "profile": {
+        "updated": "Profil berhasil diperbarui."
+    },
+    "success": "Sukses",
+    "error": "Error",
+    "warning": "Peringatan",
+    "primary": "Info",
+    "something_wrong": "Terjadi kesalahan!",
+    "menu": "Menu",
+    "account": "Akun",
+    "travel": "Travel"
 }

@@ -17,6 +17,7 @@ import { useViewport } from "@/hooks/viewport";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/auth";
 import { useLocale } from "@/hooks/locale";
+import { toast } from "react-toastify";
 
 const AppLayout = props => {
     const [modalOpen, setModalOpen] = useRecoilState(modalState)
@@ -59,6 +60,11 @@ const AppLayout = props => {
         if (query?.social && query?.user_id) {
             socialLogin(query.social, query.user_id)
             router.push(router.pathname)
+        }
+
+        if (query?.verified) {
+            toast.success(__('auth.verified'))
+            // router.push(router.pathname)
         }
     }, [router.query]);
     

@@ -15,7 +15,8 @@
         "hajj_umrah": "ハッジとウマーラ",
         "visa": "ビザ",
         "pay_later": "後払い",
-        "land_arrangement": "ランドアレンジメント"
+        "land_arrangement": "ランドアレンジメント",
+        "language": "言語"
     },
     "main": {
         "greeting": "どこに行きたいのですか？",
@@ -43,7 +44,8 @@
         "confirm": "確認",
         "cancel": "キャンセル",
         "close": "閉じる",
-        "reload": "リロード"
+        "reload": "リロード",
+        "save": "セーブ"
     },
     "state": {
         "offline": {
@@ -63,7 +65,8 @@
         "phone": "電話番号",
         "password": "パスワード",
         "confirm_password": "パスワードを確認",
-        "call_code": "ダイヤルコード"
+        "call_code": "ダイヤルコード",
+        "change_avatar": "アバターを変更"
     },
     "dont_have_account": "アカウントをお持ちでないですか？",
     "already_have_account": "すでにアカウントをお持ちですか？",
@@ -74,5 +77,36 @@
     },
     "invalid": {
         "email": "メールアドレスが無効です。"
-    }
+    },
+    "my_account": "マイアカウント",
+    "basic_info": "基本情報",
+    "your_basic_info": "あなたの基本情報",
+    "email_and_phone": "メールアドレスと電話番号",
+    "email_and_phone_desc": "ログインおよびあなたへの連絡に使用される連絡先情報。",
+    "email": {
+        "nochange": "{provider} アカウントでログインしているため、メールアドレスを変更できません。"
+    },
+    "reset_password": "パスワードをリセット",
+    "reset_password_desc": "パスワードをリセットして、アカウントのセキュリティを強化します。",
+    "reset_password_info": "セキュリティ上の理由から、パスワードを直接変更することはできません。 ログアウトし、「パスワードをお忘れですか？」 ページに移動して変更してください。",
+    "forgot_password_desc": "パスワードをお忘れですか？ 問題ありません。 メール アドレスをお知らせいただければ、新しいパスワードを選択できるパスワード リセット リンクをメールでお送りします。",
+    "send_password_reset_link": "パスワードリセットリンクをメールに送信",
+    "auth": {
+        "verify_email": "メールアドレスを確認",
+        "verify_email_desc": "登録ありがとうございます！ 開始する前に、電子メールに送信されたリンクをクリックして、電子メールを確認してください。 メールが届かない場合は、下のボタンをクリックして確認リンクを再送信してください。",
+        "resend_verification_link": "確認リンクを再送信",
+        "verification_email_sent": "確認メールが送信されました。",
+        "verified": "あなたのメールアドレスは確認されました。"
+    },
+    "profile": {
+        "updated": "プロフィールが更新されました。"
+    },
+    "success": "成功",
+    "error": "エラー",
+    "warning": "警告",
+    "primary": "情報",
+    "something_wrong": "問題が発生しました",
+    "menu": "メニュー",
+    "account": "アカウント",
+    "travel": "旅行"
 }

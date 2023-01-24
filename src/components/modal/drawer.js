@@ -83,7 +83,7 @@ const Drawer = ({ showCloseButton = true, afterClose = () => {}, ...props }) => 
                 onStop={handleStop}
             >
                 <Transition.Child
-                    className={`w-full absolute inset-x-0 bottom-0 rounded-t-3xl bg-white ${released ? "transition-all duration-200" : ""}`}
+                    className={`w-full absolute inset-x-0 bottom-0 rounded-t-2xl bg-white ${released ? "transition-all duration-200" : ""}`}
                     enter="transition-all duration-300"
                     enterFrom="opacity-0 -bottom-full"
                     enterTo="opacity-100 bottom-0"
@@ -108,7 +108,7 @@ const Drawer = ({ showCloseButton = true, afterClose = () => {}, ...props }) => 
 
 const Header = ({ className = "", ...props }) => {
     return (
-        <div className={`w-full block bg-white shadow my-1 py-1 px-2 relative rounded-t-3xl drag-handler ${className}`} { ...props }>
+        <div className={`w-full block bg-white shadow my-1 py-1 px-2 relative rounded-t-2xl drag-handler ${className}`} { ...props }>
             {props.children}
         </div>
     )

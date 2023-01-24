@@ -1,3 +1,4 @@
+import { useLocale } from "@/hooks/locale"
 import { useEffect, useState } from "react"
 import Alert from "../alert"
 import { Input } from "../forms"
@@ -13,6 +14,8 @@ export const ProfileCredentials = ({
     const [loading, setLoading] = useState(false)
     const [errors, setErrors] = useState([])
     const [status, setStatus] = useState(null)
+
+    const { __ } = useLocale()
 
     const update = () => {
         updateCredentials({
@@ -44,26 +47,26 @@ export const ProfileCredentials = ({
 
             <header>
                 <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
-                    Email dan Nomor Telepon
+                    {__('email_and_phone')}
                 </h2>
 
                 <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    Informasi kontak yang digunakan untuk login dan menghubungi anda.
+                    {__('email_and_phone_desc')}
                 </p>
             </header>
 
             <main className="my-4 max-w-xl">
                 {
                     status === 'success' && (
-                        <Alert type="success" title="Sukses!" className="mb-6">
-                            Informasi profil berhasil diperbarui.
+                        <Alert type="success" title={__('success')} className="mb-6">
+                            {__('profile.updated')}
                         </Alert>
                     )
                 }
 
                 {
                     errors.length > 0 && (
-                        <Alert type="error" title="Terjadi Kesalahan!" className="mb-6">
+                        <Alert type="error" title={__('something_wrong')} className="mb-6">
                             <ul className="list-disc list-inside">
                                 {
                                     errors.map((error, index) => (
@@ -74,19 +77,21 @@ export const ProfileCredentials = ({
                         </Alert>
                     )
                 }
-                <Input id="email" disabled={user.google_id !== null || user.facebook_id !== null} type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} label="Email" invalidMessage="Isi dengan alamat email yang valid!" required />
+                <Input id="email" disabled={user.google_id !== null || user.facebook_id !== null} type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} label={__('input.email')} invalidMessage="Isi dengan alamat email yang valid!" required />
                 {
                     (user.google_id !== null || user.facebook_id !== null) && (
                         <p className="text-sm text-gray-700 mb-4 -mt-2 mx-2">
-                            Email tidak dapat diubah karena anda login menggunakan akun {user.google_id !== null ? 'Google' : 'Facebook'}.
+                            {__('email.nochange', {
+                                provider: user.google_id !== null ? 'Google' : 'Facebook'
+                            })}
                         </p>
                     )
                 }
-                <Input id="phone" type="text" onlyNumbers name="phone" value={phone} onChange={(e) => setPhone(e.target.value)} label="Nomor Telepon" required />
+                <Input id="phone" type="text" onlyNumbers name="phone" value={phone} onChange={(e) => setPhone(e.target.value)} label={__('input.phone')} required />
             </main>
 
             <footer className="flex items-center justify-end max-w-xl">
-                <button disabled={email.trim() === user.email && phone.trim() === user.phone} onClick={update} className="btn-rose rounded-full">Update</button>
+                <button disabled={email.trim() === user.email && phone.trim() === user.phone} onClick={update} className="btn-rose rounded-full">{__('command.save')}</button>
             </footer>
         </section>
     )

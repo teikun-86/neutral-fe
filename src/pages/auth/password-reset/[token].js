@@ -8,9 +8,12 @@ import { SpinnerIcon } from '@/components/icons'
 import Alert from '@/components/alert'
 import Image from 'next/image'
 import btwLogo from "@/assets/images/btw-logo.png";
+import AuthFooter from '@/components/auth-footer'
+import { useLocale } from '@/hooks/locale'
 
 const PasswordReset = () => {
     const router = useRouter()
+    const { __ } = useLocale()
 
     const { resetPassword } = useAuth({ middleware: 'guest' })
 
@@ -45,7 +48,7 @@ const PasswordReset = () => {
                             <Image src={btwLogo} alt="BTW Logo" className="h-10 w-auto" />
                         </Link>
                         <h2 className="text-xl font-bold text-gray-800 text-center">
-                            Lupa Password?
+                            {__('reset_password')}
                         </h2>
                     </div>
 
@@ -79,18 +82,18 @@ const PasswordReset = () => {
                         }
                         <div className="pt-4">
 
-                            <Input type="email" name="email" label="Email" value={email} onChange={(e) => setEmail(e.target.value)} required placeholder="john@example.com" autoFocus invalidMessage="Isi dengan alamat email yang valid!" />
-                            <Input placeholder="**********" type="password" id="passwordInput" name="passwordInput" label="Password" onChange={(e) => setPassword(e.target.value)} />
-                            <Input placeholder="**********" type="password" id="passwordConfirmInput" name="passwordConfirmInput" label="Konfirmasi Password" onChange={(e) => setPasswordConfirmation(e.target.value)} />
+                            <Input type="email" name="email" label={__('input.email')} value={email} onChange={(e) => setEmail(e.target.value)} required placeholder="john@example.com" readOnly invalidMessage="Isi dengan alamat email yang valid!" />
+                            <Input placeholder="**********" type="password" id="passwordInput" name="passwordInput" label={__('input.password')} onChange={(e) => setPassword(e.target.value)} />
+                            <Input placeholder="**********" type="password" id="passwordConfirmInput" name="passwordConfirmInput" label={__('input.confirm_password')} onChange={(e) => setPasswordConfirmation(e.target.value)} />
 
                             <button disabled={password !== passwordConfirmation || password.length === 0 || passwordConfirmation.length === 0} className="btn-rose w-full mb-3"
                                 onClick={handleResetPassword}>
-                                Reset Password
+                                {__('reset_password')}
                             </button>
                         </div>
                     </div>
                     <div className="flex flex-col items-center justify-center mt-2">
-                        <p className="text-center text-xs">Copyright &copy; {(new Date()).getFullYear()} Bumi Tihamah Wisata</p>
+                        <AuthFooter />
                     </div>
                 </div>
             </div>

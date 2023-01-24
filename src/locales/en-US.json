@@ -15,7 +15,8 @@
         "hajj_umrah": "Hajj & Umrah",
         "visa": "VISA",
         "pay_later": "Pay Later",
-        "land_arrangement": "Land Arrangement"
+        "land_arrangement": "Land Arrangement",
+        "language": "Language"
     },
     "main": {
         "greeting": "Where do you want to go?",
@@ -43,7 +44,8 @@
         "confirm": "Confirm",
         "cancel": "Cancel",
         "close": "Close",
-        "reload": "Reload"
+        "reload": "Reload",
+        "save": "Save"
     },
     "state": {
         "offline": {
@@ -62,7 +64,8 @@
         "phone": "Phone Number",
         "password": "Password",
         "confirm_password": "Confirm Password",
-        "call_code": "Call Code"
+        "call_code": "Call Code",
+        "change_avatar": "Change Avatar"
     },
     "dont_have_account": "Don't have an account?",
     "already_have_account": "Already have an account?",
@@ -70,5 +73,36 @@
     "forgot_password": "Forgot Password?",
     "info": {
         "name": "Fill in your name as it appears on your ID card."
-    }
+    },
+    "my_account": "My Account",
+    "basic_info": "Basic Info",
+    "your_basic_info": "Your Basic Profile Information",
+    "email_and_phone": "Email and Phone Number",
+    "email_and_phone_desc": "Your email and phone number that will be used to log in and contact you.",
+    "email": {
+        "nochange": "You can't change your email address because you logged in with your {provider} account."
+    },
+    "reset_password": "Reset Password",
+    "reset_password_desc": "Reset password for your account to improve your account's security.",
+    "reset_password_info": "For security reasons, you cannot change the password directly. Please log out and go to the Forgot Password page to change it.",
+    "forgot_password_desc": "Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.",
+    "send_password_reset_link": "Email Password Reset Link",
+    "auth": {
+        "verify_email": "Verify Email",
+        "verify_email_desc": "Thank you for registering! Before starting, please verify your email by clicking the link that we have sent to your email. If you don't receive an email, click the button below to resend the verification link.",
+        "resend_verification_link": "Resend Verification Link",
+        "verification_email_sent": "A fresh verification link has been sent to your email address.",
+        "verified": "Your email address has been verified."
+    },
+    "profile": {
+        "updated": "Your profile information has been updated."
+    },
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "primary": "Info",
+    "something_wrong": "Something went wrong!",
+    "menu": "Menu",
+    "account": "Account",
+    "travel": "Travel"
 }

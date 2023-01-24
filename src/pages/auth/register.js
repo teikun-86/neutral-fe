@@ -12,6 +12,7 @@ import countryCodes from "@/data/call-codes";
 import Alert from "@/components/alert";
 import { InputError } from "@/components/forms/input-error";
 import { useLocale } from "@/hooks/locale";
+import AuthFooter from "@/components/auth-footer";
 
 const Register = () => {
     const { __, locale } = useLocale();
@@ -176,7 +177,7 @@ const Register = () => {
                         </div>
                     </div>
                     <div className="flex flex-col items-center justify-center mt-2">
-                        <p className="text-center text-xs">Copyright &copy; {(new Date()).getFullYear()} Bumi Tihamah Wisata</p>
+                        <AuthFooter />
                     </div>
                 </div>
             </div>

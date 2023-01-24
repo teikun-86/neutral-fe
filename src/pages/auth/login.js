@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import Alert from "@/components/alert";
 import { InputError } from "@/components/forms/input-error";
 import { useLocale } from "@/hooks/locale";
+import AuthFooter from "@/components/auth-footer";
 
 const Login = () => {
     const router = useRouter()
@@ -133,7 +134,7 @@ const Login = () => {
                         </div>
                     </div>
                     <div className="flex flex-col items-center justify-center mt-2">
-                        <p className="text-center text-xs">Copyright &copy; {(new Date()).getFullYear()} Bumi Tihamah Wisata</p>
+                        <AuthFooter />
                     </div>
                 </div>
             </div>

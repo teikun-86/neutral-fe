@@ -8,6 +8,7 @@ import Alert from "@/components/alert"
 import { SpinnerIcon } from "@/components/icons"
 import { Input } from "@/components/forms"
 import { useLocale } from "@/hooks/locale"
+import AuthFooter from "@/components/auth-footer"
 
 
 const ForgotPassword = () => {
@@ -43,7 +44,7 @@ const ForgotPassword = () => {
                             <Image src={btwLogo} alt="BTW Logo" className="h-10 w-auto" />
                         </Link>
                         <h2 className="text-xl font-bold text-gray-800 text-center">
-                            Lupa Password?
+                            {__('forgot_password')}
                         </h2>
                     </div>
 
@@ -77,33 +78,27 @@ const ForgotPassword = () => {
                         }
 
                         <p className="text-center">
-                            Lupa password? Jangan khawatir, beri tahu kami email anda dan kami akan mengirimkan link untuk mereset password anda.
+                            {__('forgot_password_desc')}
                         </p>
 
                         <div className="mt-4">
                             
-                            <Input type="email" name="email" label="Email" value={email} onChange={(e) => setEmail(e.target.value)} required placeholder="john@example.com" autoFocus invalidMessage="Isi dengan alamat email yang valid!" />
+                            <Input type="email" name="email" label={__('input.email')} value={email} onChange={(e) => setEmail(e.target.value)} required placeholder="john@example.com" autoFocus invalidMessage="Isi dengan alamat email yang valid!" />
                             
                             <button disabled={!email || !isEmailValid} className="btn-rose w-full mb-3"
                                 onClick={() => forgotPassword({ setErrors, setStatus, setLoading, email: email })}>
-                                Kirim Link Reset Password 
+                                {__('send_password_reset_link')}
                             </button>
 
-                            <div className="flex items-center justify-center my-2">
-                                <hr className="w-10 border-t border-gray-300" />
-                                <span className="text-center w-auto text-xs text-gray-600 font-medium mx-2">Sudah Ingat?</span>
-                                <hr className="w-10 border-t border-gray-300" />
-                            </div>
-
                             <Link
-                                className="btn-light w-full text-gray-800"
+                                className="btn-light w-full text-gray-800 mt-3"
                                 href="/auth/login">
-                                Log in
+                                {__('nav.login')}
                             </Link>
                         </div>
                     </div>
                     <div className="flex flex-col items-center justify-center mt-2">
-                        <p className="text-center text-xs">Copyright &copy; {(new Date()).getFullYear()} Bumi Tihamah Wisata</p>
+                        <AuthFooter />
                     </div>
                 </div>
             </div>

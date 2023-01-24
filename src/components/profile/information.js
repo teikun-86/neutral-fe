@@ -1,3 +1,4 @@
+import { useLocale } from "@/hooks/locale"
 import { axios } from "@/libs/axios"
 import { ViewfinderCircleIcon } from "@heroicons/react/24/outline"
 import Image from "next/image"
@@ -13,6 +14,7 @@ export const ProfileInformation = ({ user, updateProfile = async () => {}, resen
     const [name, setName] = useState(user.name)
     const [avatarPreview, setAvatarPreview] = useState(user.avatar)
     const [avatar, setAvatar] = useState(null)
+    const { __ } = useLocale()
     
     const update = () => {
         updateProfile({
@@ -62,11 +64,11 @@ export const ProfileInformation = ({ user, updateProfile = async () => {}, resen
             
             <header>
                 <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
-                    Informasi Dasar
+                    {__('basic_info')}
                 </h2>
 
                 <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    Informasi dasar akun anda.
+                    {__('your_basic_info')}
                 </p>
             </header>
 
@@ -93,15 +95,15 @@ export const ProfileInformation = ({ user, updateProfile = async () => {}, resen
                     }
                     {
                         status === 'success' && (
-                            <Alert type="success" title="Sukses!" className="mb-6">
-                                Informasi profil berhasil diperbarui.
+                            <Alert type="success" title={__('success')} className="mb-6">
+                                {__('profile.updated')}
                             </Alert>
                         )
                     }
 
                     {
                         errors.length > 0 && (
-                            <Alert type="error" title="Terjadi Kesalahan!" className="mb-6">
+                            <Alert type="error" title={__('something_wrong')} className="mb-6">
                                 <ul className="list-disc list-inside">
                                     {
                                         errors.map((error, index) => (
@@ -119,7 +121,7 @@ export const ProfileInformation = ({ user, updateProfile = async () => {}, resen
                             <div className="absolute inset-0 bg-black/50 grid place-items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-sm">
                                 <div className="flex items-center flex-col">
                                     <ViewfinderCircleIcon className="w-8 h-8 text-white" />
-                                    <span className="text-white text-xs font-medium">Ganti Avatar</span>
+                                    <span className="text-white text-xs font-medium">{__('input.change_avatar')}</span>
                                 </div>
                             </div>
                         </label>
@@ -127,12 +129,12 @@ export const ProfileInformation = ({ user, updateProfile = async () => {}, resen
                         <input type="file" id="avatarInput" className="!hidden" onChange={handleAvatarChange} accept="image/jpg,image/jpeg,image/png,image/gif,image/webp,image/svg" />
                     </div>
                     
-                    <Input id="nameInput" className="mt-4" type="text" name="name" value={name} onChange={(e) => setName(e.target.value)} label="Nama" autoCapitalize info="Isi sesuai KTP/SIM/Passport/Kitas" />
+                    <Input id="nameInput" className="mt-4" type="text" name="name" value={name} onChange={(e) => setName(e.target.value)} label={__('input.name')} autoCapitalize info={__('info.name')} />
                 </div>
             </main>
 
             <footer className="flex items-center justify-end max-w-xl">
-                <button disabled={name.trim() === user.name && avatar === null} onClick={update} className="btn-rose rounded-full">Update</button>
+                <button disabled={name.trim() === user.name && avatar === null} onClick={update} className="btn-rose rounded-full">{__('command.save')}</button>
             </footer>
         </section>
     )

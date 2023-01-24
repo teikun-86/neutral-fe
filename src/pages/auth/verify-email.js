@@ -6,9 +6,12 @@ import { useState } from "react"
 import btwLogo from "@/assets/images/btw-logo.png";
 import Alert from "@/components/alert"
 import { SpinnerIcon } from "@/components/icons"
+import AuthFooter from "@/components/auth-footer"
+import { useLocale } from "@/hooks/locale"
 
 
 const VerifyEmail = () => {
+    const { __ } = useLocale()
 
     const { logout, resendEmailVerification } = useAuth({
         middleware: 'auth',
@@ -27,7 +30,7 @@ const VerifyEmail = () => {
                             <Image src={btwLogo} alt="BTW Logo" className="h-10 w-auto" />
                         </Link>
                         <h2 className="text-xl font-bold text-gray-800 text-center">
-                            Verifikasi Email
+                            {__('auth.verify_email')}
                         </h2>
                     </div>
 
@@ -42,31 +45,31 @@ const VerifyEmail = () => {
                         {
                             status === 'verification-link-sent' && (
                                 <Alert type="success" title="Sukses!" className="mb-4 font-medium text-sm text-green-600">
-                                    Link verifikasi telah dikirimkan ke email anda. Silahkan cek email anda.
+                                    {__('auth.verification_email_sent')}
                                 </Alert>
                             )
                         }
 
                         <p className="text-center">
-                            Terima kasih telah mendaftar! Sebelum memulai, mohon verifikasi email anda dengan mengklik link yang telah kami kirimkan ke email anda. Jika anda tidak menerima email, Klik tombol di bawah ini untuk mengirim ulang link verifikasi.
+                            {__('auth.verify_email_desc')}
                         </p>
 
                         <div className="mt-4">
                             <button className="btn-rose w-full mb-3"
                                 onClick={() => resendEmailVerification({ setStatus, setLoading })}>
-                                Kirim Ulang Link Verifikasi
+                                {__('auth.resend_verification_link')}
                             </button>
 
                             <button
                                 type="button"
                                 className="btn-light w-full text-gray-800"
                                 onClick={logout}>
-                                Logout
+                                {__('nav.logout')}
                             </button>
                         </div>
                     </div>
                     <div className="flex flex-col items-center justify-center mt-2">
-                        <p className="text-center text-xs">Copyright &copy; {(new Date()).getFullYear()} Bumi Tihamah Wisata</p>
+                        <AuthFooter />
                     </div>
                 </div>
             </div>

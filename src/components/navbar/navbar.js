@@ -1,5 +1,5 @@
 import { Transition } from "@headlessui/react";
-import { ArrowLeftOnRectangleIcon, Bars3BottomRightIcon, ChevronDownIcon, CreditCardIcon, IdentificationIcon, UserIcon } from "@heroicons/react/24/outline";
+import { ArrowLeftOnRectangleIcon, Bars3BottomRightIcon, ChevronDownIcon, CreditCardIcon, IdentificationIcon, LanguageIcon, UserIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useRef, useState } from "react";
@@ -15,12 +15,14 @@ import drawerState from "@/hooks/drawer";
 import Image from "next/image";
 import { useLocale } from "@/hooks/locale";
 
-export const Navbar = ({ isInViewport = null, fixed = true, user = null, logout = () => {} }) => {
+import logo from "@/assets/images/tripla-logo.png"
+
+export const Navbar = ({ isInViewport = null, fixed = true, user = null, logout = () => { } }) => {
     const [showNavbar, setBgActive] = useState(false)
     const [showSidebar, setShowSidebar] = useState(false)
     const [modalOpen, setModalOpen] = useRecoilState(modalState);
     const [drawerOpen, setDrawerOpen] = useRecoilState(drawerState)
-    
+
     const router = useRouter()
 
     const { __, locale, localeMap } = useLocale()
@@ -50,7 +52,7 @@ export const Navbar = ({ isInViewport = null, fixed = true, user = null, logout 
             closeSidebar()
         }
     }
-    
+
     useEffect(() => {
         window.addEventListener('scroll', onScroll)
         window.addEventListener('resize', onResize)
@@ -75,81 +77,79 @@ export const Navbar = ({ isInViewport = null, fixed = true, user = null, logout 
                     }
                     <div className={`w-full h-16 z-20 ${router.pathname === '/' ? (showNavbar ? "bg-white shadow" : "bg-transparent") : "bg-white shadow-lg"} relative transition-colors duration-400`}>
                         <div className="flex items-center justify-between w-full max-w-7xl px-4 mx-auto h-full">
-                            <Link className="text-3xl md:text-4xl font-bold text-rose-600" href="/">Neutral</Link>
-                            <div className="h-full justify-end items-center space-x-3 hidden md:flex">
+                            <Link className="text-3xl md:text-4xl font-bold text-rose-600" href="/">
+                                <Image alt={process.env.NEXT_PUBLIC_APP_NAME} src={logo} className="h-14 w-auto" />
+                            </Link>
+                            <div className="flex items-center justify-end">
+                                <div className="h-full justify-end items-center space-x-3 hidden md:flex">
+                                    <NavLink className={`${showNavbar ? "text-gray-700 hocus:text-gray-900" : ""}`} href="#elite-rewards">
+                                        {__('nav.elite_rewards')}
+                                    </NavLink>
+                                    <NavLink className={`${showNavbar ? "text-gray-700 hocus:text-gray-900" : ""}`} href="#check-order">
+                                        {__('nav.check_order')}
+                                    </NavLink>
+                                    {
+                                        !user ? (
+                                            <>
+                                                <NavLink className={`${showNavbar ? "text-gray-700 hocus:text-gray-900" : ""}`} href="/auth/login">
+                                                    {__('nav.login')}
+                                                </NavLink>
+                                                <Link href="/auth/register" className="btn-rose">{__('nav.register')}</Link>
+                                            </>
+                                        )
+                                            : (
+                                                <Dropdown>
+                                                    {({ open }) => (
+                                                        <>
+                                                            <Dropdown.Button className={`btn-text px-2 py-1 group select-none ${showNavbar ? "text-gray-700 hocus:text-gray-900" : ""}`}>
+                                                                <Image className="w-6 h-6 mr-2 object-cover rounded-full" src={user.avatar} alt={user.name} width={100} height={100} />
+                                                                <span className="text-sm font-medium">{truncateString(user.name, 12)}</span>
+                                                                <ChevronDownIcon className={`w-5 h-5 ml-2 ${open ? "rotate-180" : ""} transition-all duration-200`} />
+                                                            </Dropdown.Button>
+                                                            <Dropdown.Content>
+                                                                <Link className="w-full flex my-2 px-2 py-1" href="/@me">
+                                                                    <div className="w-1/4 grid place-items-center">
+                                                                        <Image className="w-12 h-12 object-cover rounded-full" src={user.avatar} alt={user.name} width={100} height={100} />
+                                                                    </div>
+                                                                    <div className="w-3/4 px-2 py-2">
+                                                                        <p className="text-sm font-medium truncate">{user.name}</p>
+                                                                        <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                                                                    </div>
+                                                                </Link>
+                                                                <Dropdown.Item as={Link} href="/@me" className="flex items-center justify-start">
+                                                                    <UserIcon className="w-5 h-5 mr-2" />
+                                                                    {__('nav.profile')}
+                                                                </Dropdown.Item>
+                                                                <Dropdown.Item onClick={logout} className="flex items-center justify-start">
+                                                                    <ArrowLeftOnRectangleIcon className="w-5 h-5 mr-2" />
+                                                                    {__('nav.logout')}
+                                                                </Dropdown.Item>
+                                                            </Dropdown.Content>
+                                                        </>
+                                                    )}
+                                                </Dropdown>
+                                            )
+                                    }
+                                </div>
                                 <Dropdown>
-                                    {({open}) => (
-                                        <>
-                                            <Dropdown.Button className="btn-text text-rose-600 px-2 py-1 group select-none">
-                                                <Image alt={localeMap[locale].name} src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${localeMap[locale].flag}.svg`} width={64} height={64} className="w-6 mr-2" />
-                                                {localeMap[locale].localeShort.toUpperCase()}
-                                                <ChevronDownIcon className="w-5 h-5 ml-2" />
-                                            </Dropdown.Button>
-                                            <Dropdown.Content>
-                                                {
-                                                    localeMap && Object.keys(localeMap).map((key) => (
-                                                        <Dropdown.Item className="flex items-center justify-start" key={key} as={Link} href={router.pathname} shallow={true} locale={localeMap[key].localeShort}>
-                                                            <Image alt={localeMap[key].name} src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${localeMap[key].flag}.svg`} width={64} height={64} className="w-6" />
-                                                            <span className="ml-2">{localeMap[key].name}</span>
-                                                        </Dropdown.Item>
-                                                    ))
-                                                }
-                                            </Dropdown.Content>
-                                        </>
-                                    )}
+                                    <Dropdown.Button className="btn-text text-rose-600 px-2 py-1 select-none">
+                                        <LanguageIcon className="w-5 h-5" />
+                                    </Dropdown.Button>
+                                    <Dropdown.Content>
+                                        {
+                                            localeMap && Object.keys(localeMap).map((key) => (
+                                                <Dropdown.Item className="flex items-center justify-start" key={key} as={Link} href={router.pathname} shallow={true} locale={localeMap[key].localeShort}>
+                                                    <Image alt={localeMap[key].name} src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${localeMap[key].flag}.svg`} width={64} height={64} className="w-6" />
+                                                    <span className="ml-2">{localeMap[key].name}</span>
+                                                </Dropdown.Item>
+                                            ))
+                                        }
+                                    </Dropdown.Content>
                                 </Dropdown>
-                                <NavLink className={`${showNavbar ? "text-gray-700 hocus:text-gray-900" : ""}`} href="#elite-rewards">
-                                    {__('nav.elite_rewards')}
-                                </NavLink>
-                                <NavLink className={`${showNavbar ? "text-gray-700 hocus:text-gray-900" : ""}`} href="#check-order">
-                                    {__('nav.check_order')}
-                                </NavLink>
-                                {
-                                    !user ? (
-                                        <>
-                                            <NavLink className={`${showNavbar ? "text-gray-700 hocus:text-gray-900" : ""}`} href="/auth/login">
-                                                {__('nav.login')}
-                                            </NavLink>
-                                            <Link href="/auth/register" className="btn-rose">{__('nav.register')}</Link>
-                                        </>
-                                    )
-                                    : (
-                                        <Dropdown>
-                                            {({open}) => (
-                                                <>
-                                                    <Dropdown.Button className={`btn-text px-2 py-1 group select-none ${showNavbar ? "text-gray-700 hocus:text-gray-900" : ""}`}>
-                                                        <Image className="w-6 h-6 mr-2 rounded-full" src={user.avatar} alt={user.name} width={100} height={100} />
-                                                        <span className="text-sm font-medium">{truncateString(user.name, 12)}</span>
-                                                        <ChevronDownIcon className={`w-5 h-5 ml-2 ${open ? "rotate-180" : ""} transition-all duration-200`} />
-                                                    </Dropdown.Button>
-                                                    <Dropdown.Content>
-                                                        <Link className="w-full flex my-2 px-2 py-1" href="/@me">
-                                                            <div className="w-1/4 grid place-items-center">
-                                                                <Image className="w-12 h-12 object-cover rounded-full" src={user.avatar} alt={user.name} width={100} height={100} />
-                                                            </div>
-                                                            <div className="w-3/4 px-2 py-2">
-                                                                <p className="text-sm font-medium truncate">{user.name}</p>
-                                                                <p className="text-xs text-gray-500 truncate">{user.email}</p>
-                                                            </div>
-                                                        </Link>
-                                                        <Dropdown.Item as={Link} href="/@me" className="flex items-center justify-start">
-                                                            <UserIcon className="w-5 h-5 mr-2" />
-                                                            {__('nav.profile')}
-                                                        </Dropdown.Item>
-                                                        <Dropdown.Item onClick={logout} className="flex items-center justify-start">
-                                                            <ArrowLeftOnRectangleIcon className="w-5 h-5 mr-2" />
-                                                            {__('nav.logout')}
-                                                        </Dropdown.Item>
-                                                    </Dropdown.Content>
-                                                </>
-                                            )}
-                                        </Dropdown>
-                                    )
-                                }
+                                <button onClick={toggleSidebar} className="btn-text text-rose-600 px-2 py-1 select-none">
+                                    <Bars3BottomRightIcon className="w-6 h-6" />
+                                </button>
                             </div>
-                            <button onClick={toggleSidebar} className="text-rose-600 p-2 rounded-full hocus:bg-white/20 focus:outline-none md:hidden transition-all duration-200 ring-0 outline-none">
-                                <Bars3BottomRightIcon className="w-6 h-6" />
-                            </button>
                         </div>
                     </div>
 

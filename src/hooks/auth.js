@@ -79,8 +79,13 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
         await csrf()
 
+        const data = {
+            ...props,
+            lang: router.locale,
+        }
+
         axios
-            .post('/profile/update', props, {
+            .post('/profile/update', data, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 }
@@ -109,8 +114,13 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
         await csrf()
 
+        const data = {
+            ...props,
+            lang: router.locale,
+        }
+
         axios
-            .post('/profile/update-credentials', props)
+            .post('/profile/update-credentials', data)
             .then(() => {
                 setLoading(false)
                 setStatus('success')
@@ -158,8 +168,14 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         
         await csrf()
 
+        const data = {
+            ...props,
+            lang: router.locale,
+            token: router.query.token,
+        }
+
         axios
-            .post('/auth/reset-password', { token: router.query.token, ...props })
+            .post('/auth/reset-password', data)
             .then(response => { 
                 setLoading(false)
                 router.push('/auth/login?reset=' + btoa(response.data.status))
@@ -185,7 +201,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             await axios.post('/auth/logout').then(() => mutate())
         }
 
-        window.location.pathname = '/auth/login'
+        window.location.pathname = `/${router.locale}/auth/login`
     }
     
     const socialLogin = async (provider, user_id) => {
