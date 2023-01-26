@@ -3,7 +3,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import NextNProgress from 'nextjs-progressbar';
 import { RecoilRoot } from 'recoil'
 import { Source_Sans_Pro } from "@next/font/google";
-import { ToastContainer } from 'react-toastify';
 
 const ssp = Source_Sans_Pro({
     variable: "--font-source-sans-pro",
@@ -20,7 +19,6 @@ function MyApp({ Component, pageProps }) {
             <main className={`${ssp.variable} font-sans`}>
                 <Component {...pageProps} />
             </main>
-            <ToastContainer />
         </RecoilRoot>
     )
 }

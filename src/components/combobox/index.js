@@ -19,19 +19,14 @@ const Combobox = (props) => {
 
 const Input = ({ showButton = true, ...props}) => {
     return (
-        <div className="relative w-full cursor-default overflow-hidden text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
-            <ComboboxParent.Input {...props} />
-            {
-                showButton 
-                ?
-                    <ComboboxParent.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
-                        <ChevronUpDownIcon
-                            className="h-5 w-5 text-gray-400"
-                            aria-hidden="true"
-                        />
-                    </ComboboxParent.Button>
-                : <></>
-            }
+        <div className="relative w-full overflow-hidden text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm cursor-pointer">
+            <ComboboxParent.Button as="div" className="flex items-center">
+                <ComboboxParent.Input {...props} />
+                <ChevronUpDownIcon
+                    className="h-5 w-5 text-gray-400 bg-white dark:bg-gray-900"
+                    aria-hidden="true"
+                />
+            </ComboboxParent.Button>
         </div>
     )
 }
@@ -45,7 +40,7 @@ const Container = ({className = "", afterLeave = () => {}, ...props}) => {
             leaveTo="opacity-0"
             afterLeave={afterLeave}
         >
-            <div className={`w-full md:w-[28rem] bg-white rounded-lg overflow-hidden block absolute z-[60] shadow-lg right-0 ${className}`}>
+            <div className={`w-full md:w-[28rem] bg-white dark:bg-gray-900 rounded-lg overflow-hidden block absolute z-[70] shadow-lg right-0 ${className}`}>
                 {props.children}
             </div>
         </Transition>
@@ -54,7 +49,7 @@ const Container = ({className = "", afterLeave = () => {}, ...props}) => {
 
 const Options = (props) => {
     return (
-        <ComboboxParent.Options className="max-h-80 w-full overflow-y-auto overflow-x-hidden bg-white py-1 text-base ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm" {...props}>
+        <ComboboxParent.Options className="max-h-80 w-full overflow-y-auto overflow-x-hidden bg-white dark:bg-gray-900 py-1 text-base ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm" {...props}>
             {props.children}
         </ComboboxParent.Options>
     )
@@ -74,7 +69,7 @@ const Footer = (props) => {
     let { className } = props
 
     return (
-        <div {...props} className={`${className} w-full px-3 py-2 mt-2 bg-gray-100`}>
+        <div {...props} className={`${className} w-full px-3 py-2 mt-2 bg-gray-100 dark:bg-gray-800`}>
             {props.children}
         </div>
     )

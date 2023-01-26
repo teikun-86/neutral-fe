@@ -15,7 +15,7 @@
         "hajj_umrah": "Haji & Umrah",
         "visa": "VISA",
         "pay_later": "Pay Later",
-        "land_arrangement": "Land Arrangement",
+        "land_arrangement": "Land\nArrangement",
         "language": "Bahasa"
     },
     "main": {
@@ -55,7 +55,8 @@
         }
     },
     "title": {
-        "login": "Masuk untuk menikmati segala keuntungan dan kemudahan dari {link}"
+        "login": "Masuk untuk menikmati segala keuntungan dan kemudahan dari {link}",
+        "register": "Daftar untuk menikmati segala keuntungan dan kemudahan dari {link}"
     },
     "input": {
         "email_or_phone": "Email atau Nomor Telepon",
@@ -73,6 +74,9 @@
     "forgot_password": "Lupa Password?",
     "info": {
         "name": "Isi sesuai KTP/SIM/Passport/Kitas"
+    },
+    "invalid": {
+        "email": "Masukkan email yang valid."
     },
     "my_account": "Akun Saya",
     "basic_info": "Informasi Dasar",
@@ -92,7 +96,13 @@
         "verify_email_desc": "Terima kasih telah mendaftar! Sebelum memulai, mohon verifikasi email anda dengan mengklik link yang telah kami kirimkan ke email anda. Jika anda tidak menerima email, Klik tombol di bawah ini untuk mengirim ulang link verifikasi.",
         "resend_verification_link": "Kirim Ulang Link Verifikasi",
         "verification_email_sent": "Link verifikasi telah dikirim ke email anda. Silahkan cek email anda.",
-        "verified": "Email anda telah diverifikasi."
+        "verified": "Email anda telah diverifikasi.",
+        "logging_in": "Sedang masuk...",
+        "logged_in": "Login sukses!",
+        "login_failed": "Login gagal!",
+        "logging_out": "Sedang keluar...",
+        "logged_out": "Logout sukses!",
+        "logout_failed": "Logout gagal!"
     },
     "profile": {
         "updated": "Profil berhasil diperbarui."

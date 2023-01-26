@@ -1,5 +1,5 @@
 import { ExclamationCircleIcon, EyeIcon, EyeSlashIcon, InformationCircleIcon } from "@heroicons/react/24/outline"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export const Input = ({ 
     className = "",
@@ -71,6 +71,14 @@ export const Input = ({
         }
         onChange(e)
     }
+
+    useEffect(() => {
+        if (props.value === "" || !props.value) {
+            setEmpty(true)
+        } else {
+            setEmpty(false)
+        }
+    }, [props.value])
     
     return (
         <div className="relative w-full z-10">
@@ -80,7 +88,7 @@ export const Input = ({
                 {...props} 
                 id={id} 
                 name={name} 
-                className={`form-input rounded-lg border border-gray-300 focus:border-sky-600 transition-all duration-200 ring-0 focus:ring-0 outline-none focus:outline-none w-full block ${className} peer/input placeholder:opacity-0 focus:placeholder:opacity-100 placeholder:transition-opacity placeholder:duration-500 disabled:opacity-50 peer/input disabled:cursor-not-allowed mb-3`}
+                className={`form-input rounded-lg border border-gray-300 dark:border-gray-700 focus:border-sky-600 dark:focus:border-gray-400 transition-all duration-200 ring-0 focus:ring-0 outline-none focus:outline-none w-full block ${className} peer/input placeholder:opacity-0 focus:placeholder:opacity-100 placeholder:transition-opacity placeholder:duration-500 disabled:opacity-50 dark:disabled:opacity-80 peer/input disabled:cursor-not-allowed dark:bg-gray-900 dark:text-gray-200 dark:placeholder:text-gray-400`}
                 autoFocus={autoFocus}
                 onFocus={() => setFocus(true)}
                 onChange={handleChange}
@@ -91,7 +99,7 @@ export const Input = ({
                     }
                 }}
              />
-            <label htmlFor={id} className={`absolute text-sm left-2 z-10 bg-white px-1 transition-all duration-200 font-medium tracking-wide cursor-pointer rounded-lg ${focus || valid || !empty ? "-top-2 text-xs left-3" : " text-gray-700 select-none top-[0.75rem]"} peer-disabled/input:opacity-50 peer-disabled/input:cursor-not-allowed`}>{label}</label>
+            <label htmlFor={id} className={`absolute text-sm left-2 z-10 bg-white dark:bg-gray-900 dark:text-white px-1 transition-all duration-200 font-medium tracking-wide cursor-pointer rounded-lg ${focus || valid || !empty ? "-top-2 text-xs left-3" : " text-gray-700 select-none top-[0.75rem]"} peer-disabled/input:opacity-50 dark:peer-disabled/input:opacity-80 peer-disabled/input:cursor-not-allowed`}>{label}</label>
             {
                 valid !== null && valid !== true && invalidMessage !== null
                 ? (
@@ -103,8 +111,8 @@ export const Input = ({
                 : (
                     info !== null && (
                         <div className="flex items-center justify-start space-x-1 mb-2 mt-1">
-                            <InformationCircleIcon className="w-4 h-4" />
-                            <small className="text-xs font-medium text-gray-500">{info}</small>
+                            <InformationCircleIcon className="w-4 h-4 dark:text-gray-300" />
+                            <small className="text-xs font-medium text-gray-500 dark:text-gray-400">{info}</small>
                         </div>
                     )
                 )
@@ -116,10 +124,10 @@ export const Input = ({
                             {
                                 typeS === "password"
                                 ? (
-                                    <EyeIcon className="w-5 h-5" />
+                                    <EyeIcon className="w-5 h-5 dark:text-gray-500" />
                                 )
                                 : (
-                                    <EyeSlashIcon className="w-5 h-5" />
+                                    <EyeSlashIcon className="w-5 h-5 dark:text-gray-300" />
                                 )
                             }
                         </button>

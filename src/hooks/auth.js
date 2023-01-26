@@ -181,6 +181,8 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
                 router.push('/auth/login?reset=' + btoa(response.data.status))
              })
             .catch(error => {
+                setLoading(false)
+                
                 if (error.response.status !== 422) throw error
                 setErrors(error.response.data.errors)
             })
@@ -206,7 +208,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     
     const socialLogin = async (provider, user_id) => {
         await csrf()
-        axios
+        return await axios
             .post(`/auth/social/${provider}/login`, { provider, user_id })
             .then(() => mutate())
             .catch(error => {

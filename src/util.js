@@ -56,3 +56,16 @@ export const chunkArray = (array, chunkSize = 1000) => {
     }
     return tempArray;
 }
+
+export const setTheme = (theme) => {
+    if (theme === 'auto') {
+        localStorage.removeItem('theme')
+    } else {
+        localStorage.setItem('theme', theme)
+    }
+    if (theme === 'dark' || (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark')
+    } else {
+        document.documentElement.classList.remove('dark')
+    }
+}

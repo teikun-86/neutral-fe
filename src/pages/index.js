@@ -56,61 +56,61 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-            <div className="w-full max-w-7xl mx-auto px-4">     
-                <Destination __={__} />
+            <div className="w-full max-w-7xl mx-auto px-4 py-5">     
+                <Destination />
 
-                <Tour __={__} />
+                <Tour />
             
-                <h2 className="text-2xl font-bold text-gray-900">Jaminan Harga Termurah!</h2>
-                <h2 className="text-2xl font-bold text-gray-900 mt-4 mb-2">Butuh Bantuan? Cek Informasi Berikut!</h2>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Jaminan Harga Termurah!</h2>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mt-4 mb-2">Butuh Bantuan? Cek Informasi Berikut!</h2>
 
                 <div className="flex w-full justify-center items-center flex-wrap">
                     <div className="w-1/2 sm:w-1/3 lg:w-1/4 p-2 sm:p-3">
-                        <div className="w-full p-1 py-3 sm:p-3 rounded-lg bg-white shadow hover:shadow-lg transition duration-300 grid place-items-center min-h-[10rem] lg:min-h-0 cursor-pointer">
-                            <span className="p-2 rounded-full bg-primary-50/20">
+                        <div className="w-full p-1 py-3 sm:p-3 rounded-lg bg-white dark:bg-gray-900 shadow hover:shadow-lg transition duration-300 grid place-items-center min-h-[10rem] lg:min-h-0 cursor-pointer">
+                            <span className="p-2 rounded-full bg-primary-50/20 dark:bg-gray-1000">
                                 <QuestionMarkCircleIcon className="w-10 h-10 text-primary-600" />
                             </span>
-                            <h5 className="text-lg font-semibold text-gray-900 text-center">Info Perjalanan Saat PPKM</h5>
+                            <h5 className="text-lg font-semibold text-gray-900 dark:text-white text-center">Info Perjalanan Saat PPKM</h5>
                         </div>
                     </div>
                     <div className="w-1/2 sm:w-1/3 lg:w-1/4 p-2 sm:p-3">
-                        <div className="w-full p-1 py-3 sm:p-3 rounded-lg bg-white shadow hover:shadow-lg transition duration-300 grid place-items-center min-h-[10rem] lg:min-h-0 cursor-pointer">
-                            <span className="p-2 rounded-full bg-primary-50/20">
+                        <div className="w-full p-1 py-3 sm:p-3 rounded-lg bg-white dark:bg-gray-900 shadow hover:shadow-lg transition duration-300 grid place-items-center min-h-[10rem] lg:min-h-0 cursor-pointer">
+                            <span className="p-2 rounded-full bg-primary-50/20 dark:bg-gray-1000">
                                 <ReceiptRefundIcon className="w-10 h-10 text-primary-600" />
                             </span>
-                            <h5 className="text-lg font-semibold text-gray-900 text-center">Refund Pesawat</h5>
+                            <h5 className="text-lg font-semibold text-gray-900 dark:text-white text-center">Refund Pesawat</h5>
                         </div>
                     </div>
                     <div className="w-1/2 sm:w-1/3 lg:w-1/4 p-2 sm:p-3">
-                        <div className="w-full p-1 py-3 sm:p-3 rounded-lg bg-white shadow hover:shadow-lg transition duration-300 grid place-items-center min-h-[10rem] lg:min-h-0 cursor-pointer">
-                            <span className="p-2 rounded-full bg-primary-50/20">
+                        <div className="w-full p-1 py-3 sm:p-3 rounded-lg bg-white dark:bg-gray-900 shadow hover:shadow-lg transition duration-300 grid place-items-center min-h-[10rem] lg:min-h-0 cursor-pointer">
+                            <span className="p-2 rounded-full bg-primary-50/20 dark:bg-gray-1000">
                                 <ArrowPathIcon className="w-10 h-10 text-primary-600" />
                             </span>
-                            <h5 className="text-lg font-semibold text-gray-900 text-center">Reschedule Pesawat</h5>
+                            <h5 className="text-lg font-semibold text-gray-900 dark:text-white text-center">Reschedule Pesawat</h5>
                         </div>
                     </div>
                     <div className="w-1/2 sm:w-1/3 lg:w-1/4 p-2 sm:p-3">
-                        <div className="w-full p-1 py-3 sm:p-3 rounded-lg bg-white shadow hover:shadow-lg transition duration-300 grid place-items-center min-h-[10rem] lg:min-h-0 cursor-pointer">
-                            <span className="p-2 rounded-full bg-primary-50/20">
+                        <div className="w-full p-1 py-3 sm:p-3 rounded-lg bg-white dark:bg-gray-900 shadow hover:shadow-lg transition duration-300 grid place-items-center min-h-[10rem] lg:min-h-0 cursor-pointer">
+                            <span className="p-2 rounded-full bg-primary-50/20 dark:bg-gray-1000">
                                 <ReceiptRefundIcon className="w-10 h-10 text-primary-600" />
                             </span>
-                            <h5 className="text-lg font-semibold text-gray-900 text-center">Refund Hotel</h5>
+                            <h5 className="text-lg font-semibold text-gray-900 dark:text-white text-center">Refund Hotel</h5>
                         </div>
                     </div>
                     <div className="w-1/2 sm:w-1/3 lg:w-1/4 p-2 sm:p-3">
-                        <div className="w-full p-1 py-3 sm:p-3 rounded-lg bg-white shadow hover:shadow-lg transition duration-300 grid place-items-center min-h-[10rem] lg:min-h-0 cursor-pointer">
-                            <span className="p-2 rounded-full bg-primary-50/20">
+                        <div className="w-full p-1 py-3 sm:p-3 rounded-lg bg-white dark:bg-gray-900 shadow hover:shadow-lg transition duration-300 grid place-items-center min-h-[10rem] lg:min-h-0 cursor-pointer">
+                            <span className="p-2 rounded-full bg-primary-50/20 dark:bg-gray-1000">
                                 <ArrowPathIcon className="w-10 h-10 text-primary-600" />
                             </span>
-                            <h5 className="text-lg font-semibold text-gray-900 text-center">Reschedule Hotel</h5>
+                            <h5 className="text-lg font-semibold text-gray-900 dark:text-white text-center">Reschedule Hotel</h5>
                         </div>
                     </div>
                     <div className="w-1/2 sm:w-1/3 lg:w-1/4 p-2 sm:p-3">
-                        <div className="w-full p-1 py-3 sm:p-3 rounded-lg bg-white shadow hover:shadow-lg transition duration-300 grid place-items-center min-h-[10rem] lg:min-h-0 cursor-pointer">
-                            <span className="p-2 rounded-full bg-primary-50/20">
+                        <div className="w-full p-1 py-3 sm:p-3 rounded-lg bg-white dark:bg-gray-900 shadow hover:shadow-lg transition duration-300 grid place-items-center min-h-[10rem] lg:min-h-0 cursor-pointer">
+                            <span className="p-2 rounded-full bg-primary-50/20 dark:bg-gray-1000">
                                 <QuestionMarkCircleIcon className="w-10 h-10 text-primary-600" />
                             </span>
-                            <h5 className="text-lg font-semibold text-gray-900 text-center">Pusat Bantuan</h5>
+                            <h5 className="text-lg font-semibold text-gray-900 dark:text-white text-center">Pusat Bantuan</h5>
                         </div>
                     </div>
                 </div>

@@ -3,8 +3,8 @@ import Link from "next/link";
 export const ResponsiveLink = ({ className, active = false, ...props }) => {
 
     let classes = active
-        ? "bg-gradient-to-r from-rose-50/60 to-rose-50/40 text-rose-500 relative after:w-0.5 after:h-full after:bg-rose-500 after:absolute after:left-px after:rounded-lg after:top-0"
-        : "bg-white text-gray-800 hocus:text-gray-900 hover:bg-gray-100 focus:bg-gray-200 "
+        ? "bg-gray-100 dark:bg-gray-900 text-rose-500 relative after:w-0.5 after:h-full after:bg-rose-500 after:absolute after:left-px after:rounded-lg after:top-0"
+        : "bg-white dark:bg-gray-1000 text-gray-800 dark:text-gray-300 dark:hocus:text-gray-100 hocus:text-gray-900 hover:bg-gray-100 focus:bg-gray-200 "
 
     if (props.as === 'button') {
         return (

@@ -15,6 +15,9 @@ module.exports = {
         extend: {
             colors: {
                 primary: colors.rose,
+                gray: {
+                    1000: "#0b101b",
+                }
             },
             animation: {
                 "width-half": "width-half 0.2s ease-in-out",

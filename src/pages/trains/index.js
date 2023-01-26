@@ -1,6 +1,6 @@
 import { StationButton } from "@/components/button";
 import Combobox from "@/components/combobox";
-import useOutsideClick from "@/components/hooks/outsideclick";
+import useOutsideClick from "@/hooks/outsideclick";
 import { TrainIcon, TrainRightIcon } from "@/components/icons";
 import AppLayout from "@/layouts/app";
 import { checkObjectUndefined, objectToQueryString, searchString } from "@/util";

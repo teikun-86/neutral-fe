@@ -7,9 +7,12 @@ import { Input } from '@/components/forms'
 import { SpinnerIcon } from '@/components/icons'
 import Alert from '@/components/alert'
 import Image from 'next/image'
-import btwLogo from "@/assets/images/btw-logo.png";
-import AuthFooter from '@/components/auth-footer'
+import logo from "@/assets/images/tripla-logo.png";
+import AuthFooter from '@/components/auth/footer'
 import { useLocale } from '@/hooks/locale'
+import { AuthCard } from '@/components/auth'
+import { AuthContainer } from '@/components/auth/container'
+import { InputError } from '@/components/forms/input-error'
 
 const PasswordReset = () => {
     const router = useRouter()
@@ -40,22 +43,13 @@ const PasswordReset = () => {
     }, [router.query.email])
 
     return (
-        <GuestLayout title="Reset Password">
+        <GuestLayout title={__('reset_password')}>
             <div className="w-full grid place-items-center min-h-screen bg-cover bg-no-repeat bg-center">
-                <div className="w-full sm:max-w-md p-3">
-                    <div className="flex flex-col items-center justify-center mb-2">
-                        <Link href="/">
-                            <Image src={btwLogo} alt="BTW Logo" className="h-10 w-auto" />
-                        </Link>
-                        <h2 className="text-xl font-bold text-gray-800 text-center">
-                            {__('reset_password')}
-                        </h2>
-                    </div>
-
-                    <div className="w-full px-6 py-4 bg-white shadow-md overflow-hidden rounded-lg relative">
+                <AuthContainer title={__('reset_password')}>
+                    <AuthCard>
                         {
                             loading && (
-                                <div className="w-full absolute inset-0 h-full bg-white/80 grid place-items-center z-50">
+                                <div className="w-full absolute inset-0 h-full bg-white/80 dark:bg-black/60 grid place-items-center z-50">
                                     <SpinnerIcon className="h-10 w-10 text-rose-600 animate-spin" />
                                 </div>
                             )
@@ -82,20 +76,23 @@ const PasswordReset = () => {
                         }
                         <div className="pt-4">
 
-                            <Input type="email" name="email" label={__('input.email')} value={email} onChange={(e) => setEmail(e.target.value)} required placeholder="john@example.com" readOnly invalidMessage="Isi dengan alamat email yang valid!" />
-                            <Input placeholder="**********" type="password" id="passwordInput" name="passwordInput" label={__('input.password')} onChange={(e) => setPassword(e.target.value)} />
-                            <Input placeholder="**********" type="password" id="passwordConfirmInput" name="passwordConfirmInput" label={__('input.confirm_password')} onChange={(e) => setPasswordConfirmation(e.target.value)} />
+                            <div className="mb-4">
+                                <Input type="email" name="email" label={__('input.email')} value={email} onChange={(e) => setEmail(e.target.value)} required placeholder="john@example.com" readOnly invalidMessage="Isi dengan alamat email yang valid!" />
+                                <InputError errors={errors.email} />
+                            </div>
+                            <div className="mb-4">
+                                <Input placeholder="**********" type="password" id="passwordInput" name="passwordInput" label={__('input.password')} onChange={(e) => setPassword(e.target.value)} />
+                                <InputError errors={errors.password} />
+                            </div>
+                            <Input className="mb-4" placeholder="**********" type="password" id="passwordConfirmInput" name="passwordConfirmInput" label={__('input.confirm_password')} onChange={(e) => setPasswordConfirmation(e.target.value)} />
 
                             <button disabled={password !== passwordConfirmation || password.length === 0 || passwordConfirmation.length === 0} className="btn-rose w-full mb-3"
                                 onClick={handleResetPassword}>
                                 {__('reset_password')}
                             </button>
                         </div>
-                    </div>
-                    <div className="flex flex-col items-center justify-center mt-2">
-                        <AuthFooter />
-                    </div>
-                </div>
+                    </AuthCard>
+                </AuthContainer>
             </div>
         </GuestLayout>
     )

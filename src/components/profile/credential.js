@@ -9,7 +9,7 @@ export const ProfileCredentials = ({
     updateCredentials = async () => { },
 }) => {
     const [email, setEmail] = useState(user.email)
-    const [phone, setPhone] = useState(user.phone ?? "")
+    const [phone, setPhone] = useState(user.phone ?? '')
 
     const [loading, setLoading] = useState(false)
     const [errors, setErrors] = useState([])
@@ -36,10 +36,10 @@ export const ProfileCredentials = ({
     }, [status])
 
     return (
-        <section className="w-full p-3 rounded-lg bg-white shadow relative my-4">
+        <section className="w-full p-3 rounded-lg bg-white dark:bg-gray-900 shadow relative my-4">
             {
                 loading && (
-                    <div className="absolute z-[60] inset-0 bg-white/50 grid place-items-center w-full h-full">
+                    <div className="absolute z-[60] inset-0 bg-white/50 dark:bg-black/50 grid place-items-center w-full h-full">
                         <SpinnerIcon className="w-10 h-10 animate-spin text-rose-600" />
                     </div>
                 )
@@ -50,7 +50,7 @@ export const ProfileCredentials = ({
                     {__('email_and_phone')}
                 </h2>
 
-                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
                     {__('email_and_phone_desc')}
                 </p>
             </header>
@@ -77,21 +77,23 @@ export const ProfileCredentials = ({
                         </Alert>
                     )
                 }
-                <Input id="email" disabled={user.google_id !== null || user.facebook_id !== null} type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} label={__('input.email')} invalidMessage="Isi dengan alamat email yang valid!" required />
-                {
-                    (user.google_id !== null || user.facebook_id !== null) && (
-                        <p className="text-sm text-gray-700 mb-4 -mt-2 mx-2">
-                            {__('email.nochange', {
-                                provider: user.google_id !== null ? 'Google' : 'Facebook'
-                            })}
-                        </p>
-                    )
-                }
-                <Input id="phone" type="text" onlyNumbers name="phone" value={phone} onChange={(e) => setPhone(e.target.value)} label={__('input.phone')} required />
+                <Input id="email" disabled={user.google_id !== null || user.facebook_id !== null} type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} label={__('input.email')} invalidMessage="Isi dengan alamat email yang valid!" required info={
+                    user.google_id !== null || user.facebook_id !== null
+                        ? __('email.nochange', {
+                            provider: user.google_id !== null ? 'Google' : 'Facebook'
+                        })
+                        : null
+                } />
+                <Input id="phone" className="mt-3" type="text" onlyNumbers name="phone" value={phone} onChange={(e) => setPhone(e.target.value)} label={__('input.phone')} required />
             </main>
 
             <footer className="flex items-center justify-end max-w-xl">
-                <button disabled={email.trim() === user.email && phone.trim() === user.phone} onClick={update} className="btn-rose rounded-full">{__('command.save')}</button>
+                <button disabled={
+                    loading ||
+                    user.email === email && (
+                        user.phone === null ? phone === '' : user.phone === phone
+                    )
+                } onClick={update} className="btn-rose rounded-full">{__('command.save')}</button>
             </footer>
         </section>
     )

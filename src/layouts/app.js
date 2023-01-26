@@ -17,7 +17,7 @@ import { useViewport } from "@/hooks/viewport";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/auth";
 import { useLocale } from "@/hooks/locale";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 const AppLayout = props => {
     const [modalOpen, setModalOpen] = useRecoilState(modalState)
@@ -25,7 +25,8 @@ const AppLayout = props => {
     const router = useRouter()
     const { __ } = useLocale()
     const [showBtn, setShowBtn] = useState(false)
-    const { width, scrollY } = useViewport({
+    const [theme, setTheme] = useState("light")
+    const { width } = useViewport({
         onScroll: (result) => {
             setShowBtn(result.y > 100)
         }
@@ -58,22 +59,40 @@ const AppLayout = props => {
     useEffect(() => {
         const query = router.query
         if (query?.social && query?.user_id) {
-            socialLogin(query.social, query.user_id)
+            toast.promise(socialLogin(query.social, query.user_id), {
+                pending: __('auth.logging_in'),
+                success: __('auth.logged_in'),
+                error: __('auth.login_failed')
+            })
             router.push(router.pathname)
         }
 
         if (query?.verified) {
             toast.success(__('auth.verified'))
-            // router.push(router.pathname)
+            router.push(router.pathname)
         }
     }, [router.query]);
+
+    useEffect(() => {
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+            setTheme('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+            setTheme('light')
+        }
+    }, [])
     
     return (
         <>
             <Head>
                 <title>{props.title ?? `${process.env.NEXT_PUBLIC_APP_NAME} ー ${process.env.NEXT_PUBLIC_APP_SLOGAN}`}</title>
+                <link rel="canonical" href={`${process.env.NEXT_PUBLIC_BASE_URL}${router.asPath}`} />
+                <link rel="alternate" hrefLang="en" href={`${process.env.NEXT_PUBLIC_BASE_URL}/en${router.asPath}`} />
+                <link rel="alternate" hrefLang="id" href={`${process.env.NEXT_PUBLIC_BASE_URL}/id${router.asPath}`} />
+                <link rel="alternate" hrefLang="jp" href={`${process.env.NEXT_PUBLIC_BASE_URL}/jp${router.asPath}`} />
             </Head>
-            <div className="w-full min-h-screen bg-gray-50 p-0 m-0 antialiased">
+            <div className="w-full min-h-screen bg-gray-50 dark:bg-gray-1000 p-0 m-0 antialiased">
                 <Transition show={!online}
                     as="div"
                     className="fixed top-0 w-full z-50"
@@ -175,6 +194,7 @@ const AppLayout = props => {
                 </Drawer.Footer>
             </Drawer>
             <Footer />
+            <ToastContainer theme={theme} />
         </>
     );
 };

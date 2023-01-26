@@ -63,7 +63,7 @@ const Drawer = ({ showCloseButton = true, afterClose = () => {}, ...props }) => 
 
     return (
         <Transition className="w-full h-screen fixed inset-0 z-[100]" show={open} id={props.id}>
-            <Transition.Child onClick={closeDrawer} className="w-full h-full bg-black/80 backdrop-blur-sm"
+            <Transition.Child onClick={closeDrawer} className="w-full h-full bg-black/30 backdrop-blur-sm"
                 enter="transition-all duration-300"
                 enterFrom="opacity-0"
                 enterTo="opacity-100"
@@ -83,7 +83,7 @@ const Drawer = ({ showCloseButton = true, afterClose = () => {}, ...props }) => 
                 onStop={handleStop}
             >
                 <Transition.Child
-                    className={`w-full absolute inset-x-0 bottom-0 rounded-t-2xl bg-white ${released ? "transition-all duration-200" : ""}`}
+                    className={`w-full absolute inset-x-0 bottom-0 rounded-t-2xl bg-white dark:bg-gray-1000 ${released ? "transition-all duration-200" : ""}`}
                     enter="transition-all duration-300"
                     enterFrom="opacity-0 -bottom-full"
                     enterTo="opacity-100 bottom-0"
@@ -94,7 +94,7 @@ const Drawer = ({ showCloseButton = true, afterClose = () => {}, ...props }) => 
                     {
                         showCloseButton && (
                             <button className="absolute top-1 right-1 rounded-full outline-none focus:outline-none ring-0 focus:ring-0 p-2 z-50" onClick={closeDrawer}>
-                                <XMarkIcon className="w-7 h-7" />
+                                <XMarkIcon className="w-7 h-7 dark:text-gray-400" />
                             </button>
                         )
                     }
@@ -108,7 +108,7 @@ const Drawer = ({ showCloseButton = true, afterClose = () => {}, ...props }) => 
 
 const Header = ({ className = "", ...props }) => {
     return (
-        <div className={`w-full block bg-white shadow my-1 py-1 px-2 relative rounded-t-2xl drag-handler ${className}`} { ...props }>
+        <div className={`w-full block bg-white dark:bg-gray-1000 shadow my-1 py-1 px-2 relative rounded-t-2xl drag-handler ${className}`} { ...props }>
             {props.children}
         </div>
     )
@@ -124,7 +124,7 @@ const Body = ({ className = "", ...props}) => {
 
 const Footer = ({ className = "", ...props}) => {
     return (
-        <div className={`py-2 px-4 bg-gray-100 sticky bottom-0 mt-2 border-t border-gray-300/50 ${className}`} { ...props }>
+        <div className={`py-2 px-4 bg-gray-100 dark:bg-gray-900 sticky bottom-0 mt-2 border-t border-gray-300/50 ${className}`} { ...props }>
             {props.children}
         </div>
     )

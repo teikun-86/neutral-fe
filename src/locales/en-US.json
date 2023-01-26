@@ -55,7 +55,8 @@
         }
     },
     "title": {
-        "login": "Log In to enjoy every benefits and services in {link}"
+        "login": "Log In to enjoy every benefits and services in {link}",
+        "register": "Register to enjoy every benefits and services in {link}"
     },
     "input": {
         "email_or_phone": "Email or Phone Number",
@@ -73,6 +74,9 @@
     "forgot_password": "Forgot Password?",
     "info": {
         "name": "Fill in your name as it appears on your ID card."
+    },
+    "invalid": {
+        "email": "Invalid email address."
     },
     "my_account": "My Account",
     "basic_info": "Basic Info",
@@ -92,7 +96,13 @@
         "verify_email_desc": "Thank you for registering! Before starting, please verify your email by clicking the link that we have sent to your email. If you don't receive an email, click the button below to resend the verification link.",
         "resend_verification_link": "Resend Verification Link",
         "verification_email_sent": "A fresh verification link has been sent to your email address.",
-        "verified": "Your email address has been verified."
+        "verified": "Your email address has been verified.",
+        "logging_in": "Logging in...",
+        "logged_in": "Logged in!",
+        "login_failed": "Login failed!",
+        "logging_out": "Logging out...",
+        "logged_out": "Logged out!",
+        "logout_failed": "Logout failed!"
     },
     "profile": {
         "updated": "Your profile information has been updated."

@@ -1,6 +1,5 @@
 import { HeartIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import React from 'react';
 
 const Footer = () => {
     return (
@@ -20,10 +19,10 @@ const Footer = () => {
                                     <nav>
                                         <ul className="list-none mt-4">
                                             <li className="my-1">
-                                                <Link href="#" className="text-gray-100 hover:text-white">Useful Link</Link>
+                                                <Link href="/" className="text-gray-100 hover:text-white">Useful Link</Link>
                                             </li>
                                             <li className="my-1">
-                                                <Link href="#" className="text-gray-100 hover:text-white">Lorem Ipsum</Link>
+                                                <Link href="/" className="text-gray-100 hover:text-white">Lorem Ipsum</Link>
                                             </li>
                                         </ul>
                                     </nav>
@@ -35,10 +34,10 @@ const Footer = () => {
                                     <nav>
                                         <ul className="list-none mt-4">
                                             <li className="my-1">
-                                                <Link href="#" className="text-gray-100 hover:text-white">About Neutral</Link>
+                                                <Link href="/" className="text-gray-100 hover:text-white">About Neutral</Link>
                                             </li>
                                             <li className="my-1">
-                                                <Link href="#" className="text-gray-100 hover:text-white">Neutral LLC</Link>
+                                                <Link href="/" className="text-gray-100 hover:text-white">Neutral LLC</Link>
                                             </li>
                                         </ul>
                                     </nav>

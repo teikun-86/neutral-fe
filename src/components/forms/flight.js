@@ -9,7 +9,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, Fragment } from "rea
 import Datepicker from "react-tailwindcss-datepicker"
 import { AirportButton } from "../button"
 import Combobox from "../combobox"
-import useOutsideClick from "../hooks/outsideclick"
+import useOutsideClick from "@/hooks/outsideclick"
 import { AirplaneLandingIcon, AirplaneTakeoffIcon, HistoryIcon } from "../icons"
 import { RoseTooltip } from "../tooltip"
 
@@ -207,7 +207,7 @@ export const FlightForm = ({ onSearch = () => {}, onFailed = () => {}, intl = fa
     }, [])
 
     return (
-        <div className="w-full rounded-lg bg-white">
+        <div className="w-full rounded-lg bg-white dark:bg-gray-900">
             <div className="my-2 px-4 py-2">
                 <div className="w-full my-2 flex items-center space-x-4">
                     <label htmlFor="onewayTrip" className="flex items-center select-none">

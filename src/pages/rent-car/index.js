@@ -1,6 +1,6 @@
 import { CarLocationButton, StationButton } from "@/components/button";
 import Combobox from "@/components/combobox";
-import useOutsideClick from "@/components/hooks/outsideclick";
+import useOutsideClick from "@/hooks/outsideclick";
 import { CarIcon, TrainIcon, TrainRightIcon } from "@/components/icons";
 import { RoseTooltip } from "@/components/tooltip";
 import AppLayout from "@/layouts/app";

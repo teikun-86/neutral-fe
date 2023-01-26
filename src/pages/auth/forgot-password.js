@@ -3,12 +3,14 @@ import GuestLayout from "@/layouts/guest"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import btwLogo from "@/assets/images/btw-logo.png";
+import logo from "@/assets/images/tripla-logo.png";
 import Alert from "@/components/alert"
 import { SpinnerIcon } from "@/components/icons"
 import { Input } from "@/components/forms"
 import { useLocale } from "@/hooks/locale"
-import AuthFooter from "@/components/auth-footer"
+import AuthFooter from "@/components/auth/footer"
+import { AuthCard } from "@/components/auth"
+import { AuthContainer } from "@/components/auth/container"
 
 
 const ForgotPassword = () => {
@@ -38,20 +40,11 @@ const ForgotPassword = () => {
     return (
         <GuestLayout title={__('forgot_password')}>
             <div className="w-full grid place-items-center min-h-screen bg-cover bg-no-repeat bg-center">
-                <div className="w-full sm:max-w-md p-3">
-                    <div className="flex flex-col items-center justify-center mb-2">
-                        <Link href="/">
-                            <Image src={btwLogo} alt="BTW Logo" className="h-10 w-auto" />
-                        </Link>
-                        <h2 className="text-xl font-bold text-gray-800 text-center">
-                            {__('forgot_password')}
-                        </h2>
-                    </div>
-
-                    <div className="w-full px-6 py-4 bg-white shadow-md overflow-hidden rounded-lg relative">
+                <AuthContainer title={__('forgot_password')}>
+                    <AuthCard className="w-full px-6 py-4 bg-white dark:bg-gray-900 shadow-md overflow-hidden rounded-lg relative">
                         {
                             loading && (
-                                <div className="w-full absolute inset-0 h-full bg-white/80 grid place-items-center z-50">
+                                <div className="w-full absolute inset-0 h-full bg-white/80 dark:bg-black/50 grid place-items-center z-50">
                                     <SpinnerIcon className="h-10 w-10 text-rose-600 animate-spin" />
                                 </div>
                             )
@@ -77,7 +70,7 @@ const ForgotPassword = () => {
                             )
                         }
 
-                        <p className="text-center">
+                        <p className="text-center dark:text-gray-300">
                             {__('forgot_password_desc')}
                         </p>
 
@@ -85,22 +78,19 @@ const ForgotPassword = () => {
                             
                             <Input type="email" name="email" label={__('input.email')} value={email} onChange={(e) => setEmail(e.target.value)} required placeholder="john@example.com" autoFocus invalidMessage="Isi dengan alamat email yang valid!" />
                             
-                            <button disabled={!email || !isEmailValid} className="btn-rose w-full mb-3"
+                            <button disabled={!email || !isEmailValid} className="btn-rose w-full my-3"
                                 onClick={() => forgotPassword({ setErrors, setStatus, setLoading, email: email })}>
                                 {__('send_password_reset_link')}
                             </button>
 
                             <Link
-                                className="btn-light w-full text-gray-800 mt-3"
+                                className="btn-light dark:btn-dark !w-full"
                                 href="/auth/login">
                                 {__('nav.login')}
                             </Link>
                         </div>
-                    </div>
-                    <div className="flex flex-col items-center justify-center mt-2">
-                        <AuthFooter />
-                    </div>
-                </div>
+                    </AuthCard>
+                </AuthContainer>
             </div>
         </GuestLayout>
     )

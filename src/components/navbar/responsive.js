@@ -19,8 +19,8 @@ export const ResponsiveNavbar = ({ user, logout }) => {
     return (
         <Drawer id="responsiveNavDrawer">
             <Drawer.Header>
-                <h4 className="text-xl font-bold text-gray-900 text-center mb-3">{__('menu')}</h4>
-                <SearchBox />
+                <h4 className="text-xl font-bold text-gray-900 dark:text-white text-center mb-3">{__('menu')}</h4>
+                <SearchBox placeholder={__('main.searchbox')} />
             </Drawer.Header>
             <Drawer.Body className="px-1 !max-h-[80vh]">
                 <nav className="w-full block">
@@ -33,8 +33,8 @@ export const ResponsiveNavbar = ({ user, logout }) => {
                                         <Image className="w-24 h-24 object-cover rounded-full" src={user.avatar} alt={user.name} width={100} height={100} />
                                     </div>
                                     <div className="w-full px-2 py-2">
-                                        <p className="text-lg font-medium truncate text-center">{user.name}</p>
-                                        <p className="text-base text-gray-500 truncate text-center">{user.email}</p>
+                                        <p className="text-lg font-medium truncate text-center dark:text-white">{user.name}</p>
+                                        <p className="text-base text-gray-500 dark:text-gray-400 truncate text-center">{user.email}</p>
                                     </div>
                                 </Link>
                             </>
@@ -46,13 +46,13 @@ export const ResponsiveNavbar = ({ user, logout }) => {
                         <UserIcon className="w-6 h6 mr-2" />
                         {__('account')}
                     </h6>
-                    <ResponsiveLink href="#elite-rewards">{__('nav.elite_rewards')}</ResponsiveLink>
-                    <ResponsiveLink href="#elite-rewards">{__('nav.check_order')}</ResponsiveLink>
+                    <ResponsiveLink href="/elite-rewards">{__('nav.elite_rewards')}</ResponsiveLink>
+                    <ResponsiveLink href="/check-order">{__('nav.check_order')}</ResponsiveLink>
                     {
                         user
                         ? (
                             <>
-                                <ResponsiveLink href="/@me">{__('nav.profile')}</ResponsiveLink>
+                                <ResponsiveLink active={router.pathname === "/@me"} href="/@me">{__('nav.profile')}</ResponsiveLink>
                                 <ResponsiveLink as="button" onClick={logout}>{__('nav.logout')}</ResponsiveLink>
                             </>
                         )

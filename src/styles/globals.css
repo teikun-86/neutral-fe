@@ -33,10 +33,10 @@ img {
         @apply w-2 h-1;
     }
     .gray-scrollbar::-webkit-scrollbar-track {
-        @apply bg-gray-300 rounded-lg;
+        @apply bg-gray-300 dark:bg-gray-900 rounded-lg;
     }
     .gray-scrollbar::-webkit-scrollbar-thumb {
-        @apply bg-gray-400 rounded-lg hover:bg-gray-500;
+        @apply bg-gray-400 dark:bg-gray-700 rounded-lg hover:bg-gray-500 dark:hover:bg-gray-800;
     }
     
     .btn-text {
@@ -68,7 +68,7 @@ img {
     }
 
     .btn-dark {
-        @apply cursor-pointer select-none disabled:opacity-50 disabled:cursor-not-allowed inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-800 text-base font-medium text-white hover:bg-gray-900 focus:bg-gray-900 focus:outline-none sm:w-auto sm:text-sm transition duration-100;
+        @apply cursor-pointer select-none disabled:opacity-50 disabled:cursor-not-allowed inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-800 text-base font-medium text-white hover:bg-gray-1000 focus:bg-gray-1000 focus:outline-none sm:w-auto sm:text-sm transition duration-100;
     }
 
     .btn-stone {

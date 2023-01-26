@@ -1,6 +1,6 @@
 import { DestinationButton } from "@/components/button";
 import Combobox from "@/components/combobox";
-import useOutsideClick from "@/components/hooks/outsideclick";
+import useOutsideClick from "@/hooks/outsideclick";
 import { RoseTooltip } from "@/components/tooltip";
 import AppLayout from "@/layouts/app";
 import { objectToQueryString, searchString } from "@/util";

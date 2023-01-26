@@ -31,6 +31,7 @@ const MyAccount = () => {
                         : (
                             <>
                                 <ProfileInformation updateProfile={updateProfile} resendEmailVerification={resendEmailVerification} user={user} />
+                                
                                 <ProfileCredentials updateCredentials={updateCredentials} user={user} />
 
                                 <UpdatePassword user={user} />

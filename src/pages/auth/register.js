@@ -1,18 +1,17 @@
 import GuestLayout from "@/layouts/guest";
-import btwLogo from "@/assets/images/btw-logo.png";
 import { useState } from "react";
 import { useAuth } from "@/hooks/auth";
 import Image from "next/image";
 import { Input } from "@/components/forms";
 import { FacebookIcon, GoogleIcon, SpinnerIcon } from "@/components/icons";
 import Link from "next/link";
-import { ArrowLeftIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { Dropdown } from "@/components/dropdown";
 import countryCodes from "@/data/call-codes";
 import Alert from "@/components/alert";
 import { InputError } from "@/components/forms/input-error";
 import { useLocale } from "@/hooks/locale";
-import AuthFooter from "@/components/auth-footer";
+import { AuthCard, AuthContainer } from "@/components/auth";
 
 const Register = () => {
     const { __, locale } = useLocale();
@@ -52,24 +51,14 @@ const Register = () => {
 
     return (
         <GuestLayout title={__('nav.register')}>
-            <div className="w-full grid place-items-center min-h-screen bg-cover bg-no-repeat bg-center">
-                <div className="w-full sm:max-w-md p-3">
-                    <div className="flex flex-col items-center justify-center mb-2">
-                        <Link href="/">
-                            <Image src={btwLogo} alt="BTW Logo" className="h-10 w-auto" />
-                        </Link>
-                        <h2 className="text-xl font-bold text-gray-800 text-center">
-                            {__('nav.register')}
-                        </h2>
-                        <p className="text-center">{__('title.register', {
-                            link: process.env.NEXT_PUBLIC_APP_NAME
-                        })}</p>
-                    </div>
-
-                    <div className="w-full px-6 py-4 bg-white shadow-md overflow-hidden rounded-lg relative">
+            <div className="w-full grid place-items-center min-h-screen">
+                <AuthContainer description={__('title.register', {
+                    link: process.env.NEXT_PUBLIC_APP_NAME
+                })} title={__('nav.register')}>
+                    <AuthCard className="w-full px-6 py-4 bg-white shadow-md overflow-hidden dark:bg-gray-900 rounded-lg relative">
                         {
                             loading && (
-                                <div className="absolute inset-0 bg-white/50 flex items-center justify-center z-[80]">
+                                <div className="absolute inset-0 bg-white/50 dark:bg-black/60 flex items-center justify-center z-[80]">
                                     <SpinnerIcon className="w-10 h-10 text-rose-600 animate-spin" />
                                 </div>
                             )
@@ -91,27 +80,27 @@ const Register = () => {
                             <Input className="mb-0" autoCapitalize info={__('info.name')} placeholder="John Doe" type="text" id="name" name="name" label={__('input.name')} onChange={(e) => setName(e.target.value)} />
                             <InputError errors={errors.name} />
                         </div>
-                        
+
                         <div className="my-3">
                             <Input className="mb-0" placeholder="johndoe@example.com" type="email" id="email" name="email" label={__('input.email')} onChange={(e) => setEmail(e.target.value)} invalidMessage={__('invalid.email')} />
                             <InputError errors={errors.email} />
                         </div>
-                        
+
                         <div className="flex items-start space-x-2 my-3">
                             <div className="w-1/4">
                                 <Dropdown className="w-full z-50">
                                     {({ open }) => (
                                         <>
                                             <Dropdown.Button as="div" className="relative">
-                                                <button className="w-full bg-white form-input border-gray-300 focus:border-sky-600 ring-0 focus:ring-0 outline-none focus:outline-none transition-all text-start cursor-pointer duration-200 rounded-lg h-[2.6rem] flex items-center space-x-1" >
+                                                <button className="w-full bg-white dark:bg-gray-900 form-input border-gray-300 dark:border-gray-700 focus:border-sky-600 ring-0 focus:ring-0 outline-none focus:outline-none transition-all text-start cursor-pointer duration-200 rounded-lg h-[2.6rem] flex items-center space-x-1" >
                                                     <span className="w-6 h-3 grid place-items-center mr-2">
                                                         <Image src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${countryCode.code}.svg`} width={100} height={100} alt="Indonesia" />
                                                     </span>
                                                 </button>
-                                                <ChevronDownIcon className={`w-5 h-5 absolute top-3 right-3 ${open ? "rotate-180 " : ""} transition-all cursor-pointer duration-200`} />
+                                                <ChevronDownIcon className={`w-5 h-5 absolute top-3 right-3 ${open ? "rotate-180 " : ""} transition-all cursor-pointer duration-200 dark:text-gray-300`} />
                                             </Dropdown.Button>
                                             <Dropdown.Content afterLeave={() => setCountryQuery('')} className="left-0 max-h-72 overflow-y-auto gray-scrollbar pt-0">
-                                                <div className="w-full px-2 py-1 bg-white sticky top-0">
+                                                <div className="w-full px-2 py-1 bg-white dark:bg-gray-900 sticky top-0">
                                                     <Input type="text" id="searchCountry" onChange={(e) => setCountryQuery(e.target.value)} label={__('input.call_code')} />
                                                 </div>
                                                 {
@@ -139,13 +128,13 @@ const Register = () => {
                                 <Input className="mb-0" placeholder="81234567890" type="text" id="phone" name="phone" label={__('input.phone')} onChange={(e) => setPhone(e.target.value)} onlyNumbers />
                                 <InputError errors={errors.phone} />
                             </div>
-                            
+
                         </div>
                         <div className="my-3">
                             <Input className="mb-0" placeholder="**********" type="password" id="passwordInput" name="passwordInput" label={__('input.password')} onChange={(e) => setPassword(e.target.value)} />
                             <InputError errors={errors.password} />
                         </div>
-                        
+
                         <div className="my-3">
                             <Input className="mb-0" placeholder="**********" type="password" id="passwordConfirmInput" name="passwordConfirmInput" label={__('input.confirm_password')} onChange={(e) => setPasswordConfirmation(e.target.value)} />
                             <InputError errors={errors.password_confirmation} />
@@ -156,30 +145,27 @@ const Register = () => {
                         </button>
                         <div className="flex items-center justify-center my-2">
                             <hr className="w-10 border-t border-gray-300" />
-                            <span className="text-center w-auto text-xs text-gray-600 font-medium mx-2">{__('already_have_account')}</span>
+                            <span className="text-center w-auto text-xs text-gray-600 dark:text-gray-400 font-medium mx-2">{__('already_have_account')}</span>
                             <hr className="w-10 border-t border-gray-300" />
                         </div>
-                        <Link href="/auth/login" className="btn-light w-full">{__('nav.login')}</Link>
+                        <Link href="/auth/login" className="btn-light dark:btn-dark !w-full">{__('nav.login')}</Link>
                         <div className="flex items-center justify-center my-2">
                             <hr className="w-10 border-t border-gray-300" />
-                            <span className="text-center w-auto text-xs text-gray-600 font-medium mx-2">{__('login_easier')}</span>
+                            <span className="text-center w-auto text-xs text-gray-600 dark:text-gray-400 font-medium mx-2">{__('login_easier')}</span>
                             <hr className="w-10 border-t border-gray-300" />
                         </div>
                         <div className="flex items-center justify-center space-x-2">
-                            <button onClick={() => loginWith("facebook")} className="btn-light">
+                            <button onClick={() => loginWith("facebook")} className="btn-light dark:btn-dark">
                                 <FacebookIcon className="w-6 h-6 mr-2" />
                                 Facebook
                             </button>
-                            <button onClick={() => loginWith('google')} className="btn-light">
+                            <button onClick={() => loginWith('google')} className="btn-light dark:btn-dark">
                                 <GoogleIcon className="w-6 h-6 mr-2" />
                                 Google
                             </button>
                         </div>
-                    </div>
-                    <div className="flex flex-col items-center justify-center mt-2">
-                        <AuthFooter />
-                    </div>
-                </div>
+                    </AuthCard>
+                </AuthContainer>
             </div>
         </GuestLayout>
     );
