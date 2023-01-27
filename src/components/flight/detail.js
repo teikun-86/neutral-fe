@@ -49,7 +49,7 @@ export const FlightDetail = ({ flight, airports = { departure: {}, arrival: {} }
             <div className="flex items-center justify-between mt-2 flex-wrap">
                 <div className="flex items-center px-3 w-full lg:w-1/2">
                     <div className="flex flex-col items-center justify-center">
-                        <span className="text-lg font-bold text-gray-700">{moment(flight.DepartureDateTime).format("HH:MM")}</span>
+                        <span className="text-lg font-bold text-gray-700">{moment(flight.DepartureDateTime).format("HH:mm")}</span>
                         <span className="px-2 py-1 rounded-full shadow font-semibold text-xs bg-gray-100">{flight.DepartureAirport.iata}</span>
                     </div>
                     <div className="grid place-items-center mx-3 w-full lg:w-auto">
@@ -79,7 +79,7 @@ export const FlightDetail = ({ flight, airports = { departure: {}, arrival: {} }
                     </div>
                     <div className="flex flex-col items-center justify-center">
                         <span className="text-lg font-bold text-gray-700">
-                            {moment(flight.ArrivalDateTime).format("HH:MM")}
+                            {moment(flight.ArrivalDateTime).format("HH:mm")}
                             {
                                 diffDays > 0 && (
                                     <sup className="text-xs text-gray-500">(+{diffDays}d)</sup>
@@ -141,7 +141,7 @@ export const FlightDetail = ({ flight, airports = { departure: {}, arrival: {} }
                                     <div className="flex flex-col items-center justify-center">
                                         <span className="text-gray-800 font-semibold text-sm">
                                             {
-                                                moment(flight.DepartureDateTime).format("HH:MM")
+                                                moment(flight.DepartureDateTime).format("HH:mm")
                                             }
                                         </span>
                                         <span className="text-gray-700 font-semibold text-xs">
@@ -158,7 +158,7 @@ export const FlightDetail = ({ flight, airports = { departure: {}, arrival: {} }
                                     <div className="flex flex-col items-center justify-center">
                                         <span className="text-gray-800 font-semibold text-sm">
                                             {
-                                                moment(flight.ArrivalDateTime).format("HH:MM")
+                                                moment(flight.ArrivalDateTime).format("HH:mm")
                                             }
                                         </span>
                                         <span className="text-gray-700 font-semibold text-xs">
