@@ -48,7 +48,7 @@ export default function Home() {
                                     e.preventDefault()
                                     setModalOpen('landArrangementModal')
                                 }} icon={<KaabaIcon className="w-10 h-10 text-red-600" />}>{__('nav.land_arrangement')}</Service>
-                                <Service href="/flights" icon={<AirplaneTakeoffIcon className="w-10 h-10 text-red-600" />}>{__('nav.flight')}</Service>
+                                <Service href="/hajj-and-umrah/flight" icon={<AirplaneTakeoffIcon className="w-10 h-10 text-red-600" />}>{__('nav.flight')}</Service>
                                 <Service href="/hajj-and-umrah/pay-later" icon={<CreditCardIcon className="w-10 h-10 text-red-600" />}>{__('nav.pay_later')}</Service>
                                 <Service href="/hajj-and-umrah/visa" icon={<IdentificationIcon className="w-10 h-10 text-red-600" />}>{__('nav.visa')}</Service>
                             </div>

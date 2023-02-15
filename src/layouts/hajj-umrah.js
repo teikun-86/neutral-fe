@@ -1,7 +1,7 @@
 import Footer from "@/components/footer";
 import { Drawer, Modal } from "@/components/modal";
-import { GlobalNavbar, Navbar } from "@/components/navbar";
-import { ArrowLeftIcon, ArrowUpIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { GlobalNavbar, Navbar, ResponsiveLink } from "@/components/navbar";
+import { ArrowUpIcon, Bars3BottomRightIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -11,28 +11,37 @@ import { useRecoilState } from "recoil";
 import modalState from "@/hooks/modal";
 import drawerState from "@/hooks/drawer";
 import { useNetwork } from "@/hooks/network";
-import { WifiOffIcon } from "@/components/icons";
+import { AirplaneTakeoffIcon, ThreeDots, WifiOffIcon } from "@/components/icons";
 import { Transition } from "@headlessui/react";
 import { useViewport } from "@/hooks/viewport";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/auth";
 import { useLocale } from "@/hooks/locale";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import Sidebar from "@/components/sidebar";
+import Link from "next/link";
 
-const AppLayout = props => {
+const HajjUmrahLayout = props => {
     const [modalOpen, setModalOpen] = useRecoilState(modalState)
     const [drawerOpen, setDrawerOpen] = useRecoilState(drawerState)
     const router = useRouter()
     const { __ } = useLocale()
     const [showBtn, setShowBtn] = useState(false)
     const [theme, setTheme] = useState("light")
+    const [sidebarOpen, setSidebarOpen] = useState(true)
     const { width } = useViewport({
         onScroll: (result) => {
             setShowBtn(result.y > 100)
+        },
+        onResize: () => {
+            setSidebarOpen(open => window.width > 768 && open ? true : false)
         }
     })
 
-    const { user, socialLogin, logout } = useAuth()
+    const { user, logout, authenticating } = useAuth({
+        middleware: 'auth',
+        userType: ['agent', 'company']
+    })
 
     const { online } = useNetwork({
         onOnline: () => {
@@ -46,7 +55,7 @@ const AppLayout = props => {
         }
     })
 
-    const { showGoToTopButton } = props
+    const { showGoToTopButton = true } = props
 
     const goToTop = () => {
         window.scrollTo({
@@ -55,23 +64,6 @@ const AppLayout = props => {
             behavior: "smooth"
         })
     }
-    
-    useEffect(() => {
-        const query = router.query
-        if (query?.social && query?.user_id) {
-            toast.promise(socialLogin(query.social, query.user_id), {
-                pending: __('auth.logging_in'),
-                success: __('auth.logged_in'),
-                error: __('auth.login_failed')
-            })
-            router.push(router.pathname)
-        }
-
-        if (query?.verified) {
-            toast.success(__('auth.verified'))
-            router.push(router.pathname)
-        }
-    }, [router.query]);
 
     useEffect(() => {
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -82,7 +74,7 @@ const AppLayout = props => {
             setTheme('light')
         }
     }, [])
-    
+
     return (
         <>
             <Head>
@@ -95,7 +87,7 @@ const AppLayout = props => {
             <div className="w-full min-h-screen bg-gray-50 dark:bg-gray-1000 p-0 m-0 antialiased">
                 <Transition show={!online}
                     as="div"
-                    className="fixed top-0 w-full z-50"
+                    className="fixed top-0 w-full z-[1000]"
                     enter="transition duration-300"
                     enterFrom="-translate-y-5"
                     enterTo="translate-y-0"
@@ -105,25 +97,40 @@ const AppLayout = props => {
                 >
                     <div className="w-full px-2 py-2 bg-rose-600 flex items-center justify-start">
                         <WifiOffIcon className="w-4 h-4 text-white mr-4" />
-                        <p className="text-center text-white text-sm">Kamu sedang offline.</p>
+                        <p className="text-center text-white text-sm">{__('state.offline.status')}</p>
                     </div>
                 </Transition>
-                {
-                    router.pathname === '/'
-                    ?   <Navbar user={user} logout={logout} fixed={props.fixed ?? true} isInViewport={props.isInViewport ?? null} />
-                    :   <GlobalNavbar user={user} logout={logout} stickyOnScroll={props.stickyOnScroll ?? false} />
-                }
-
-                {props.children}
+                <GlobalNavbar user={user} logout={logout} />
+                <div className="w-full relative flex">
+                    <div className="hidden md:block md:w-1/4 lg:w-1/5">
+                        <div className="flex-1 sticky top-0 h-screen self-start">
+                            <Sidebar showLogo={showBtn} user={user} logout={logout} />
+                        </div>
+                    </div>
+                    <div className="w-full md:w-3/4 lg:w-4/5">
+                        <div className="p-6">{props.children}</div>
+                    </div>
+                </div>
             </div>
+            <button onClick={() => setDrawerOpen('hajjUmrahDrawer')} className={`md:!hidden fixed ${showBtn && showGoToTopButton ? "bottom-16" : "bottom-4"} !transition !duration-200 right-3 btn-light dark:btn-dark !rounded-full !p-2 items-start`}>
+                <Bars3BottomRightIcon className="w-6 h-6 mr-2" />
+                Menu
+            </button>
 
-            {
-                showGoToTopButton && showBtn && (
-                    <button onClick={goToTop} className="btn-rose rounded-full p-2 fixed bottom-3 right-3 opacity-80 hocus:opacity-100">
-                        <ArrowUpIcon className="w-6 h-6" />
-                    </button>
-                )
-            }
+            <Transition
+                show={showGoToTopButton && showBtn}
+                enter="transition duration-200"
+                enterFrom="opacity-0 translate-y-10"
+                enterTo="opacity-100 translate-y-0"
+                leave="transition duration-200"
+                leaveFrom="opacity-100 translate-y-0"
+                leaveTo="opacity-0 translate-y-10"
+                className="fixed bottom-3 right-3"
+            >
+                <button onClick={goToTop} className="btn-light dark:btn-dark !rounded-full !p-2">
+                    <ArrowUpIcon className="w-6 h-6" />
+                </button>
+            </Transition>
 
             <Modal size="md" id="landArrangementModal">
                 <Modal.Header>
@@ -193,10 +200,29 @@ const AppLayout = props => {
                     <button onClick={() => router.reload()} className="btn-rose w-full my-2">{__('command.reload')}</button>
                 </Drawer.Footer>
             </Drawer>
+            <Drawer id="hajjUmrahDrawer">
+                <Drawer.Header>
+                    <h4 className="text-xl font-bold text-gray-900 dark:text-white text-center mb-3">{__('nav.hajj_umrah')}</h4>
+                </Drawer.Header>
+                <Drawer.Body className="min-h-[60vh]">
+                    <div className="space-y-1">
+                        <h6 className="text-gray-900 dark:text-white py-2 font-semibold text-base mx-4 flex items-center justify-start">
+                            <AirplaneTakeoffIcon className="w-6 h6 mr-2 text-rose-600" />
+                            {__('nav.flight')}
+                        </h6>
+                        <ResponsiveLink href="/hajj-and-umrah/flight">
+                            Flight
+                        </ResponsiveLink>
+                        <ResponsiveLink href="/hajj-and-umrah/pool">
+                            Pool
+                        </ResponsiveLink>
+                    </div>
+                </Drawer.Body>
+            </Drawer>
             <Footer />
             <ToastContainer theme={theme} />
         </>
     );
 };
 
-export default AppLayout;
+export default HajjUmrahLayout;

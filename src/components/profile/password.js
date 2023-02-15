@@ -17,7 +17,7 @@ export const UpdatePassword = () => {
                 </p>
             </header>
 
-            <main className="my-4 max-w-xl">
+            <main className="my-4 max-w-3xl">
                 <p className="text-gray-800 dark:text-gray-200">{__('reset_password_info')}</p>
             </main>
         </section>

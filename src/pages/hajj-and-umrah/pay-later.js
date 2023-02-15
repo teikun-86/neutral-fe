@@ -1,4 +1,3 @@
-import AppLayout from "@/layouts/app";
 import { CameraIcon, CheckCircleIcon, CreditCardIcon, PaperAirplaneIcon, ViewfinderCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useMemo, useRef, useState } from "react";
 
@@ -10,6 +9,7 @@ import useHorizontalScroll from "@/hooks/horizontal-scroll";
 import { CircleIcon } from "@/components/icons";
 import Combobox from "@/components/combobox";
 import { searchString } from "@/util";
+import HajjUmrahLayout from "@/layouts/hajj-umrah";
 
 const PayLater = () => {
     const jobs = [
@@ -87,7 +87,7 @@ const PayLater = () => {
     }
     
     return (
-        <AppLayout title={`Pay Later Haji & Umrah ー ${process.env.NEXT_PUBLIC_APP_NAME}`}>
+        <HajjUmrahLayout title={`Pay Later Haji & Umrah ー ${process.env.NEXT_PUBLIC_APP_NAME}`}>
             <div className="w-full min-h-screen pb-4">
                 <div className="w-full bg-rose-600 h-72 py-3 px-2 grid place-items-center">
                     <div>
@@ -225,7 +225,7 @@ const PayLater = () => {
                     </div>
                 </div>
             </div>
-        </AppLayout>
+        </HajjUmrahLayout>
     );
 };
 

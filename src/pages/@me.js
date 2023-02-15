@@ -30,9 +30,9 @@ const MyAccount = () => {
                         )
                         : (
                             <>
-                                <ProfileInformation updateProfile={updateProfile} resendEmailVerification={resendEmailVerification} user={user} />
+                                <ProfileInformation updateProfile={updateProfile} user={user} />
                                 
-                                <ProfileCredentials updateCredentials={updateCredentials} user={user} />
+                                <ProfileCredentials updateCredentials={updateCredentials} resendEmailVerification={resendEmailVerification} user={user} />
 
                                 <UpdatePassword user={user} />
                             </>

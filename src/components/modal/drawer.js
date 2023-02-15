@@ -124,7 +124,7 @@ const Body = ({ className = "", ...props}) => {
 
 const Footer = ({ className = "", ...props}) => {
     return (
-        <div className={`py-2 px-4 bg-gray-100 dark:bg-gray-900 sticky bottom-0 mt-2 border-t border-gray-300/50 ${className}`} { ...props }>
+        <div className={`py-2 px-4 bg-gray-100 dark:bg-gray-900 sticky bottom-0 mt-2 border-t border-gray-300/50 dark:border-gray-800/80 ${className}`} { ...props }>
             {props.children}
         </div>
     )

@@ -80,7 +80,7 @@ export const ResponsiveNavbar = ({ user, logout }) => {
                     <ResponsiveLink as="button" onClick={() => setDrawerOpen('landArrangementDrawer')}>
                         {__('nav.land_arrangement')}
                     </ResponsiveLink>
-                    <ResponsiveLink href="/flights">
+                    <ResponsiveLink href="/hajj-and-umrah/flight">
                         {__('nav.flight')}
                     </ResponsiveLink>
                     <ResponsiveLink href="/hajj-and-umrah/pay-later">

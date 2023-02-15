@@ -45,8 +45,8 @@ const nextConfig = {
         ]
     },
     i18n: {
-        locales: ['id', 'en', 'jp'],
-        defaultLocale: 'id',
+        locales: ['id-ID', 'en-US'],
+        defaultLocale: 'id-ID',
         localeDetection: true,
     },
     // async headers() {

@@ -8,7 +8,8 @@ const defaultProps = {
     static: false,
     id: '',
     title: undefined,
-    footer: <></>
+    footer: <></>,
+    onClose: () => {}
 };
 
 const Modal = (props = defaultProps) => {
@@ -49,7 +50,7 @@ const Modal = (props = defaultProps) => {
     };
 
     return (
-        <Transition appear show={open} as={Fragment}>
+        <Transition appear show={open} as={Fragment} afterLeave={props.onClose ? props.onClose : () => {}}>
             <Dialog id={props.id} as="div" className="relative z-[80]" onClose={() => props.static ? {} : closeModal()}>
                 <Transition.Child
                     as={Fragment}
@@ -79,7 +80,7 @@ const Modal = (props = defaultProps) => {
                                     props.clean === true
                                         ? props.children
                                         : (
-                                            <div className="w-full bg-white rounded-lg overflow-hidden">
+                                            <div className="w-full bg-white dark:bg-gray-900 rounded-lg overflow-hidden">
                                                 {props.children}
                                             </div>
                                         )
@@ -111,7 +112,7 @@ const Body = ({className = "", ...props}) => {
 
 const Footer = props => {
     return (
-        <div className={`py-2 px-4 bg-gray-100 ${props.className}`}>
+        <div className={`py-2 px-4 bg-gray-100 dark:bg-gray-800 ${props.className}`}>
             {props.children}
         </div>
     )

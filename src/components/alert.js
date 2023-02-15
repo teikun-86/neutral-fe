@@ -9,25 +9,25 @@ const Alert = ({ type = "primary", className = "", title, ...props }) => {
     const classes = {
         primary: {
             border: "border-sky-500",
-            body: "bg-sky-100",
+            body: "bg-sky-100 dark:bg-sky-50/10",
             icon: <InformationCircleIcon className="w-8 h-8 text-sky-600" />,
             title: "text-sky-600"
         },
         warning: {
             border: "border-yellow-400",
-            body: "bg-yellow-100",
+            body: "bg-yellow-100 dark:bg-yellow-50/10",
             icon: <ExclamationTriangleIcon className="w-8 h-8 text-yellow-400" />,
             title: "text-yellow-500"
         },
         success: {
             border: "border-emerald-500",
-            body: "bg-emerald-100",
+            body: "bg-emerald-100 dark:bg-emerald-50/10",
             icon: <CheckCircleIcon className="w-8 h-8 text-emerald-600" />,
             title: "text-emerald-600"
         },
         error: {
             border: "border-rose-600",
-            body: "bg-rose-100",
+            body: "bg-rose-100 dark:bg-rose-50/10",
             icon: <ExclamationCircleIcon className="w-8 h-8 text-rose-600" />,
             title: "text-rose-600"
         },
@@ -42,7 +42,7 @@ const Alert = ({ type = "primary", className = "", title, ...props }) => {
                         <h6 className={`text-base font-semibold tracking-wide ${classes[type].title}`}>{title}</h6>
                     )
                 }
-                <p className="text-gray-800 text-sm font-medium">{props.children}</p>
+                <p className="text-gray-800 text-sm font-medium dark:text-gray-200">{props.children}</p>
             </div>
         </div>
     );

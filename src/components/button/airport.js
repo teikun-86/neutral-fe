@@ -24,7 +24,7 @@ export const AirportButton = props => {
                         highlightClassName="text-rose-500 bg-transparent font-semibold"
                         searchWords={query.split(" ")}
                         autoEscape={true}
-                        textToHighlight={`${airport.city}, ${airport.country}`}
+                        textToHighlight={`${airport.city.name}, ${airport.country.name}`}
                     />
                 </small>
             </div>

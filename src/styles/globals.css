@@ -6,6 +6,10 @@
     -webkit-tap-highlight-color: transparent;
 }
 
+body {
+    overflow-x: hidden !important;
+}
+
 img {
     user-select: none !important;
 }
@@ -68,7 +72,7 @@ img {
     }
 
     .btn-dark {
-        @apply cursor-pointer select-none disabled:opacity-50 disabled:cursor-not-allowed inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-800 text-base font-medium text-white hover:bg-gray-1000 focus:bg-gray-1000 focus:outline-none sm:w-auto sm:text-sm transition duration-100;
+        @apply cursor-pointer select-none disabled:opacity-50 disabled:cursor-not-allowed inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-800 text-base font-medium text-white hover:bg-gray-1000 focus:bg-gray-1000 focus:outline-none sm:w-auto sm:text-sm transition duration-100 active:outline-none;
     }
 
     .btn-stone {
@@ -92,7 +96,7 @@ img {
     }
 
     input[type="file"] {
-        @apply cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed block w-full text-sm text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-rose-500 file:text-rose-50 hover:file:bg-rose-700 file:cursor-pointer outline-none focus:outline-none;
+        @apply cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed block w-full text-sm text-gray-600 dark:text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-rose-500 file:text-rose-50 hover:file:bg-rose-700 file:cursor-pointer outline-none focus:outline-none;
     }
 
     .input-group {

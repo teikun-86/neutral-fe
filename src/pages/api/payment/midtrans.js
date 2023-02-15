@@ -12,5 +12,7 @@ export default async function midtrans (req, res) {
 
     let transaction = await midtransClient.createTransaction(payload)
 
+    console.log({transaction});
+
     res.status(200).json({ status: "ok", transaction })
 }

@@ -18,6 +18,9 @@ export const Input = ({
     onEnter = (e) => { },
     disabled = false,
     autoFocus = false,
+    containerClassName = "",
+    max = undefined,
+    min = undefined,
     ...props
 }) => {
     const [focus, setFocus] = useState(false)
@@ -65,6 +68,15 @@ export const Input = ({
         if (typeS === "email") {
             setValid(e.target.value.trim().length > 0 && checkEmail(e.target.value.trim()))
         } else if (typeS === "number") {
+
+            if (max !== undefined && e.target.value > max) {
+                e.target.value = max
+            }
+
+            if (min !== undefined && e.target.value < min) {
+                e.target.value = min
+            }
+            
             setValid(e.target.value.trim().length > 0 && !isNaN(e.target.value.trim()))
         } else {
             setValid(e.target.value.trim().length > 0)
@@ -81,11 +93,10 @@ export const Input = ({
     }, [props.value])
     
     return (
-        <div className="relative w-full z-10">
+        <div className={`relative w-full z-10 ${containerClassName}`}>
             <input 
                 disabled={disabled} 
                 type={typeS} 
-                {...props} 
                 id={id} 
                 name={name} 
                 className={`form-input rounded-lg border border-gray-300 dark:border-gray-700 focus:border-sky-600 dark:focus:border-gray-400 transition-all duration-200 ring-0 focus:ring-0 outline-none focus:outline-none w-full block ${className} peer/input placeholder:opacity-0 focus:placeholder:opacity-100 placeholder:transition-opacity placeholder:duration-500 disabled:opacity-50 dark:disabled:opacity-80 peer/input disabled:cursor-not-allowed dark:bg-gray-900 dark:text-gray-200 dark:placeholder:text-gray-400`}
@@ -93,11 +104,14 @@ export const Input = ({
                 onFocus={() => setFocus(true)}
                 onChange={handleChange}
                 onBlur={() => setFocus(false)}
+                max={max}
+                min={min}
                 onKeyDown={(e) => {
                     if (e.key === "Enter") {
                         onEnter(e)
                     }
                 }}
+                {...props} 
              />
             <label htmlFor={id} className={`absolute text-sm left-2 z-10 bg-white dark:bg-gray-900 dark:text-white px-1 transition-all duration-200 font-medium tracking-wide cursor-pointer rounded-lg ${focus || valid || !empty ? "-top-2 text-xs left-3" : " text-gray-700 select-none top-[0.75rem]"} peer-disabled/input:opacity-50 dark:peer-disabled/input:opacity-80 peer-disabled/input:cursor-not-allowed`}>{label}</label>
             {

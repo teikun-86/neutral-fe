@@ -44,12 +44,21 @@ const Login = () => {
     }, [router])
 
     useEffect(() => {
-        if (router.query.reset?.length > 0 && errors.length === 0) {
-            setStatus(atob(router.query.reset))
-        } else {
-            setStatus(null)
+        const { reset } = router.query
+
+        if (reset) {
+            setStatus(atob(reset))
+            router.replace(router.pathname)
         }
-    }, [router.query.reset, errors])
+    }, [router.query, errors])
+
+    useEffect(() => {
+        if (status) {
+            setTimeout(() => {
+                setStatus(null)
+            }, 5000)
+        }
+    }, [status])
 
     return (
         <GuestLayout title={__('nav.login')}>
@@ -80,7 +89,7 @@ const Login = () => {
                         }
                         {
                             status && (
-                                <Alert type="success" title="Sukses!">{status}</Alert>
+                                <Alert type="success" title={__('success')}>{status}</Alert>
                             )
                         }
                         <div className="my-3">

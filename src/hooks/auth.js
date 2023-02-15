@@ -1,21 +1,31 @@
 import useSWR from 'swr'
 import { axios } from '@/libs/axios'
-import { useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import { toast } from 'react-toastify'
+import { useLocale } from './locale'
 
-export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
+export const useAuth = ({ middleware, redirectIfAuthenticated, ...options } = {}) => {
     const router = useRouter()
+    const { __ } = useLocale()
+    const [authenticating, setAuthenticating] = useState(true)
 
-    const { data: user, error, mutate } = useSWR('/user', () =>
-        axios
+    const { data: user, error, mutate } = useSWR('/user', () => {
+        setAuthenticating(true)
+        
+        return axios
             .get('/user')
-            .then(res => res.data)
+            .then(res => {
+                setAuthenticating(false)
+                return res.data
+            })
             .catch(error => {
+                setAuthenticating(false)
                 if (error.response.status !== 409) throw error
 
                 router.push('/auth/verify-email')
-            }),
-    )
+            })
+    })
 
     const csrf = () => axios.get('/sanctum/csrf-cookie')
 
@@ -131,10 +141,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
                 setLoading(false)
                 if (error.response.status !== 422) throw error
 
-                // get all errors
-                const errors = Object.values(error.response.data.errors).flat()
-
-                setErrors(errors)
+                setErrors(error.response.data.errors)
             })
     }
 
@@ -216,22 +223,74 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             })
     }
 
+    const checkRole = useCallback((requiredRoles) => {
+        if (!user) return false
+        let userRoles = user.roles.map(role => role.name)
+        let hasRole = false
+        requiredRoles.forEach(role => {
+            if (userRoles.includes(role)) hasRole = true
+        })
+        return hasRole
+    }, [user])
+
+    const checkPermission = (requiredPermissions) => {
+        if (!user) return false
+        let permissions = user.roles.map(role => role.permissions.map(permission => permission.name)).flat()
+        let hasPermission = false
+        requiredPermissions.forEach(permission => {
+            if (permissions.includes(permission)) hasPermission = true
+        })
+        return hasPermission
+    }
+
+
     useEffect(() => {
-        if (user && user.email_verified_at === null) {
-            router.push('/auth/verify-email')
-            return
-        }
+        // if (user && user.email_verified_at === null) {
+            // router.push('/auth/verify-email')
+            // return
+        // }
         
         if (middleware === 'guest' && redirectIfAuthenticated && user)
             router.push(redirectIfAuthenticated)
             
         if (
-            window.location.pathname === '/auth/verify-email' &&
+            router.pathname === '/auth/verify-email' &&
             user?.email_verified_at
         )
             router.push(redirectIfAuthenticated)
+
+            
         if (middleware === 'auth' && error) logout()
-    }, [user, error])
+
+        if (!authenticating) {
+            if (options && options.hasCompany) {
+                if (!user?.company) {
+                    router.push('/', undefined, { shallow: true }).then(() => {
+                        toast.warning(__('info.no_company'))
+                    })
+                }
+            }
+    
+            if (options && options.userType) {
+                if (!user?.user_type || !options.userType.includes(user.user_type)) {
+                    window.location.replace("/403")
+                    return;
+                }
+            }
+    
+            if (options && options.permissions && !checkPermission(options.permissions)) {
+                window.location.replace("/403")
+                return;
+            }
+    
+            if (options && options.roles && !checkRole(options.roles)) {
+                window.location.replace("/403")
+                return;
+            }
+        }
+
+        
+    }, [user, error, authenticating])
 
     return {
         user,
@@ -243,6 +302,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         logout,
         socialLogin,
         updateProfile,
-        updateCredentials
+        updateCredentials,
+        authenticating
     }
 }

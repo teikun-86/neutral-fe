@@ -10,10 +10,10 @@ export const useLocale = () => {
 
     useEffect(() => {
         switch (locale) {
-            case "en":
+            case "en-US":
                 setLocaleData(enUS);
                 break;
-            case "id":
+            case "id-ID":
                 setLocaleData(idID);
                 break;
             case "jp":
@@ -46,20 +46,20 @@ export const useLocale = () => {
             name: "Bahasa Indonesia",
             flag: "ID",
             locale: 'id-ID',
-            localeShort: 'id',
+            localeShort: 'id-ID',
         },
         en: {
             name: "English (US)",
             flag: "US",
             locale: 'en-US',
-            localeShort: 'en',
+            localeShort: 'en-US',
         },
-        jp: {
-            name: "日本語",
-            flag: "JP",
-            locale: 'ja-JP',
-            localeShort: 'jp',
-        },
+        // jp: {
+        //     name: "日本語",
+        //     flag: "JP",
+        //     locale: 'ja-JP',
+        //     localeShort: 'jp',
+        // },
     }
 
     return { __, locale, localeMap };

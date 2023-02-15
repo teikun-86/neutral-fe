@@ -47,8 +47,8 @@ const Flights = () => {
         let results = airports.filter(airport => {
             return searchString(query.trim(), airport.iata)
                 || searchString(query.trim(), airport.name)
-                || searchString(query.trim(), airport.country)
-                || searchString(query.trim(), airport.city)
+                || searchString(query.trim(), airport.country.name)
+                || searchString(query.trim(), airport.city.name)
         })
         setQueriedAirports(results)
     }, [airports])

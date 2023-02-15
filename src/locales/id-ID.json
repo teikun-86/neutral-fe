@@ -16,7 +16,8 @@
         "visa": "VISA",
         "pay_later": "Pay Later",
         "land_arrangement": "Land\nArrangement",
-        "language": "Bahasa"
+        "language": "Bahasa",
+        "dashboard": "Dashboard"
     },
     "main": {
         "greeting": "Jalan-jalan kemana nih?",
@@ -56,7 +57,11 @@
     },
     "title": {
         "login": "Masuk untuk menikmati segala keuntungan dan kemudahan dari {link}",
-        "register": "Daftar untuk menikmati segala keuntungan dan kemudahan dari {link}"
+        "register": "Daftar untuk menikmati segala keuntungan dan kemudahan dari {link}",
+        "hajj_umrah": {
+            "flights": "Pesawat",
+            "reservations": "Reservasi"
+        }
     },
     "input": {
         "email_or_phone": "Email atau Nomor Telepon",
@@ -66,14 +71,23 @@
         "password": "Password",
         "confirm_password": "Konfirmasi Password",
         "call_code": "Kode Negara",
-        "change_avatar": "Ganti Avatar"
+        "change_avatar": "Ganti Avatar",
+        "account_type": "Jenis Akun",
+        "company_name": "Nama Perusahaan",
+        "ppiu_number": "Nomor PPIU",
+        "select_ppiu": "Pilih PPIU"
     },
     "dont_have_account": "Belum punya akun?",
     "already_have_account": "Sudah punya akun?",
     "login_easier": "Atau masuk lebih mudah dengan",
     "forgot_password": "Lupa Password?",
     "info": {
-        "name": "Isi sesuai KTP/SIM/Passport/Kitas"
+        "name": "Isi sesuai KTP/SIM/Passport/Kitas",
+        "company_detail": "Detail Perusahaan",
+        "no_company": "Kamu harus terdaftar sebagai perusahaan untuk mengakses halaman ini.",
+        "flight": {
+            "unchangeable": "Reservasi tidak dapat diubah setelah anda mengklik tombol \"Pesan\""
+        }
     },
     "invalid": {
         "email": "Masukkan email yang valid."
@@ -114,5 +128,47 @@
     "something_wrong": "Terjadi kesalahan!",
     "menu": "Menu",
     "account": "Akun",
-    "travel": "Travel"
+    "travel": "Travel",
+    "flight": {
+        "seat_not_enough": "Jumlah kursi yang tersedia tidak mencukupi untuk pemesanan ini.",
+        "reservation": {
+            "stored": "Reservasi berhasil disimpan. Tolong selesaikan pembayaran dalam {minute} menit untuk menghindari pembatalan otomatis.",
+            "expired": "Reservasi telah kadaluarsa. Silahkan membuat reservasi baru.",
+            "not_found": "Reservasi tidak ditemukan.",
+            "price_per_seat": "Harga per kursi",
+            "info": "Informasi Reservasi",
+            "seats": "Kursi yang Dipesan",
+            "manifest": {
+                "title": "Manifest",
+                "name": "Nama",
+                "passport_number": "Nomor Passport",
+                "visa_number": "Nomor Visa",
+                "date_of_birth": "Tanggal Lahir",
+                "gender": "Jenis Kelamin"
+            }
+        }
+    },
+    "seats": "Kursi",
+    "days": "hari",
+    "hours": "jam",
+    "minutes": "menit",
+    "seconds": "detik",
+    "expired_in": "Kadaluarsa dalam",
+    "depart_at": "Berangkat pada {date}",
+    "total_price": "Total Harga",
+    "paid": "Lunas",
+    "unpaid": "Belum Dibayar",
+    "payment": {
+        "title": "Pembayaran",
+        "code": "Kode Pembayaran",
+        "method": "Metode Pembayaran",
+        "paid_at": "Dibayar pada",
+        "status": "Status Pembayaran",
+        "amount": "Jumlah"
+    },
+    "reserved_at": "Dipesan pada {date}",
+    "no_payment": "Belum ada pembayaran",
+    "search": "Cari",
+    "male": "Laki-laki",
+    "female": "Perempuan"
 }

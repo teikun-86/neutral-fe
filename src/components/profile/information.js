@@ -71,27 +71,8 @@ export const ProfileInformation = ({ user, updateProfile = async () => { }, rese
                 </p>
             </header>
 
-            <main className="my-4 max-w-xl">
+            <main className="my-4 max-w-3xl">
                 <div className="block">
-                    {
-                        user.email_verified_at === null && (
-                            <Alert type="primary" className="mb-6" title="Email Belum Terverivikasi">
-                                <p>Email anda belum diverifikasi. Silahkan cek email anda untuk melakukan verifikasi.
-                                    Jika tidak ada email, silahkan klik tombol <strong>Kirim Ulang</strong> untuk mengirim ulang email verifikasi.
-                                </p>
-                                <div className="flex items-center justify-end">
-                                    <button onClick={() => resendEmailVerification({ setStatus, setLoading })} className="btn-rose rounded-full">Kirim Ulang</button>
-                                </div>
-                            </Alert>
-                        )
-                    }
-                    {
-                        status === 'verification-link-sent' && (
-                            <Alert type="success" title="Sukses!" className="mb-6">
-                                Link verifikasi telah dikirimkan ke email anda. Silahkan cek email anda.
-                            </Alert>
-                        )
-                    }
                     {
                         status === 'success' && (
                             <Alert type="success" title={__('success')} className="mb-6">
@@ -116,7 +97,7 @@ export const ProfileInformation = ({ user, updateProfile = async () => { }, rese
 
                     <div className="flex items-center justify-center md:justify-start">
                         <label htmlFor="avatarInput" className="relative w-32 h-32 cursor-pointer rounded-full overflow-hidden group p-1 shadow">
-                            <Image src={avatarPreview} priority alt={user.name} width={200} height={200} className="w-full h-full rounded-full object-cover" />
+                            <Image src={avatarPreview} priority alt={user.name} width={500} height={500} className="w-full h-full rounded-full object-cover" />
                             <div className="absolute inset-0 bg-black/50 grid place-items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-sm">
                                 <div className="flex items-center flex-col">
                                     <ViewfinderCircleIcon className="w-8 h-8 text-white" />
@@ -132,7 +113,7 @@ export const ProfileInformation = ({ user, updateProfile = async () => { }, rese
                 </div>
             </main>
 
-            <footer className="flex items-center justify-end max-w-xl">
+            <footer className="flex items-center justify-end max-w-3xl">
                 <button disabled={name.trim() === user.name && avatar === null} onClick={update} className="btn-rose rounded-full">{__('command.save')}</button>
             </footer>
         </section>

@@ -1,5 +1,5 @@
 import { Transition } from "@headlessui/react";
-import { ArrowLeftOnRectangleIcon, Bars3BottomRightIcon, ChevronDownIcon, ComputerDesktopIcon, CreditCardIcon, IdentificationIcon, LanguageIcon, MoonIcon, SunIcon, UserIcon } from "@heroicons/react/24/outline";
+import { ArrowLeftOnRectangleIcon, Bars3BottomRightIcon, ChevronDownIcon, ComputerDesktopIcon, CreditCardIcon, IdentificationIcon, LanguageIcon, MoonIcon, Squares2X2Icon, SunIcon, UserIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -87,7 +87,7 @@ export const Navbar = ({ isInViewport = null, fixed = true, user = null, logout 
                                     <Dropdown.Content>
                                         {
                                             localeMap && Object.keys(localeMap).map((key) => (
-                                                <Dropdown.Item className="flex items-center justify-start" key={key} as={Link} href={router.pathname} shallow={true} locale={localeMap[key].localeShort}>
+                                                <Dropdown.Item className="flex items-center justify-start" key={key} as={Link} href={router.asPath} shallow={true} locale={localeMap[key].localeShort}>
                                                     <Image alt={localeMap[key].name} src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${localeMap[key].flag}.svg`} width={64} height={64} className="w-6" />
                                                     <span className="ml-2">{localeMap[key].name}</span>
                                                 </Dropdown.Item>
@@ -209,22 +209,26 @@ export const Navbar = ({ isInViewport = null, fixed = true, user = null, logout 
                                                         <UnderlinedLink active={open} as="button">{__('nav.hajj_umrah')}</UnderlinedLink>
                                                     </Dropdown.Button>
                                                     <Dropdown.Content>
-                                                        <button className="w-full bg-white hocus:bg-gray-100 outline-none focus:outline-none ring-0 focus:ring-0 transition duration-200 flex items-center justify-start space-x-2 px-3 py-2 text-sm font-semibold text-gray-900 tracking-wider" onClick={() => setModalOpen('landArrangementModal')}>
+                                                        <Dropdown.Item as={Link} href="/hajj-and-umrah">
+                                                            <Squares2X2Icon className="w-5 h-5 mr-2 text-rose-500" />
+                                                            {__('nav.dashboard')}
+                                                        </Dropdown.Item>
+                                                        <Dropdown.Item onClick={() => setModalOpen('landArrangementModal')}>
                                                             <KaabaIcon className="w-5 h-5 mr-2 text-rose-500" />
                                                             {__('nav.land_arrangement')}
-                                                        </button>
-                                                        <Link className="w-full bg-white hocus:bg-gray-100 outline-none focus:outline-none ring-0 focus:ring-0 transition duration-200 flex items-center justify-start space-x-2 px-3 py-2 text-sm font-semibold text-gray-900 tracking-wider" href="/flights">
+                                                        </Dropdown.Item>
+                                                        <Dropdown.Item as={Link} href="/hajj-and-umrah/flight">
                                                             <AirplaneTakeoffIcon className="w-5 h-5 mr-2 text-rose-500" />
                                                             {__('nav.flight')}
-                                                        </Link>
-                                                        <Link className="w-full bg-white hocus:bg-gray-100 outline-none focus:outline-none ring-0 focus:ring-0 transition duration-200 flex items-center justify-start space-x-2 px-3 py-2 text-sm font-semibold text-gray-900 tracking-wider" href="/hajj-and-umrah/pay-later">
+                                                        </Dropdown.Item>
+                                                        <Dropdown.Item as={Link} href="/hajj-and-umrah/pay-later">
                                                             <CreditCardIcon className="w-5 h-5 mr-2 text-rose-500" />
                                                             {__('nav.pay_later')}
-                                                        </Link>
-                                                        <Link className="w-full bg-white hocus:bg-gray-100 outline-none focus:outline-none ring-0 focus:ring-0 transition duration-200 flex items-center justify-start space-x-2 px-3 py-2 text-sm font-semibold text-gray-900 tracking-wider" href="/hajj-and-umrah/visa">
+                                                        </Dropdown.Item>
+                                                        <Dropdown.Item as={Link} href="/hajj-and-umrah/visa">
                                                             <IdentificationIcon className="w-5 h-5 mr-2 text-rose-500" />
                                                             {__('nav.visa')}
-                                                        </Link>
+                                                        </Dropdown.Item>
                                                     </Dropdown.Content>
                                                 </>
                                             )}

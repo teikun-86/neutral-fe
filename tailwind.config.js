@@ -22,6 +22,7 @@ module.exports = {
             animation: {
                 "width-half": "width-half 0.2s ease-in-out",
                 "width-2/3": "width-2/3 0.2s ease-in-out",
+                "bounce-x": "bounce-x 3s ease-in-out infinite",
                 "ripple": "ripple 1s cubic-bezier(0, 0, 0.2, 1)",
                 "bounce-fast": "bounce 0.5s infinite",
             },
@@ -51,8 +52,25 @@ module.exports = {
                         transform: "scale(2.4)",
                         opacity: 0,
                     }
+                },
+                "bounce-x": {
+                    "0%": {
+                        transform: "translateX(-100%)",
+                    },
+                    "50%": {
+                        transform: "translateX(400%)",
+                    },
+                    "100%": {
+                        transform: "translateX(-100%)",
+                    }
                 }
-            }
+            },
+            transitionProperty: {
+                'height': 'height',
+            },
+            fontFamily: {
+                // sans: ['var(--font-source-sans-pro)', ...defaultTheme.fontFamily.sans],
+            },
         },
     },
     plugins: [

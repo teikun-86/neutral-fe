@@ -41,7 +41,7 @@ const Content = ({className = "", afterLeave = () => {}, ...props}) => {
 
 const Item = ({ className = "", as = "button", ...props }) => {
     return (
-        <Menu.Item as={as} className={`w-full bg-white hover:bg-gray-50 focus:bg-gray-100 dark:bg-gray-900 dark:hover:bg-gray-800 dark:focus:bg-gray-800 dark:text-gray-100 px-2 py-1  transition-all duration-100 ${className}`} {... props}>
+        <Menu.Item as={as} className={`w-full bg-white hover:bg-gray-50 focus:bg-gray-100 dark:bg-gray-900 dark:hover:bg-gray-800 flex items-center dark:focus:bg-gray-800 dark:text-gray-100 px-2 py-1  transition-all duration-100 ${className}`} {... props}>
             {props.children}
         </Menu.Item>
     )

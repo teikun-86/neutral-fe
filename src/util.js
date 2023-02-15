@@ -69,3 +69,12 @@ export const setTheme = (theme) => {
         document.documentElement.classList.remove('dark')
     }
 }
+
+export const splitString = (string = "", firstDigits = 8, lastDigits = 4) => {
+    if (string.length > 16) {
+        let first = string.substring(0, firstDigits);
+        let last = string.substring(string.length - lastDigits);
+        return first + "..." + last;
+    }
+    return string;
+}

@@ -5,7 +5,7 @@ import { ChevronUpDownIcon } from '@heroicons/react/20/solid'
 const Combobox = (props) => {
 
     return (
-        <div className="block w-full">
+        <div className="block w-full relative">
             <ComboboxParent {...props}>
                 <div className="relative mt-1">
                     {
@@ -22,10 +22,14 @@ const Input = ({ showButton = true, ...props}) => {
         <div className="relative w-full overflow-hidden text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm cursor-pointer">
             <ComboboxParent.Button as="div" className="flex items-center">
                 <ComboboxParent.Input {...props} />
-                <ChevronUpDownIcon
-                    className="h-5 w-5 text-gray-400 bg-white dark:bg-gray-900"
-                    aria-hidden="true"
-                />
+                {
+                    showButton && (
+                        <ChevronUpDownIcon
+                            className="h-5 w-5 text-gray-400 bg-white dark:bg-gray-900"
+                            aria-hidden="true"
+                        />
+                    )
+                }
             </ComboboxParent.Button>
         </div>
     )
