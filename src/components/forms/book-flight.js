@@ -145,9 +145,6 @@ const BookFlight = ({
                                             : queriedCompanies.map((company, index) => (
                                                 <Combobox.Option className="cursor-pointer" key={index} value={company}>
                                                     <div className="flex items-center p-2 space-x-2">
-                                                        <div className="flex-shrink-0">
-                                                            <Image className="w-10 h-10 rounded-full" src={company.image} alt="" width={200} height={200} />
-                                                        </div>
                                                         <div className="flex flex-col items-start">
                                                             <span className="text-sm font-medium text-gray-900 dark:text-white">{company.name}</span>
                                                             <span className="text-sm text-gray-500 dark:text-gray-400">PPIU: {company.ppiu_number}</span>
