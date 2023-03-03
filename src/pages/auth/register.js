@@ -18,7 +18,7 @@ import { useAuth } from "@/hooks/auth";
 
 const Register = () => {
     const { register } = useAuth({ middleware: "guest" })
-    const { __ } = useLocale();
+    const { __, locale } = useLocale();
 
     const [loading, setLoading] = useState(false)
     const [name, setName] = useState("")

@@ -122,6 +122,10 @@ img {
     .middot {
         @apply w-1 h-1 bg-gray-500 rounded-full;
     }
+
+    .skeleton {
+        @apply bg-gray-200 dark:bg-gray-800 relative overflow-hidden after:absolute after:h-full after:w-1/2 after:bg-gradient-to-r after:from-transparent after:via-white/50 after:to-white/70 dark:after:via-white/20 dark:after:to-white/30 after:animate-skeleton after:inset-0 animate-pulse;
+    }
 }
 
 .rdp {

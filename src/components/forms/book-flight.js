@@ -161,7 +161,7 @@ const BookFlight = ({
                     )
                 }
                 <div className="mb-3">
-                    <Input type="number" name="seats" min={flight.available_seats > minSeats ? minSeats : flight.available_seats} max={flight.available_seats} label="Seats" value={data.seats} onChange={(e) => handleChange('seats', e.target.value)} />
+                    <Input type="number" name="seats" min={flight.available_seats > minSeats ? minSeats : flight.available_seats} max={flight.available_seats} label="Seats" value={data.seats} onChange={(e) => handleChange('seats', e.target.value)} noDecimal />
                     <InputError errors={errors.seats} />
                 </div>
             </Modal.Body>

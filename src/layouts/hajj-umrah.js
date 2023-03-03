@@ -108,7 +108,7 @@ const HajjUmrahLayout = props => {
                         </div>
                     </div>
                     <div className="w-full md:w-3/4 lg:w-4/5">
-                        <div className="p-6">{props.children}</div>
+                        <div className="md:p-6">{props.children}</div>
                     </div>
                 </div>
             </div>

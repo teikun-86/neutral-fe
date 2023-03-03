@@ -122,12 +122,18 @@ export const ProfileCredentials = ({
                                 <>
                                     <Dropdown.Button as="div" className="relative">
                                         <button className="w-full bg-white dark:bg-gray-900 form-input border-gray-300 dark:border-gray-700 focus:border-sky-600 ring-0 focus:ring-0 outline-none focus:outline-none transition-all text-start cursor-pointer duration-200 rounded-lg h-[2.6rem] flex items-center space-x-1" >
-                                            <span className="w-6 h-3 grid place-items-center mr-2">
-                                                <Image src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${countryCode.code}.svg`} width={100} height={100} alt="Indonesia" />
-                                            </span>
-                                            <span className="text-gray-900 dark:text-gray-100 font-medium hidden sm:flex sm:items-center">
-                                                <span className="mr-2">{countryCode.code}</span> ({countryCode.dial_code})
-                                            </span>
+                                            {
+                                                countryCode === null
+                                                ? <span>Select Country Code</span>
+                                                : <>
+                                                    <span className="w-6 h-3 grid place-items-center mr-2">
+                                                        <Image src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${countryCode?.code}.svg`} width={100} height={100} alt={countryCode?.name} />
+                                                    </span>
+                                                    <span className="text-gray-900 dark:text-gray-100 font-medium hidden sm:flex sm:items-center">
+                                                        <span className="mr-2">{countryCode?.code}</span> ({countryCode?.dial_code})
+                                                    </span>
+                                                </>
+                                            }
                                         </button>
                                         <ChevronDownIcon className={`w-5 h-5 absolute top-3 right-3 ${open ? "rotate-180 " : ""} transition-all cursor-pointer duration-200 dark:text-gray-300`} />
                                     </Dropdown.Button>

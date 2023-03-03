@@ -25,6 +25,7 @@ module.exports = {
                 "bounce-x": "bounce-x 3s ease-in-out infinite",
                 "ripple": "ripple 1s cubic-bezier(0, 0, 0.2, 1)",
                 "bounce-fast": "bounce 0.5s infinite",
+                "skeleton": "skeleton 0.8s ease-in-out infinite",
             },
             keyframes: {
                 "width-half": {
@@ -62,6 +63,19 @@ module.exports = {
                     },
                     "100%": {
                         transform: "translateX(-100%)",
+                    }
+                },
+                "skeleton": {
+                    "0%": {
+                        transform: "translateX(-100%)",
+                        opacity: 0,
+                    },
+                    "50%": {
+                        opacity: 1,
+                    },
+                    "100%": {
+                        transform: "translateX(100%)",
+                        opacity: 0,
                     }
                 }
             },

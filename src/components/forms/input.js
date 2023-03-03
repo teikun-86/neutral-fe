@@ -8,7 +8,6 @@ export const Input = ({
     id = "myInput",
     name = "my-input",
     onChange = (event) => { },
-    invalidMessage = null,
     info = null,
     type = "text",
     noSymbols = false,
@@ -21,12 +20,14 @@ export const Input = ({
     containerClassName = "",
     max = undefined,
     min = undefined,
+    noDecimal = false,
     ...props
 }) => {
     const [focus, setFocus] = useState(false)
     const [valid, setValid] = useState(null)
     const [empty, setEmpty] = useState(props.value === "" || !props.value)
     const [typeS, setTypeS] = useState(type)
+    const [invalidMessage, setInvalidMessage] = useState("")
 
     // check email validity
     const checkEmail = (email) => {
@@ -69,15 +70,29 @@ export const Input = ({
             setValid(e.target.value.trim().length > 0 && checkEmail(e.target.value.trim()))
         } else if (typeS === "number") {
 
+            if (noDecimal) {
+                if (e.target.value.includes(".")) {
+                    e.target.value = e.target.value.replace('.', '')
+                }
+            }
+
             if (max !== undefined && e.target.value > max) {
-                e.target.value = max
+                // e.target.value = max
+                setInvalidMessage(`The maximum value is ${max}`)
+                setValid(false)
+                onChange(e)
+                return;
             }
 
             if (min !== undefined && e.target.value < min) {
-                e.target.value = min
+                // e.target.value = min
+                setInvalidMessage(`The minimum value is ${min}`)
+                setValid(false)
+                onChange(e)
+                return;
             }
             
-            setValid(e.target.value.trim().length > 0 && !isNaN(e.target.value.trim()))
+            setValid(e.target.value.trim().length > 0 || !isNaN(e.target.value.trim()))
         } else {
             setValid(e.target.value.trim().length > 0)
         }
