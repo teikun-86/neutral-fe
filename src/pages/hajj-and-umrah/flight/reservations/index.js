@@ -1,10 +1,9 @@
 import Alert from '@/components/alert';
-import { HajjUmrahReservation } from '@/components/flight';
+import { FlightReservation } from '@/components/flight';
 import { Input } from '@/components/forms';
 import AddPayment from '@/components/forms/flight/add-payment';
 import UploadManifest from '@/components/forms/manifest';
 import { ThreeDots } from '@/components/icons';
-import { Modal } from '@/components/modal';
 import { useLocale } from '@/hooks/locale';
 import HajjUmrahLayout from '@/layouts/hajj-umrah';
 import { axios } from '@/libs/axios';
@@ -95,7 +94,7 @@ const Reservations = () => {
                             : (
                                 <div className="w-full">
                                     {
-                                        queriedReservations.map(reservation => <HajjUmrahReservation res={reservation} key={reservation.id} setParentReservation={setReservation} reload={getReservations} />)
+                                        queriedReservations.map(reservation => <FlightReservation res={reservation} key={reservation.id} setParentReservation={setReservation} reload={getReservations} />)
                                     }
                                 </div>
                             )

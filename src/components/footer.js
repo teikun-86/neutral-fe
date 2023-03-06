@@ -1,5 +1,6 @@
-import { HeartIcon } from '@heroicons/react/24/outline';
+import Image from 'next/image';
 import Link from 'next/link';
+import appStore from "@/assets/images/download-on-app-store.png";
 
 const Footer = () => {
     return (
@@ -15,40 +16,23 @@ const Footer = () => {
                         <div className="flex w-full flex-wrap justify-end">
                             <div className="w-full lg:w-auto p-3 flex flex-col lg:flex-row lg:space-x-3 lg:justify-end">
                                 <div className="w-full">
-                                    <a className="text-white font-bold text-lg relative after:w-3/4 after:h-0.5 after:bg-white after:absolute after:-bottom-1 after:left-0 flex items-center">Useful Links</a>
-                                    <nav>
-                                        <ul className="list-none mt-4">
-                                            <li className="my-1">
-                                                <Link href="/" className="text-gray-100 hover:text-white">Useful Link</Link>
-                                            </li>
-                                            <li className="my-1">
-                                                <Link href="/" className="text-gray-100 hover:text-white">Lorem Ipsum</Link>
-                                            </li>
-                                        </ul>
-                                    </nav>
-                                </div>
-                            </div>
-                            <div className="w-full lg:w-auto p-3 flex flex-col lg:flex-row lg:space-x-3 lg:justify-end">
-                                <div className="w-full">
-                                    <a className="text-white font-bold text-lg relative after:w-3/4 after:h-0.5 after:bg-white after:absolute after:-bottom-1 after:left-0 flex items-center">About Neutral</a>
-                                    <nav>
-                                        <ul className="list-none mt-4">
-                                            <li className="my-1">
-                                                <Link href="/" className="text-gray-100 hover:text-white">About Neutral</Link>
-                                            </li>
-                                            <li className="my-1">
-                                                <Link href="/" className="text-gray-100 hover:text-white">Neutral LLC</Link>
-                                            </li>
-                                        </ul>
-                                    </nav>
+                                    <a className="text-white font-bold text-lg relative after:w-3/4 after:h-0.5 after:bg-white after:absolute after:-bottom-1 after:left-0 flex items-center">Payment Partners</a>
+                                    <div className="flex flex-wrap">
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
-                <div className="text-center text-gray-200 flex items-center justify-center">Made with <HeartIcon className="text-white w-5 h-5 mx-1" /> by
-                    <a href="https://azizfsama.vercel.app" rel="noreferrer" target="_blank" className="text-gray-100 hover:text-white hover:underline transition-all duration-200 underline-offset-1 ml-1">Aziz Febriyanto</a></div>
+                <div className="flex flex-row space-x-2 justify-center items-center">
+                    <Link href={`https://play.google.com/store/search?q=${process.env.NEXT_PUBLIC_APP_NAME}&c=apps`} target="_blank">
+                        <Image src="https://lh3.googleusercontent.com/q1k2l5CwMV31JdDXcpN4Ey7O43PxnjAuZBTmcHEwQxVuv_2wCE2gAAQMWxwNUC2FYEOnYgFPOpw6kmHJWuEGeIBLTj9CuxcOEeU8UXyzWJq4NJM3lg=s0" alt="Get it on Google Play Store" className="w-32" width={200} height={200} />
+                    </Link>
+                    <Link href={`https://play.google.com/store/search?q=${process.env.NEXT_PUBLIC_APP_NAME}&c=apps`} target="_blank">
+                        <Image src={appStore} alt="Download on App Store" className="w-28" />
+                    </Link>
+                </div>
                 <p className="text-center text-gray-200">Copyright &copy; {(new Date).getFullYear()}</p>
             </footer>
         </>

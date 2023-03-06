@@ -13,7 +13,7 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import { useRecoilState } from "recoil"
 
-export const HajjUmrahReservation = ({
+export const FlightReservation = ({
     res,
     setParentReservation,
 }) => {

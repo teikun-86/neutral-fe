@@ -12,13 +12,13 @@ import { Modal } from "../modal";
 import { InputFile } from "./file";
 import { InputError } from "./input-error";
 
-const UploadManifest = ({
+const UploadGuestMap = ({
     reservation,
-    reload = () => {},
+    reload = () => { },
 }) => {
     const { __ } = useLocale()
     const [modalOpen, setModalOpen] = useRecoilState(modalState)
-    
+
     const { data, isDirty, handleChange, setData } = useForm({
         reservation_id: reservation.id,
         file: null
@@ -35,10 +35,10 @@ const UploadManifest = ({
             handleChange('file', file)
             // get file size in MB
 
-            
+
             setPreview({
                 name: file.name,
-                size: file.size / 1024, 
+                size: file.size / 1024,
                 extension: file.name.split('.').pop()
             })
             return;
@@ -47,7 +47,7 @@ const UploadManifest = ({
         setPreview(null)
     }
 
-    const uploadManifest = async () => {
+    const uploadGuestMap = async () => {
         setLoading(true)
         setErrors({})
         if (!data.file) {
@@ -58,25 +58,17 @@ const UploadManifest = ({
             return;
         }
 
-        if (data.file.type !== 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' && data.file.type !== 'application/vnd.ms-excel') {
-            setErrors({
-                file: __('File must be excel')
-            })
-            setLoading(false)
-            return;
-        }
-
         let formData = new FormData()
         formData.append('file', data.file)
-        formData.append('reservation_id', data.reservation_id)
+        formData.append('id', data.reservation_id)
 
         let url = {
-            flight: '/hajj-umrah/flights/reservations/manifest/store',
-            package: '/hajj-umrah/packages/reservations/store-manifest'
+            hotel: "/hajj-umrah/hotels/reservations/store-guest-map",
+            package: "/hajj-umrah/packages/reservations/store-guest-map"
         }
 
-        let type = reservation.flight ? 'flight' : 'package'
-        
+        let type = reservation.hotel ? 'hotel' : 'package'
+
         await axios.post(url[type], formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -107,15 +99,15 @@ const UploadManifest = ({
             reservation_id: reservation.id
         })
     }, [reservation])
-    
+
     return (
-        <Modal size="md" id="uploadManifestModal">
+        <Modal size="md" id="uploadGuestMapModal">
             <Modal.Header>
-                <h4 className="text-lg font-semibold text-gray-900 dark:text-white">Upload Manifest</h4>
+                <h4 className="text-lg font-semibold text-gray-900 dark:text-white">Upload Guest Map</h4>
             </Modal.Header>
             <Modal.Body>
                 <div className="mb-3 text-start">
-                    <InputFile label="File" accept=".xls, .xlsx" name="manifest_file" onChange={handleFile} />
+                    <InputFile label="File" accept=".xls, .xlsx, .pdf, .doc, .docx" name="file" onChange={handleFile} />
                     <InputError errors={errors.file} />
                 </div>
                 {
@@ -131,8 +123,8 @@ const UploadManifest = ({
                                             <span className="text-sm font-medium text-gray-700 dark:text-gray-200">{splitString(preview.name, 12, preview.extension.length + 1)}</span>
                                             <span className="text-xs font-normal text-gray-500 dark:text-gray-400">{
                                                 preview.size > 1024 ?
-                                                `${(preview.size / 1024).toFixed(2)} MB` :
-                                                `${preview.size.toFixed(2)} KB`
+                                                    `${(preview.size / 1024).toFixed(2)} MB` :
+                                                    `${preview.size.toFixed(2)} KB`
                                             }</span>
                                         </div>
                                     </div>
@@ -151,10 +143,10 @@ const UploadManifest = ({
             </Modal.Body>
             <Modal.Footer className="flex items-center justify-end space-x-3">
                 <button disabled={loading} type="button" onClick={() => setModalOpen('')} className="btn-light dark:btn-dark !rounded-full">Close</button>
-                <button onClick={uploadManifest} className="btn-rose !rounded-full" disabled={data.file === null || loading}>Upload</button>
+                <button onClick={uploadGuestMap} className="btn-rose !rounded-full" disabled={data.file === null || loading}>Upload</button>
             </Modal.Footer>
         </Modal>
     );
 };
 
-export default UploadManifest;
+export default UploadGuestMap;

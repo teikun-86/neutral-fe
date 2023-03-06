@@ -26,6 +26,8 @@ module.exports = {
                 "ripple": "ripple 1s cubic-bezier(0, 0, 0.2, 1)",
                 "bounce-fast": "bounce 0.5s infinite",
                 "skeleton": "skeleton 0.8s ease-in-out infinite",
+                "spinner": "spinner 1.4s ease-in-out infinite",
+                "spin-slow": "spin 2s linear infinite",
             },
             keyframes: {
                 "width-half": {
@@ -77,7 +79,21 @@ module.exports = {
                         transform: "translateX(100%)",
                         opacity: 0,
                     }
-                }
+                },
+                "spinner": {
+                    "0%": {
+                        "stroke-dasharray": "1,200",
+                        "stroke-dashoffset": "0",
+                    },
+                    "50%": {
+                        "stroke-dasharray": "100,200",
+                        "stroke-dashoffset": "-15px",
+                    },
+                    "100%": {
+                        "stroke-dasharray": "100,200",
+                        "stroke-dashoffset": "-113.097px",
+                    }
+                },
             },
             transitionProperty: {
                 'height': 'height',

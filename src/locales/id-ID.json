@@ -60,7 +60,9 @@
         "register": "Daftar untuk menikmati segala keuntungan dan kemudahan dari {link}",
         "hajj_umrah": {
             "flights": "Pesawat",
-            "reservations": "Reservasi"
+            "reservations": "Reservasi",
+            "hotels": "Hotel",
+            "packages": "Paket"
         }
     },
     "input": {

@@ -200,25 +200,69 @@ const HajjUmrahLayout = props => {
                     <button onClick={() => router.reload()} className="btn-rose w-full my-2">{__('command.reload')}</button>
                 </Drawer.Footer>
             </Drawer>
-            <Drawer id="hajjUmrahDrawer">
-                <Drawer.Header>
-                    <h4 className="text-xl font-bold text-gray-900 dark:text-white text-center mb-3">{__('nav.hajj_umrah')}</h4>
-                </Drawer.Header>
-                <Drawer.Body className="min-h-[60vh]">
-                    <div className="space-y-1">
-                        <h6 className="text-gray-900 dark:text-white py-2 font-semibold text-base mx-4 flex items-center justify-start">
-                            <AirplaneTakeoffIcon className="w-6 h6 mr-2 text-rose-600" />
-                            {__('nav.flight')}
-                        </h6>
-                        <ResponsiveLink href="/hajj-and-umrah/flight">
-                            Flight
-                        </ResponsiveLink>
-                        <ResponsiveLink href="/hajj-and-umrah/pool">
-                            Pool
-                        </ResponsiveLink>
-                    </div>
-                </Drawer.Body>
-            </Drawer>
+            {
+                user && (
+                    <Drawer id="hajjUmrahDrawer">
+                        <Drawer.Header>
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white text-center mb-3">{__('nav.hajj_umrah')}</h4>
+                        </Drawer.Header>
+                        <Drawer.Body className="min-h-[60vh]">
+                            <div className="space-y-1">
+                                <nav className="list-none mt-3 flex flex-col space-y-1">
+                                    <h6 className="text-xs font-medium text-gray-600 dark:text-gray-300 uppercase">
+                                        Flight
+                                    </h6>
+                                    {
+                                        user.user_type === 'company' && (
+                                            <ResponsiveLink active={router.pathname === '/hajj-and-umrah/flight'} href="/hajj-and-umrah/flight">
+                                                Flight
+                                            </ResponsiveLink>
+                                        )
+                                    }
+                                    <ResponsiveLink active={router.pathname === '/hajj-and-umrah/flight/pool'} href="/hajj-and-umrah/flight/pool">
+                                        Pool
+                                    </ResponsiveLink>
+                                    <ResponsiveLink active={router.pathname === '/hajj-and-umrah/flight/reservations'} href="/hajj-and-umrah/flight/reservations">
+                                        Reservations
+                                    </ResponsiveLink>
+                                    <h6 className="text-xs font-medium text-gray-600 dark:text-gray-300 uppercase !mt-3">
+                                        Hotel
+                                    </h6>
+                                    {
+                                        user.user_type === 'company' && (
+                                            <ResponsiveLink active={router.pathname === '/hajj-and-umrah/hotel'} href="/hajj-and-umrah/hotel">
+                                                Hotel
+                                            </ResponsiveLink>
+                                        )
+                                    }
+                                    <ResponsiveLink active={router.pathname === '/hajj-and-umrah/hotel/pool'} href="/hajj-and-umrah/hotel/pool">
+                                        Pool
+                                    </ResponsiveLink>
+                                    <ResponsiveLink active={router.pathname === '/hajj-and-umrah/hotel/reservations'} href="/hajj-and-umrah/hotel/reservations">
+                                        Reservations
+                                    </ResponsiveLink>
+                                    <h6 className="text-xs font-medium text-gray-600 dark:text-gray-300 uppercase !mt-3">
+                                        Flight + Hotel
+                                    </h6>
+                                    {
+                                        user.user_type === 'company' && (
+                                            <ResponsiveLink active={router.pathname === '/hajj-and-umrah/package'} href="/hajj-and-umrah/package">
+                                                Package
+                                            </ResponsiveLink>
+                                        )
+                                    }
+                                    <ResponsiveLink active={router.pathname === '/hajj-and-umrah/package/pool'} href="/hajj-and-umrah/package/pool">
+                                        Pool
+                                    </ResponsiveLink>
+                                    <ResponsiveLink active={router.pathname === '/hajj-and-umrah/package/reservations'} href="/hajj-and-umrah/package/reservations">
+                                        Reservations
+                                    </ResponsiveLink>
+                                </nav>
+                            </div>
+                        </Drawer.Body>
+                    </Drawer>
+                )
+            }
             <Footer />
             <ToastContainer theme={theme} />
         </>

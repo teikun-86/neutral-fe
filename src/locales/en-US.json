@@ -60,7 +60,9 @@
         "register": "Register to enjoy every benefits and services in {link}",
         "hajj_umrah": {
             "flights": "Flights",
-            "reservations": "Reservations"
+            "reservations": "Reservations",
+            "hotels": "Hotels",
+            "packages": "Packages"
         }
     },
     "input": {

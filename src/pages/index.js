@@ -9,7 +9,7 @@ import { Service } from "@/components/button";
 import useInViewport from "@/hooks/inviewport";
 import { useRef } from "react";
 import AppLayout from "@/layouts/app";
-import { Destination, Tour } from "@/components/landing";
+import { AirlinePartners, Destination, Tour } from "@/components/landing";
 import { useLocale } from "@/hooks/locale";
 
 export default function Home() {
@@ -60,6 +60,8 @@ export default function Home() {
                 <Destination />
 
                 <Tour />
+
+                <AirlinePartners />
             
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Jaminan Harga Termurah!</h2>
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mt-4 mb-2">Butuh Bantuan? Cek Informasi Berikut!</h2>

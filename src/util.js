@@ -78,3 +78,5 @@ export const splitString = (string = "", firstDigits = 8, lastDigits = 4) => {
     }
     return string;
 }
+
+export const basename = (path) => path.split('/').reverse()[0];

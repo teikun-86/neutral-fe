@@ -81,6 +81,7 @@ const Flight = () => {
                                 <th>Departure</th>
                                 <th>Arrival</th>
                                 <th>Departure Date</th>
+                                <th>Program Type</th>
                                 <th>Price</th>
                                 <th>Seats</th>
                                 <th></th>
@@ -95,7 +96,7 @@ const Flight = () => {
                                             [...Array(10)].map((_,i) => (
                                                 <tr key={i} className="border-gray-300 dark:border-gray-800 [&_>_td]:p-2 [&_>_td]:whitespace-nowrap">
                                                     <td></td>
-                                                    <td colSpan={7} className="skeleton"></td>
+                                                    <td colSpan={8} className="skeleton"></td>
                                                     <td></td>
                                                 </tr>
                                             ))
@@ -109,7 +110,7 @@ const Flight = () => {
                                                 ? (
                                                     <>
                                                         <tr>
-                                                            <td colSpan="9" className="text-center py-4">No flights found</td>
+                                                            <td colSpan="10" className="text-center py-4">No flights found</td>
                                                         </tr>
                                                     </>
                                                 )
@@ -122,6 +123,7 @@ const Flight = () => {
                                                             <td>{flight.departure_airport.name} ({flight.departure_airport.iata})</td>
                                                             <td>{flight.arrival_airport.name} ({flight.arrival_airport.iata})</td>
                                                             <td>{moment(flight.depart_at).format("DD MMMM YYYY")} </td>
+                                                            <td rowSpan={2}>{flight.program_type} Days</td>
                                                             <td rowSpan={2}>{formatIDR(flight.price)}</td>
                                                             <td rowSpan={2}>{flight.available_seats}</td>
                                                             <td rowSpan={2}>

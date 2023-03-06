@@ -65,9 +65,18 @@ const AddPayment = ({
             setLoading(false)
             return;
         }
-        await axios.post("/hajj-umrah/flights/reservations/add-payment", {
-            reservation_id: data.reservation_id,
-            payment_method: data.payment_method.code,
+        
+        let url = {
+            flight: "/hajj-umrah/flights/reservations/add-payment",
+            hotel: "/hajj-umrah/hotels/reservations/add-payment",
+            package: "/hajj-umrah/packages/reservations/add-payment",
+        }
+
+        let type = reservation.flight ? 'flight' : reservation.hotel ? 'hotel' : 'package'
+        
+        await axios.post(url[type], {
+            id: data.reservation_id,
+            payment_method_code: data.payment_method.code,
             amount: data.amount
         }).then(res => {
             setLoading(false)
@@ -118,7 +127,7 @@ const AddPayment = ({
                                 }
                             </Combobox.Container>
                         </Combobox>
-                        <InputError errors={errors.payment_method} />
+                        <InputError errors={errors.payment_method_code} />
                     </div>
                     <div className="mb-3">
                         <Input label={__('payment.amount')} max={reservation.total_price - reservation.amount_paid} noSymbols onlyNumbers type="number" min={1} value={data.amount} onChange={(e) => handleChange('amount', e.target.value)} info={formatIDR(data.amount)}/>

@@ -33,17 +33,56 @@ const Sidebar = ({
                 {
                     user
                     ? (
-                        <ul className="space-y-1 list-none mt-3">
-                            <ResponsiveLink active={router.pathname === '/hajj-and-umrah/flight'} href="/hajj-and-umrah/flight">
+                        <nav className="list-none mt-3 flex flex-col space-y-1">
+                            <h6 className="text-xs font-medium text-gray-600 dark:text-gray-300 uppercase">
                                 Flight
-                            </ResponsiveLink>
+                            </h6>
+                            {
+                                user.user_type === 'company' && (
+                                    <ResponsiveLink active={router.pathname === '/hajj-and-umrah/flight'} href="/hajj-and-umrah/flight">
+                                        Flight
+                                    </ResponsiveLink>
+                                )
+                            }
                             <ResponsiveLink active={router.pathname === '/hajj-and-umrah/flight/pool'} href="/hajj-and-umrah/flight/pool">
                                 Pool
                             </ResponsiveLink>
                             <ResponsiveLink active={router.pathname === '/hajj-and-umrah/flight/reservations'} href="/hajj-and-umrah/flight/reservations">
-                                My Reservations
+                                Reservations
                             </ResponsiveLink>
-                        </ul>
+                            <h6 className="text-xs font-medium text-gray-600 dark:text-gray-300 uppercase !mt-3">
+                                Hotel
+                            </h6>
+                            {
+                                user.user_type === 'company' && (
+                                    <ResponsiveLink active={router.pathname === '/hajj-and-umrah/hotel'} href="/hajj-and-umrah/hotel">
+                                        Hotel
+                                    </ResponsiveLink>
+                                )
+                            }
+                            <ResponsiveLink active={router.pathname === '/hajj-and-umrah/hotel/pool'} href="/hajj-and-umrah/hotel/pool">
+                                Pool
+                            </ResponsiveLink>
+                            <ResponsiveLink active={router.pathname === '/hajj-and-umrah/hotel/reservations'} href="/hajj-and-umrah/hotel/reservations">
+                                Reservations
+                            </ResponsiveLink>
+                            <h6 className="text-xs font-medium text-gray-600 dark:text-gray-300 uppercase !mt-3">
+                                Flight + Hotel Package
+                            </h6>
+                            {
+                                user.user_type === 'company' && (
+                                    <ResponsiveLink active={router.pathname === '/hajj-and-umrah/package'} href="/hajj-and-umrah/package">
+                                        Package
+                                    </ResponsiveLink>
+                                )
+                            }
+                            <ResponsiveLink active={router.pathname === '/hajj-and-umrah/package/pool'} href="/hajj-and-umrah/package/pool">
+                                Pool
+                            </ResponsiveLink>
+                            <ResponsiveLink active={router.pathname === '/hajj-and-umrah/package/reservations'} href="/hajj-and-umrah/package/reservations">
+                                Reservations
+                            </ResponsiveLink>
+                        </nav>
                     )
                     : (
                         <div className="w-full grid place-items-center">
