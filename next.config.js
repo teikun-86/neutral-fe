@@ -41,7 +41,8 @@ const nextConfig = {
             "avatars.githubusercontent.com",
             "localhost",
             "neutral-be.io",
-            "secure.gravatar.com"
+            "secure.gravatar.com",
+            "travel-neutral.sintegra.cloud"
         ]
     },
     i18n: {
